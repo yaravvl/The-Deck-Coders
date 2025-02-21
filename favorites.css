@@ -1,5 +1,5 @@
 body {
-    background-image: url("./assets/images/Berglandschap.webp");
+    background-image: url("./assets/images/Backgrounds/Berglandschap_80.png");
     background-position: fixed;
     /* opacity: 35%; */
 }
@@ -12,6 +12,7 @@ section {
     align-items: start;
     gap: 55px;
     padding-top: 50px;
+    padding-bottom: 50px;
     /* margin: 25px; */
     font-family: "Oswald", sans-serif;
     text-align: center;
@@ -26,21 +27,47 @@ section {
         border-radius: 5px;
         height: 100%;
         border: solid #455641 0.5px;
-        background-color: rgba(255, 255, 255, 0.5);
+        background-color: rgba(255, 255, 255, 0.65);
+
+        /* a {
+            transition: transform .2s;
+
+            &:hover {
+                transform: scale(1.05);
+            }
+        } */
 
         h1 {
             font-size: 30px;
             margin-top: 15px;
+            transition: transform .2s;
+
+            &:hover {
+                transform: scale(1.12);
+            }
+
+            &:active {
+                transform: scale(1.12);
+            }
         }
 
         img {
             border-radius: 100%;
             height: 175px;
+            transition: transform .2s;
+
+            &:hover {
+                transform: scale(1.075);
+            }
+
+            &:active {
+                transform: scale(1.075);
+            }
         }
 
         ul {
             li {
-                border: solid lightgray;
+                border: solid rgb(121, 113, 102);
                 width: 250px;
                 margin-top: 15px;
                 padding: 10px;

@@ -1,0 +1,75 @@
+body {
+    background-image: url("./assets/images/Backgrounds/Berglandschap_80.png");
+    background-position: fixed;
+    /* opacity: 35%; */
+}
+
+main {
+    padding-top: 50px;
+    font-family: "Oswald", sans-serif;
+    text-align: center;
+    font-size: 17px;
+
+    img {
+    border-radius: 100%;
+    height: 275px;
+    }
+
+    article {
+        display: flex;
+        flex-direction: row;
+        justify-content:center;
+        gap: 50px;
+        flex-wrap: wrap;
+        margin: 25px;
+
+        section {
+            padding: 25px;
+            background-color: rgba(255, 255, 255, 0.65);
+
+            h1 {
+                font-size: 30px;
+                padding-bottom: 10px;
+                transition: transform .2s;
+    
+                &:hover {
+                    transform: scale(1.12);
+                }
+    
+                &:active {
+                    transform: scale(1.12);
+                }
+            }
+        }
+    }
+
+    .quotes {
+        display: flex;
+        flex-direction: row;
+        justify-self: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        height: 100%;
+        width: 75%;
+        padding: 35px;
+        margin: 25px;
+        border-radius: 5px;
+        border: solid #455641 0.5px;
+        background-color: rgba(255, 255, 255, 0.65);
+
+        ul {
+            li {
+                border: solid rgb(121, 113, 102);
+                width: 250px;
+                margin-top: 15px;
+                padding: 10px;
+                
+            
+            }
+        }
+    }
+
+
+
+    
+}
