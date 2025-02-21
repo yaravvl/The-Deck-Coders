@@ -8,7 +8,7 @@ main {
     padding-top: 50px;
     font-family: "Oswald", sans-serif;
     text-align: center;
-    font-size: 17px;
+    font-size: 20px;
 
     img {
     border-radius: 100%;
@@ -24,12 +24,16 @@ main {
         margin: 25px;
 
         section {
-            padding: 25px;
+            padding: 35px;
+            margin: 25px;
+            border-radius: 5px;
+            border: solid #455641 0.5px;
             background-color: rgba(255, 255, 255, 0.65);
+            text-align: left;
 
             h1 {
-                font-size: 30px;
-                padding-bottom: 10px;
+                font-size: 35px;
+                padding-bottom: 5px;
                 transition: transform .2s;
     
                 &:hover {
@@ -40,6 +44,11 @@ main {
                     transform: scale(1.12);
                 }
             }
+
+            .h2 {
+                font-weight: bold;
+            }
+
         }
     }
 
