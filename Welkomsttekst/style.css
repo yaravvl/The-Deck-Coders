@@ -1,0 +1,131 @@
+/* Algemene reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Achtergrond en algemene body styling */
+body {
+    font-family: 'Oswald', sans-serif;
+    background-color: #D9C6A3;
+    background-image: url('../assets/images/Berglandschap.webp');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #401E01;
+}
+
+/* Overlay voor beter contrast */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.6);
+    z-index: -1;
+}
+
+/* Welkom-container */
+.welcome-container {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 2rem; 
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    max-width: 600px; 
+    text-align: center;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.welcome-box h1 {
+    font-size: 2rem; 
+    margin-bottom: 1rem; 
+    color: #BFA556; 
+    text-transform: uppercase;
+    font-family: 'Ringbearer', serif; 
+}
+
+.welcome-box p {
+    font-size: 1rem; 
+    margin-bottom: 1rem; 
+    line-height: 1.5; 
+    font-family: 'Oswald', sans-serif; 
+}
+
+.welcome-box ul {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 1.2rem; 
+}
+
+.welcome-box ul li {
+    font-size: 1rem; 
+    margin-bottom: 0.6rem; 
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.5; 
+    font-family: 'Oswald', sans-serif; 
+}
+
+.welcome-box ul li strong {
+    font-weight: bold; 
+}
+
+
+
+.welcome-box ul li::before {
+    content: '\2022';
+    color: #BFA556; 
+    font-size: 1.3rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+/* Knopstijl */
+button {
+    background: #BFA556; 
+    color: #000;
+    font-size: 1rem; 
+    padding: 8px 16px; 
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: 'Oswald', sans-serif; 
+}
+
+button:hover {
+    background: #d4ac0d;
+}
+
+/* Animatie */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobiele versie */
+@media (max-width: 768px) {
+    .welcome-container {
+        padding: 1.5rem; 
+        max-width: 90%; 
+    }
+
+    .welcome-box h1 {
+        font-size: 1.5rem; 
+    }
+
+    .welcome-box p, .welcome-box ul li {
+        font-size: 0.9rem; 
+    }
+
+    button {
+        font-size: 0.9rem; 
+        padding: 6px 12px; 
+    }
+}
