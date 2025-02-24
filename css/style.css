@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+
+:root {
+    --color-light-gold: #BFA556;
+    --color-tan: #A68D60;
+    --color-beige: #D9C6A3;
+    --color-brown: #734E20;
+    --color-dark-brown: #401E01;
+}
+
+* {
+    font-family: "Oswald", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.start-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('/images/background.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+.login {
+    width: 400px;
+    color: var(--color-dark-brown);
+    border-radius: 10px;
+    border: 2px solid rgba(64, 30, 1, 0.4);
+    backdrop-filter: blur(35px);
+    padding: 30px 40px;
+    background: transparent;
+
+    h1 {
+        font-size: 40px;
+        text-align: center;
+    }
+
+    .btn {
+        width: 100%;
+        height: 45px;
+        background: white;
+        border: none;
+        outline: none;
+        border-radius: 40px;
+        cursor: pointer;
+        font-size: 16px;
+        color: var(--color-dark-brown);
+        font-weight: bolder;
+    }
+
+    .forgot-password {
+        display: flex;
+        justify-content: center;
+        font-size: 16px;
+        margin: -15px 0 15px;
+        
+        a {
+            color: var(--color-dark-brown);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .make-account{
+        font-size: 16px;
+        text-align: center;
+        margin: 20px 0 15px;
+
+        p {
+            color: var(--color-beige);
+            a{
+                text-decoration: none;
+                color: var(--color-beige);
+                font-weight: bolder;
+                }
+        }
+
+        p a:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .input-box{
+        width: 100%;
+        height: 50px;
+        margin: 30px 0;
+        position: relative;
+
+        input {
+            width: 100%;
+            height: 100%;
+            outline: none;
+            border: 2px solid var(--color-dark-brown);
+            border-radius: 40px;
+            font-size: 18px;
+            padding: 20px 45px 20px 20px;
+            color: var(--color-brown);
+            background-color: transparent;
+        }
+
+        input::placeholder {
+            color: var(--color-dark-brown);
+        }
+
+        box-icon {
+            position: absolute;
+            right: 15px;
+            transform: translateY(-50%);
+            top: 50%;
+            font-size: 20px;
+        }
+
+    }
+}

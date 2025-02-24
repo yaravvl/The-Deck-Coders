@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Screen</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+    />
+  </head>
+  <body
+    class="flex justify-center items-center min-h-screen bg-cover bg-center bg-black"
+    style="background-image: url('/assets/images/login-background-temp.webp')"
+  >
+    <section
+      class="w-96 p-10 bg-opacity-80 backdrop-blur-xl border-2 border-[#734E20]-400 rounded-lg text-[#401E01] bg-[#D9C6A3]"
+    >
+      <form action="">
+        <h1 class="text-4xl text-center font-bold">Login</h1>
+        <div class="relative w-full h-12 mt-9 -mb-2">
+          <input
+            type="text"
+            placeholder="Gebruikersnaam"
+            required
+            class="w-full h-full px-5 pr-12 text-[#734E20] border-2 border-[#401E01] rounded-full bg-transparent outline-none placeholder-[#401E01]"
+          />
+          <i
+            class="bi bi-person-fill absolute right-4 top-1/2 transform -translate-y-1/2 text-lg"
+          ></i>
+        </div>
+        <div class="relative w-full h-12 mt-6">
+          <input
+            type="password"
+            placeholder="Wachtwoord"
+            required
+            class="w-full h-full px-5 pr-12 text-[#734E20] border-2 border-[#401E01] rounded-full bg-transparent outline-none placeholder-[#401E01]"
+          />
+          <i
+            class="bi bi-shield-lock-fill absolute right-4 top-1/2 transform -translate-y-1/2 text-lg"
+          ></i>
+        </div>
+        <div class="flex justify-center text-base mb-6 mt-2">
+          <a href="#" class="text-[#401E01] hover:underline"
+            >Wachtwoord vergeten?</a
+          >
+        </div>
+        <button
+          type="submit"
+          class="w-full h-12 bg-white text-[#401E01] font-bold text-lg rounded-full hover:bg-gray-200"
+        >
+          Login
+        </button>
+        <div class="text-center text-lg mt-5">
+          <p class="text-#D9C6A3">
+            Nog geen account?
+            <a href="test.html" class="font-bold text-#D9C6A3 hover:underline"
+              >Registreer hier!</a
+            >
+          </p>
+        </div>
+      </form>
+    </section>
+  </body>
+</html>
