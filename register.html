@@ -1,79 +1,42 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register Screen</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
     />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="css/account.css" />
   </head>
-  <body
-    class="flex justify-center items-center min-h-screen bg-cover bg-center bg-black"
-    style="background-image: url('/assets/images/login-background-temp.webp')"
-  >
-    <section
-      class="w-96 p-10 bg-opacity-80 backdrop-blur-xl border-2 border-[#734E20]-400 rounded-lg text-[#401E01] bg-[#D9C6A3]"
-    >
+  <body class="background-image">
+    <section class="register-container">
       <form action="">
-        <h1 class="text-3xl text-center font-bold">Maak een account!</h1>
+        <h1 class="title">Maak een account!</h1>
 
-        <figure class="flex justify-center mt-6">
-          <img src="https://placehold.co/150" alt="Temp" class="rounded-full" />
+        <figure class="profile-image">
+          <a href="">
+            <img src="https://placehold.co/150" alt="Temp" />
+          </a>
         </figure>
 
-        <article class="flex justify-center">
-          <input
-            class="inline m-auto w-40 mt-2 file-uploader"
-            type="file"
-            accept="image/*"
-          />
+        <article class="input-container">
+          <input type="email" placeholder="e-mail" required />
+          <i class="bi bi-envelope-fill input-icon"></i>
         </article>
 
-        <article class="relative w-full block mt-4 -mb-2">
-          <input
-            type="email"
-            placeholder="E-mail"
-            required
-            class="w-full h-12 px-5 pr-12 text-[#734E20] border-2 border-[#401E01] rounded-full bg-transparent outline-none placeholder-[#401E01]"
-          />
-          <i
-            class="bi bi-envelope-fill absolute right-4 top-1/2 transform -translate-y-1/2 text-lg"
-          ></i>
+        <article class="input-container">
+          <input type="text" placeholder="gebruikersnaam" required />
+          <i class="bi bi-person-fill input-icon"></i>
         </article>
 
-        <article class="relative w-full block mt-6 -mb-2">
-          <input
-            type="text"
-            placeholder="Gebruikersnaam"
-            required
-            class="w-full h-12 px-5 pr-12 text-[#734E20] border-2 border-[#401E01] rounded-full bg-transparent outline-none placeholder-[#401E01]"
-          />
-          <i
-            class="bi bi-person-fill absolute right-4 top-1/2 transform -translate-y-1/2 text-lg"
-          ></i>
+        <article class="input-container">
+          <input type="password" placeholder="wachtwoord" required />
+          <i class="bi bi-shield-lock-fill input-icon"></i>
         </article>
 
-        <article class="relative w-full block my-6">
-          <input
-            type="password"
-            placeholder="Wachtwoord"
-            required
-            class="w-full h-12 px-5 pr-12 text-[#734E20] border-2 border-[#401E01] rounded-full bg-transparent outline-none placeholder-[#401E01]"
-          />
-          <i
-            class="bi bi-shield-lock-fill absolute right-4 top-1/2 transform -translate-y-1/2 text-lg"
-          ></i>
-        </article>
-
-        <button
-          type="submit"
-          class="w-full h-12 bg-white text-[#401E01] font-bold text-lg rounded-full hover:bg-gray-200"
-        >
-          Registreer
-        </button>
+        <button type="submit" class="submit-btn">REGISTREER</button>
       </form>
     </section>
   </body>
