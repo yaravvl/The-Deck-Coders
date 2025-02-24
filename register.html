@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login Screen</title>
+    <title>Register Screen</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
@@ -19,20 +19,20 @@
     >
       <form action="">
         <h1 class="text-3xl text-center font-bold">Maak een account!</h1>
+
         <figure class="flex justify-center mt-6">
           <img src="https://placehold.co/150" alt="Temp" class="rounded-full" />
         </figure>
-        <label class="flex justify-center">
+
+        <article class="flex justify-center">
           <input
-            class="inline m-auto w-40 mt-2"
-            class="file-uploader"
+            class="inline m-auto w-40 mt-2 file-uploader"
             type="file"
-            onchange=""
             accept="image/*"
           />
-        </label>
-        <label class="relative w-full block mt-4 -mb-2">
-          <span class="sr-only">E-mail</span>
+        </article>
+
+        <article class="relative w-full block mt-4 -mb-2">
           <input
             type="email"
             placeholder="E-mail"
@@ -42,9 +42,9 @@
           <i
             class="bi bi-envelope-fill absolute right-4 top-1/2 transform -translate-y-1/2 text-lg"
           ></i>
-        </label>
-        <label class="relative w-full block mt-6 -mb-2">
-          <span class="sr-only">Gebruikersnaam</span>
+        </article>
+
+        <article class="relative w-full block mt-6 -mb-2">
           <input
             type="text"
             placeholder="Gebruikersnaam"
@@ -54,9 +54,9 @@
           <i
             class="bi bi-person-fill absolute right-4 top-1/2 transform -translate-y-1/2 text-lg"
           ></i>
-        </label>
-        <label class="relative w-full block my-6">
-          <span class="sr-only">Wachtwoord</span>
+        </article>
+
+        <article class="relative w-full block my-6">
           <input
             type="password"
             placeholder="Wachtwoord"
@@ -66,7 +66,8 @@
           <i
             class="bi bi-shield-lock-fill absolute right-4 top-1/2 transform -translate-y-1/2 text-lg"
           ></i>
-        </label>
+        </article>
+
         <button
           type="submit"
           class="w-full h-12 bg-white text-[#401E01] font-bold text-lg rounded-full hover:bg-gray-200"

@@ -19,8 +19,10 @@
     >
       <form action="">
         <h1 class="text-4xl text-center font-bold">Login</h1>
-        <div class="relative w-full h-12 mt-9 -mb-2">
+
+        <article class="relative w-full h-12 mt-9 -mb-2">
           <input
+            id="username"
             type="text"
             placeholder="Gebruikersnaam"
             required
@@ -29,9 +31,11 @@
           <i
             class="bi bi-person-fill absolute right-4 top-1/2 transform -translate-y-1/2 text-lg"
           ></i>
-        </div>
-        <div class="relative w-full h-12 mt-6">
+        </article>
+
+        <article class="relative w-full h-12 mt-6">
           <input
+            id="password"
             type="password"
             placeholder="Wachtwoord"
             required
@@ -40,26 +44,32 @@
           <i
             class="bi bi-shield-lock-fill absolute right-4 top-1/2 transform -translate-y-1/2 text-lg"
           ></i>
-        </div>
-        <div class="flex justify-center text-base mb-6 mt-2">
+        </article>
+
+        <section class="text-center text-base mb-6 mt-2">
           <a href="#" class="text-[#401E01] hover:underline"
             >Wachtwoord vergeten?</a
           >
-        </div>
+        </section>
+
         <button
           type="submit"
           class="w-full h-12 bg-white text-[#401E01] font-bold text-lg rounded-full hover:bg-gray-200"
         >
           Login
         </button>
-        <div class="text-center text-lg mt-5">
+
+        <section class="text-center text-lg mt-5">
           <p class="text-#D9C6A3">
             Nog geen account?
-            <a href="test.html" class="font-bold text-#D9C6A3 hover:underline"
-              >Registreer hier!</a
+            <a
+              href="register.html"
+              class="font-bold text-#D9C6A3 hover:underline"
             >
+              Registreer hier!
+            </a>
           </p>
-        </div>
+        </section>
       </form>
     </section>
   </body>
