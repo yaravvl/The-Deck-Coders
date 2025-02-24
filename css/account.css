@@ -1,0 +1,130 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+
+:root {
+    --color-light-gold: #F2D6B3;
+    --color-tan: #D9C6A3;
+    --color-beige: #BFA556;
+    --color-brown: #734E20;
+    --color-dark-brown: #401E01;
+}
+
+* {
+    font-family: "Oswald", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.background-image {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('/assets/images/login-background-temp.webp');
+    background-size: cover;
+    background-position: center;
+    background-color: black;
+}
+
+.login-container, .register-container {
+    width: 400px;
+    padding: 40px;
+    border: 2px solid var(--color-tan);
+    border-radius: 10px;
+    color: var(--color-dark-brown);
+    background-color: var(--color-tan);
+    backdrop-filter: blur(20px);
+
+    .title {
+        font-size: 32px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+}
+
+.input-container {
+    position: relative;
+    margin-bottom: 20px;
+
+    input {
+        width: 100%;
+        height: 45px;
+        padding: 10px 45px 10px 20px;
+        border: 2px solid var(--color-dark-brown);
+        border-radius: 40px;
+        font-size: 16px;
+        color: var(--color-brown);
+        background-color: transparent;
+        outline: none;
+    }
+
+    input::placeholder {
+        color: var(--color-dark-brown);
+    }
+
+    .input-icon {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 18px;
+        color: var(--color-dark-brown);
+    }
+}
+
+
+.submit-btn {
+    width: 100%;
+    height: 45px;
+    background-color: var(--color-light-gold);
+    color: var(--color-dark-brown);
+    border: none;
+    border-radius: 40px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 10px 0;
+
+    &:hover {
+        border: 2px solid var(--color-dark-brown);
+    }
+}
+
+.text-center {
+    text-align: center;
+    margin: 10px 0;
+
+    .text-link {
+        color: var(--color-dark-brown);
+        text-decoration: none;
+    }
+    &:hover {
+        text-decoration: underline;
+    }
+
+    .text-secondary {
+        color: var(--color-brown);
+        font-size: 16px;
+    
+        a {
+            font-weight: bold;
+            color: var(--color-brown);
+            text-decoration: none;
+    
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.profile-image {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+
+    img {
+        border-radius: 50%;
+    }
+}
