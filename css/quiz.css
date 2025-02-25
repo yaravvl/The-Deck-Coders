@@ -6,7 +6,7 @@ body{
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-image: url('./assets/images/Berglandschap.webp');
+    background-image: url('../assets/images/login-background-temp.webp');
     background-repeat: no-repeat;
 }
 
@@ -59,7 +59,7 @@ article{
 }
 
 #article-one:hover{
-    background-image: url('./assets/images/Hobbit-landschap.webp');
+    background-image: url('../assets/images/hobbitLandschap.webp');
     background-position: center;
     background-size:cover;
     background-repeat: no-repeat;
@@ -72,7 +72,7 @@ article{
 }
 
 #article-two:hover{
-    background-image: url('./assets/images/Toren.webp');
+    background-image: url('../assets/images/toren.webp');
     background-position: center;
     background-size:cover;
     background-repeat: no-repeat;
