@@ -1,5 +1,5 @@
 body {
-    background-image: url("./assets/images/Backgrounds/Berglandschap_80.png");
+    background-image: url("../assets/images/login-background-temp.webp");
     background-position: fixed;
     /* opacity: 35%; */
 }
@@ -28,7 +28,8 @@ main {
             margin: 25px;
             border-radius: 5px;
             border: solid #455641 0.5px;
-            background-color: rgba(255, 255, 255, 0.65);
+            background-color: rgba(224, 201, 173, 0.5); 
+            /* background-color: rgba(210, 180, 140, 0.7); */
             text-align: left;
 
             h1 {
@@ -49,6 +50,10 @@ main {
                 font-weight: bold;
             }
 
+            ul {
+
+            }
+
         }
     }
 
@@ -64,7 +69,7 @@ main {
         margin: 25px;
         border-radius: 5px;
         border: solid #455641 0.5px;
-        background-color: rgba(255, 255, 255, 0.65);
+        background-color: rgb(255, 255, 255);
 
         ul {
             li {
