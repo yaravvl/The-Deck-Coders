@@ -26,14 +26,14 @@
     background-color: black;
 }
 
-.login-container, .register-container {
+.login-container, .register-container, .account-settings {
     width: 400px;
     padding: 40px;
     border: 2px solid var(--color-tan);
     border-radius: 10px;
     color: var(--color-dark-brown);
-    background-color: var(--color-tan);
-    backdrop-filter: blur(20px);
+    background-color: rgba(210, 180, 140, 0.7);
+    backdrop-filter: blur(10px);
 
     .title {
         font-size: 32px;
@@ -126,5 +126,20 @@
 
     img {
         border-radius: 50%;
+    }
+}
+
+
+.account-settings {
+    width: 45%;
+    .information {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+    
+        .input-container {
+            width: 45%;
+        }
     }
 }
