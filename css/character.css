@@ -28,21 +28,21 @@ main {
             margin: 25px;
             border-radius: 5px;
             border: solid #455641 0.5px;
-            background-color: rgba(224, 201, 173, 0.5); 
-            /* background-color: rgba(210, 180, 140, 0.7); */
+            background-color: rgba(210, 180, 140, 0.7);
+            backdrop-filter: blur(10px);
             text-align: left;
 
             h1 {
                 font-size: 35px;
                 padding-bottom: 5px;
-                transition: transform .2s;
+                transition: transform 0.2s ease;
     
                 &:hover {
-                    transform: scale(1.12);
+                    transform: scale(1.065);
                 }
     
                 &:active {
-                    transform: scale(1.12);
+                    transform: scale(1.065);
                 }
             }
 
@@ -69,11 +69,13 @@ main {
         margin: 25px;
         border-radius: 5px;
         border: solid #455641 0.5px;
-        background-color: rgb(255, 255, 255);
+        background-color: rgba(210, 180, 140, 0.7);
+        backdrop-filter: blur(10px);
 
         ul {
             li {
                 border: solid rgb(121, 113, 102);
+                background-color: rgba(255, 255, 255, 0.65);
                 width: 250px;
                 margin-top: 15px;
                 padding: 10px;

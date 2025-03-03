@@ -33,7 +33,7 @@ header {
 }
 
 .logo:hover {
-    transform: scale(1.1);
+    transform: scale(1.065);
 }
 
 h1 {
@@ -41,11 +41,12 @@ h1 {
 }
 
 main {
-    flex-grow: 1;
+    /* flex-grow: 1; */
     padding: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    
 }
 
 h2 {
@@ -55,9 +56,9 @@ h2 {
 
 .projects {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 2fr);
     gap: 2rem;
-    max-width: 800px;
+    max-width: 1200px;
     width: 100%;
 }
 
@@ -78,7 +79,7 @@ h2 {
 }
 
 .project:hover {
-    transform: scale(0.95);
+    transform: scale(1.065);
     opacity: 0.7;
 }
 
@@ -95,9 +96,16 @@ h2 {
     opacity: 1;
 }
 
+@media (max-width: 1050px) {
+    .projects {
+        grid-template-columns: repeat(2, 2fr);
+    }
+}
+
 @media (max-width: 768px) {
     .projects {
         grid-template-columns: 1fr;
+        max-width: 450px;
     }
 }
 
