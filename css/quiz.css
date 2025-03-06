@@ -54,6 +54,7 @@ article:hover{
     text-align: center;
     
     p{
+        font-size: 15px;
         background-color: #2d2013;
         display: block;
     }
@@ -66,6 +67,8 @@ article:hover{
     background-repeat: no-repeat;
     text-align: center;
     p{
+        font-size: 15px;
+        background-color: #2d2013;
         display: block;
     }
 }
@@ -85,9 +88,19 @@ article:hover{
 
 
 .quiz button {
-    background: none;
+    padding: 5px 8px;
+    background-color: #455641;
+    color: white;
     border: none;
+   
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.quiz button:hover{
+    background-color: #455641;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 .options{
     display: flex;
