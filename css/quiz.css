@@ -58,12 +58,14 @@ article{
     }
 }
 
+
 #article-one:hover{
     background-image: url('./assets/images/Hobbit-landschap.webp');
     background-position: center;
     background-size:cover;
     background-repeat: no-repeat;
     text-align: center;
+    
     p{
         background-color: #2d2013;
         display: block;
@@ -72,7 +74,7 @@ article{
 }
 
 #article-two:hover{
-    background-image: url('./assets/images/Toren.webp');
+    background-image: url('../assets/images/toren.webp');
     background-position: center;
     background-size:cover;
     background-repeat: no-repeat;
@@ -96,6 +98,7 @@ article{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     border: 2px solid #f4d03f;
     color: white;
+    
 }
 
 
