@@ -38,29 +38,31 @@
             text-align: center;
             margin-bottom: 20px;
         }
-        .progress-wrapper {
-            position: relative;
-            width: 100%;
-            height: 30px;
-            margin-bottom: 1rem;
-
-            progress {
-                width: 100%;
-                height: 100%;
-                border-radius: 5px;
+        .skill-bar{
+            h1 {
+                text-align: center;
+                margin-bottom: 0.8rem;
+            }
+            .skill-container {
                 background-color: var(--color-brown);
-                border: none;
-                appearance: none;
-              }
-            .progress-text {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                font-weight: bold;
-                color: var(--color-dark-brown);
-              }
-          }
+                border-radius: 10px;
+                margin: 1rem;
+                margin-top: -0.5rem;
+    
+                .skill-level {
+                    display: inline-block;
+                    text-align: right;
+                    font-weight: bold;
+                    padding-top: 10px;
+                    padding-right: 10px;
+                    padding-bottom: 10px;
+                    color: var(--color-beige);
+                    border-radius: 10px;
+                    width: 70%;
+                    background-color: var(--color-dark-brown);            
+                }
+           }
+           }
     }
     
     .input-container {
@@ -203,30 +205,33 @@
             font-weight: bold;
             text-align: center;
             margin-bottom: 20px;
+            
         }
-        .progress-wrapper {
-            position: relative;
-            width: 100%;
-            height: 30px;
-            margin-bottom: 1rem;
-
-            progress {
-                width: 100%;
-                height: 100%;
-                border-radius: 5px;
-                background-color: var(--color-dark-brown);
-                border: none;
-                appearance: none;
-              }
-            .progress-text {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                font-weight: bold;
-                color: var(--color-light-gold);
-              }
-          }
+        .skill-bar{
+            h1 {
+                text-align: center;
+                margin-bottom: 0.8rem;
+            }
+            .skill-container {
+                background-color: var(--color-brown);
+                border-radius: 10px;
+                margin: 1rem;
+                margin-top: -0.5rem;
+    
+                .skill-level {
+                    display: inline-block;
+                    text-align: right;
+                    font-weight: bold;
+                    padding-top: 10px;
+                    padding-right: 10px;
+                    padding-bottom: 10px;
+                    color: var(--color-beige);
+                    border-radius: 10px;
+                    width: 70%;
+                    background-color: var(--color-dark-brown);            
+                }
+           }
+           }
     }
     
     .input-container {
