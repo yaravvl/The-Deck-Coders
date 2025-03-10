@@ -60,6 +60,33 @@ nav {
     }
   }
 
+  .user-stats {
+    margin-right: 1rem;
+    
+    .user-info {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      
+      .user-level {
+        color: var(--color-light-gold);
+        font-weight: 600;
+        font-size: 1rem; 
+      }
+      
+      .seperator {
+        color: var(--color-tan);
+        opacity: 0.7;
+        margin: 0 0.2rem;
+      }
+      
+      .user-type {
+        color: var(--color-beige);
+        font-size: 0.9rem;
+      }
+    }
+  }
+
   .profile-icon {
     a {
       color: var(--color-light-gold);
@@ -188,5 +215,9 @@ footer {
     span:not(:last-child)::after {
       display: none;
     }
+  }
+
+  .user-stats {
+    display: none; 
   }
 }
