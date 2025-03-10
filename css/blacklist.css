@@ -59,18 +59,27 @@ section {
                 width: 300px;
                 margin-top: 15px;
                 padding: 10px;
+                margin-bottom: -25px;
                 /*Om de svg images naast de reden van blokkering te zetten */
                 display: flex;
                 align-items: center;
+                position: relative;
               
                 justify-content: space-between;
+
+                .bi-x-circle-fill{
+                    color: darkred;
+                    position: absolute;
+                    right: -13px;
+                    top: -25px;
+                    font-size: 25px;
+                }
 
                 i:hover{
                     cursor: pointer;
                 }
                
             }
-
 
             .hidden-quote {
                 display: none; /* Hide extra quotes */
@@ -81,10 +90,16 @@ section {
             }
 
            .blocked{
-            width:75%;
+            width:90%;
+            max-width: 300px;
             position: relative;
-            left: 75px;
+            left: 30px;
             align-items: flex-end;
+            text-align: end;
+            color: grey;
+            font-style: italic;
+
+           
 
             i:hover{
                 cursor: pointer;
@@ -95,7 +110,7 @@ section {
         }
 
         .toggle-quotes {
-            margin-top: 20px;
+            margin-top: 40px;
             padding: 5px 8px;
             background-color: #455641;
             color: white;
@@ -108,6 +123,8 @@ section {
         .toggle-quotes:hover {
             background-color: #5a724d;
         }
+
+        
 
     }
 }
