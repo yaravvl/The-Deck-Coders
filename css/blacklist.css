@@ -1,6 +1,8 @@
 body {
     background-image: url("../assets/images/login-background-temp.webp");
-    background-position: fixed;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    
     /* opacity: 35%; */
 }
 
@@ -60,8 +62,12 @@ section {
                 /*Om de svg images naast de reden van blokkering te zetten */
                 display: flex;
                 align-items: center;
-                justify-content: center; 
-                gap: 20px;
+              
+                justify-content: space-between;
+
+                i:hover{
+                    cursor: pointer;
+                }
                
             }
 
@@ -73,10 +79,14 @@ section {
             .expanded  {
                 display: block; /* Show extra quotes when expanded */
             }
-           .blocked{
-            
 
-            svg:hover{
+           .blocked{
+            width:75%;
+            position: relative;
+            left: 75px;
+            align-items: flex-end;
+
+            i:hover{
                 cursor: pointer;
             }
                 
