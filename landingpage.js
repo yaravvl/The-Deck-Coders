@@ -1,20 +1,20 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const projects = document.querySelectorAll('.project');
-    const noAccessMessage = document.createElement('div');
-    noAccessMessage.classList.add('no-access');
-    noAccessMessage.textContent = 'Geen toegang';
-    document.body.appendChild(noAccessMessage);
+document.addEventListener("DOMContentLoaded", () => {
+  const projects = document.querySelectorAll(".project");
+  const noAccessMessage = document.createElement("div");
+  noAccessMessage.classList.add("no-access");
+  noAccessMessage.textContent = "Geen toegang";
+  document.body.appendChild(noAccessMessage);
 
-    projects.forEach(project => {
-        project.addEventListener('click', () => {
-            if (project.dataset.project === 'lotr') {
-                window.location.href = 'lotr-page.html';
-            } else {
-                noAccessMessage.style.display = 'block';
-                setTimeout(() => {
-                    noAccessMessage.style.display = 'none';
-                }, 2000);
-            }
-        });
+  projects.forEach((project) => {
+    project.addEventListener("click", () => {
+      if (project.dataset.project === "lotr") {
+        window.location.href = "welcomepage.html";
+      } else {
+        noAccessMessage.style.display = "block";
+        setTimeout(() => {
+          noAccessMessage.style.display = "none";
+        }, 2000);
+      }
     });
+  });
 });

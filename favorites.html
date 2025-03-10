@@ -11,6 +11,11 @@
       href="https://fonts.googleapis.com/css2?family=Oswald&family=Qwitcher+Grypen:wght@400;700&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+    />
+    <script type="module" src="./javascript/quotesExpansion.js" defer></script>
   </head>
   <body>
     <header></header>
@@ -19,22 +24,26 @@
         <article>
           <a href="./character.html"
             ><img
-              src="./assets/images/Characters/Frodo/Frodo_Chibli02.webp"
+              src="./assets/images/characters/frodo/frodoChibli02.webp"
               alt=""
             />
             <h1>Frodo</h1>
           </a>
 
           <ul>
-            <li>"Character quote"</li>
-            <li>"Character quote"</li>
+            <li>
+              This day does not belong to one man, but to all. Let us together
+              rebuild this world, that we may share in the days of peace.
+            </li>
+            <li class="hidden-quote">"Character quote"</li>
           </ul>
+          <button class="toggle-quotes">Show More</button>
         </article>
 
         <article>
           <a href="./character.html"
             ><img
-              src="./assets/images/Characters/Smeagol/Smeagol_Chibli.webp"
+              src="./assets/images/characters/smeagol/smeagolChibli.webp"
               alt=""
             />
             <h1>Smeagol</h1>
@@ -48,7 +57,7 @@
         <article>
           <a href="./character.html"
             ><img
-              src="./assets/images/Characters/Gandalf/Gandalf-Chibli.webp"
+              src="./assets/images/characters/gandalf/gandalfChibli.webp"
               alt=""
             />
             <h1>Gandalf</h1>
@@ -56,29 +65,30 @@
 
           <ul>
             <li>"Character quote"</li>
-            <li>"Character quote"</li>
-            <li>"Character quote"</li>
+            <li class="hidden-quote">"Character quote"</li>
+            <li class="hidden-quote">"Character quote"</li>
           </ul>
+          <button class="toggle-quotes">Show More</button>
         </article>
 
         <article>
           <a href="./character.html"
             ><img
-              src="./assets/images/Characters/Frodo/Frodo_Realistic.png"
+              src="./assets/images/characters/frodo/frodoRealistic.png"
               alt=""
             />
             <h1>Pippin</h1>
           </a>
 
           <ul>
-            <li>"Character quote"</li>
+            <li>"My friends, you bow to no-one."</li>
           </ul>
         </article>
 
         <article>
           <a href="./character.html"
             ><img
-              src="./assets/images/Characters/Frodo/Frodo_Realistic2.png"
+              src="./assets/images/characters/frodo/frodoRealistic2.png"
               alt=""
             />
             <h1>Sam</h1>
@@ -86,14 +96,15 @@
 
           <ul>
             <li>"Character quote"</li>
-            <li>"Character quote"</li>
+            <li class="hidden-quote">"Character quote"</li>
           </ul>
+          <button class="toggle-quotes">Show More</button>
         </article>
 
         <article>
           <a href="./character.html"
             ><img
-              src="./assets/images/Characters/Legolas/Legolas_Chibi_NBG.png"
+              src="./assets/images/characters/legolas/legolasChibiNBG.png"
               alt=""
             />
             <h1>Legolas</h1>
@@ -104,6 +115,8 @@
           </ul>
         </article>
       </section>
+
+      <a class="up" href="#top"><i class="bi bi-arrow-up-circle"></i></a>
     </main>
   </body>
 </html>
