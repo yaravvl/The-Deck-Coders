@@ -28,8 +28,8 @@ section {
         height: 100%;
         min-width: 350px;
         border: solid #455641 0.5px;
-        /* background-color: rgba(224, 201, 173, 0.5);  */
-        background-color: rgba(210, 180, 140, 0.7);
+        background-color: rgba(224, 201, 173, 0.5); 
+        /* background-color: rgba(210, 180, 140, 0.7); */
         backdrop-filter: blur(10px);
 
         a {
