@@ -1,95 +1,106 @@
+ @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+
+/* KLEUREN */
+:root {
+    --color-light-gold: #F2D6B3;
+    --color-tan: #D9C6A3;
+    --color-beige: #BFA556;
+    --color-brown: #734E20;
+    --color-dark-brown: #401E01;
+}
+
+/* BASIS */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Oswald", sans-serif;
 }
 
 body {
-    font-family: Arial, sans-serif;
     background-color: #f0f0f0;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
+/* HEADER */
 header {
     background-color: #333;
     color: white;
-    padding: 1rem;
+    padding: 0.6rem; 
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
 
-.logo {
-    width: 70px;
-    height: 70px;
-    margin-right: 1rem;
-    border-radius: 50%;
-    border: 2px solid white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
-}
+    .logo {
+        width: 50px; 
+        height: 50px; 
+        margin-right: 1rem;
+        border-radius: 50%;
+        border: 2px solid white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s ease;
 
-.logo:hover {
-    transform: scale(1.065);
+
 }
 
 h1 {
-    font-size: 2rem;
+    font-size: 1.8rem; 
 }
 
+/* MAIN */
 main {
     /* flex-grow: 1; */
     padding: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+
+
+    h2 {
+        margin-bottom: 2rem;
+        font-size: 1.8rem;
+        color: #333;
+        text-align: center;
+    }
 }
 
-h2 {
-    margin-bottom: 2rem;
-    font-size: 1.8rem;
-}
-
+/* GRID */
 .projects {
     display: grid;
+
     grid-template-columns: repeat(3, 2fr);
     gap: 2rem;
     max-width: 1200px;
-    width: 100%;
-}
 
-.project {
-    position: relative;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    margin: 0 1rem; 
-}
-
-.project img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+
+    .project {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: white;
+        cursor: pointer;
+        transition: transform 0.3s;
 
 .project:hover {
     transform: scale(1.065);
     opacity: 0.7;
 }
+        img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
 
-.project-name {
-    text-align: center;
-    margin-top: 0.5rem;
-    font-size: 1rem;
-    color: #333;
-    display: block; 
-}
+
+        &:hover {
+            transform: scale(0.95);
+            opacity: 0.7;
+        }
 
 .project.no-hover:hover {
     transform: none;
@@ -106,10 +117,20 @@ h2 {
     .projects {
         grid-template-columns: 1fr;
         max-width: 450px;
+
+        .project-name {
+            text-align: center;
+            padding: 10px;
+            font-size: 1rem;
+            color: #333;
+            font-weight: bold;
+            background-color: white;
+        }
+
     }
 }
 
-/* geen toegang */
+/* GEEN TOEGANG */
 .no-access {
     position: fixed;
     top: 50%;
@@ -122,4 +143,21 @@ h2 {
     font-weight: bold;
     display: none;
     z-index: 1000;
+}
+
+/* MOBIEL */
+@media (max-width: 768px) {
+    .projects {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 500px) {
+    .projects {
+        grid-template-columns: 1fr;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
 }

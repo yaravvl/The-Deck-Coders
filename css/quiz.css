@@ -6,6 +6,7 @@ body{
     align-items: center;
     justify-content: center;
     height: 100vh;
+
     background-image: url('../assets/images/login-background-temp.webp');
     background-repeat: no-repeat;
 }
@@ -30,6 +31,7 @@ nav a{
     margin: 0 15px;
     font-size: 18px;
     font-weight: bold;
+
 }
 
 section{
@@ -41,8 +43,11 @@ section{
 article{
     width: 350px;
     height: 250px;
+    border: solid #455641 0.5px;
+    background-color: rgba(210, 180, 140, 0.7);
+    backdrop-filter: blur(10px);
     background-image: none;
-    background-color: #2d2013;
+    
     color: white;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -51,12 +56,18 @@ article{
     justify-content: center;
     font-size: 20px;
     font-weight: bold;
-    border: 2px solid #f4d03f;
+
     p{
         background-color: #2d2013;
         display: none;
     }
 }
+
+article:hover{
+    transition: ease 0.99s;
+    transform:  scale(1.15);
+}
+
 
 #article-one:hover{
     background-image: url('../assets/images/hobbitLandschap.webp');
@@ -64,10 +75,11 @@ article{
     background-size:cover;
     background-repeat: no-repeat;
     text-align: center;
+    
     p{
+        font-size: 15px;
         background-color: #2d2013;
         display: block;
-        
     }
 }
 
@@ -78,10 +90,10 @@ article{
     background-repeat: no-repeat;
     text-align: center;
     p{
+        font-size: 15px;
+        background-color: #2d2013;
         display: block;
-        
     }
-    
 }
 
 
@@ -90,20 +102,28 @@ article{
     margin-top: 100px;
     width: 530px;
     text-align: center;
-    background: rgba(45, 32, 19, 0.8);
+    background-color: rgba(210, 180, 140, 0.7);
+    backdrop-filter: blur(10px);;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    border: 2px solid #f4d03f;
-    color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 1);
 }
 
 
 .quiz button {
-    background: none;
+    padding: 5px 8px;
+    background-color: #455641;
+    color: white;
     border: none;
+   
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.quiz button:hover{
+    background-color: #455641;
     cursor: pointer;
-    
+    transition: background-color 0.3s;
 }
 .options{
     display: flex;
@@ -129,3 +149,27 @@ article{
     border: 2px solid #f4d03f;
 }
 
+
+@media (max-width: 765px) {
+    section {
+        flex-direction: column;
+        align-items: center;
+    }
+    article {
+        width: 350px;
+    }
+
+    .quiz{
+        flex-direction: column;
+        width: 300px;
+        height: auto;
+    }
+
+    .options{
+       flex-direction: row;
+       img{
+        height: 70px;
+        width: 70px;
+       }
+    }
+}
