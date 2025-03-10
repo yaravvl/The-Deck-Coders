@@ -1,12 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
 
-:root {
-    --color-light-gold: #F2D6B3;
-    --color-tan: #D9C6A3;
-    --color-beige: #BFA556;
-    --color-brown: #734E20;
-    --color-dark-brown: #401E01;
-}
 
 * {
     font-family: "Oswald", sans-serif;
@@ -15,7 +8,28 @@
     box-sizing: border-box;
 }
 
-.background-image {
+.dark-mode {
+    --color-light-gold: #401E01;
+    --color-tan: #401E01;
+    --color-beige: #401E01;
+    --color-brown: #401E01;
+    --color-dark-brown: #F2D6B3;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('/assets/images/login-dark.webp'); /*Deze image is de normale background image met 70% darkness*/
+    background-size: cover;
+    background-position: center;
+    background-color: black;
+}
+
+.light-mode {
+    --color-light-gold: #F2D6B3;
+    --color-tan: #D9C6A3;
+    --color-beige: #BFA556;
+    --color-brown: #734E20;
+    --color-dark-brown: #401E01;
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -142,4 +156,13 @@
             width: 45%;
         }
     }
+}
+
+.bi-cloud-sun-fill {
+    position: absolute;
+    right: 10px;
+    top: 5%;
+    transform: translateY(-50%);
+    font-size: 40px;
+    color: var(--color-dark-brown);
 }
