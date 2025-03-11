@@ -99,13 +99,10 @@ section {
             color: grey;
             font-style: italic;
 
-           
-
             i:hover{
                 cursor: pointer;
             }
                 
-            
            }
         }
 
@@ -123,9 +120,6 @@ section {
         .toggle-quotes:hover {
             background-color: #5a724d;
         }
-
-        
-
     }
 }
 
