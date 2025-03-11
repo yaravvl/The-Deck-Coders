@@ -1,30 +1,123 @@
 <!DOCTYPE html>
 <html lang="nl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Welkom bij het Lord of the Rings Project</title>
-    <link rel="stylesheet" href="css/welcomepage.css">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
-</head>
-<body>
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/welcomepage.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="nav-links">
+          <a href="./quiz.html">Quiz</a>
+          <a href="./favorites.html">Favorieten</a>
+          <a href="./blacklist.html">Blacklist</a>
+        </div>
+
+        <div class="user-stats">
+          <div class="user-info">
+            <span class="user-level">Lvl 12</span>
+            <span class="seperator"> | </span>
+            <span class="user-type">Hobbit</span>
+          </div>
+        </div>
+
+        <div class="profile-icon">
+          <a href="./account-settings.html">
+            <i class="bi bi-person-fill"></i>
+          </a>
+        </div>
+      </nav>
+    </header>
     <div class="overlay"></div>
     <div class="welcome-container">
-        <div class="welcome-box">
-            <h1>Welkom, avonturier!</h1>
-            <p>Stap binnen in de wereld van <strong>Middle-earth</strong> en test je kennis met de ultieme <em>Lord of the Rings</em> quotes quiz.</p>
-            <p>Jouw reis begint hier! Dit kun je doen:</p>
-            <ul>
-                <li><strong>Quotes Quiz:</strong> 10 rondes waarin je quotes koppelt aan karakters en films.</li>
-                <li><strong>Sudden Death Modus:</strong> Hoeveel quotes kun jij correct raden zonder fouten?</li>
-                <li><strong>Favorieten:</strong> Kies je favoriete quotes en beheer ze in je lijst.</li>
-                <li><strong>Blacklist:</strong> Markeer quotes die je niet in de quiz wilt zien, met een reden.</li>
-                <li><strong>Statistieken:</strong> Bekijk jouw score en high scores, en verbeter je prestaties!</li>
-                <li><strong>Karakter Info:</strong> Klik op een karakter om meer over hen te leren op hun wiki-pagina.</li>
-            </ul>
-            <p>Het wordt misschien niet makkelijk, maar met een beetje doorzettingsvermogen kom je er wel. Veel succes!</p>
-            <button>Begin je avontuur</button>
-        </div>
+      <div class="welcome-box">
+        <h1>Welkom, avonturier!</h1>
+        <p>
+          Stap binnen in de wereld van <strong>Middle-earth</strong> en test je
+          kennis met de ultieme <em>Lord of the Rings</em> quotes quiz.
+        </p>
+        <p>Jouw reis begint hier! Dit kun je doen:</p>
+        <ul>
+          <li>
+            <strong>Quotes Quiz:</strong> 10 rondes waarin je quotes koppelt aan
+            karakters en films.
+          </li>
+          <li>
+            <strong>Sudden Death Modus:</strong> Hoeveel quotes kun jij correct
+            raden zonder fouten?
+          </li>
+          <li>
+            <strong>Favorieten:</strong> Kies je favoriete quotes en beheer ze
+            in je lijst.
+          </li>
+          <li>
+            <strong>Blacklist:</strong> Markeer quotes die je niet in de quiz
+            wilt zien, met een reden.
+          </li>
+          <li>
+            <strong>Statistieken:</strong> Bekijk jouw score en high scores, en
+            verbeter je prestaties!
+          </li>
+          <li>
+            <strong>Karakter Info:</strong> Klik op een karakter om meer over
+            hen te leren op hun wiki-pagina.
+          </li>
+        </ul>
+        <p>
+          Het wordt misschien niet makkelijk, maar met een beetje
+          doorzettingsvermogen kom je er wel. Veel succes!
+        </p>
+        <a href="./quiz.html"><button>Begin je avontuur</button></a>
+      </div>
     </div>
-</body>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-content">
+          <div class="social-placeholder"></div>
+
+          <p class="copyright">
+            © 2025 The Deck Coders. Alle rechten voorbehouden.
+          </p>
+
+          <div class="social-icons">
+            <a
+              href="https://github.com/The-Deck-Coders"
+              target="_blank"
+              aria-label="GitHub"
+            >
+              <i class="bi bi-github"></i>
+            </a>
+            <a
+              href="https://discord.gg/deckcoders"
+              target="_blank"
+              aria-label="Discord"
+            >
+              <i class="bi bi-discord"></i>
+            </a>
+            <a
+              href="https://www.youtube.com/@TheDeckCoders"
+              target="_blank"
+              aria-label="YouTube"
+            >
+              <i class="bi bi-youtube"></i>
+            </a>
+          </div>
+        </div>
+        <div class="footer-team">
+          <p>Gemaakt door:</p>
+          <span>Hamdaoui Ilias</span>
+          <span>Van Vlierberghe Yara</span>
+          <span>De Jong Jessie</span>
+          <span>Vandevelde Tawan</span>
+        </div>
+      </div>
+    </footer>
+  </body>
 </html>

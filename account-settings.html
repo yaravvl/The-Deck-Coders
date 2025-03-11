@@ -8,10 +8,33 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/account.css" />
   </head>
   <body class="light-mode">
+    <header>
+      <nav>
+        <div class="nav-links">
+          <a href="./quiz.html">Quiz</a>
+          <a href="./favorites.html">Favorieten</a>
+          <a href="./blacklist.html">Blacklist</a>
+        </div>
+
+        <div class="user-stats">
+          <div class="user-info">
+            <span class="user-level">Lvl 12</span>
+            <span class="seperator"> | </span>
+            <span class="user-type">Hobbit</span>
+          </div>
+        </div>
+
+        <div class="profile-icon">
+          <a href="./account-settings.html">
+            <i class="bi bi-person-fill"></i>
+          </a>
+        </div>
+      </nav>
+    </header>
     <section class="account-settings">
       <i class="bi bi-cloud-sun-fill top-right-icon" id="toggle-mode"></i>
       <form action="">
@@ -361,5 +384,47 @@
         document.body.classList.toggle("light-mode");
       });
     </script>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-content">
+          <div class="social-placeholder"></div>
+
+          <p class="copyright">
+            © 2025 The Deck Coders. Alle rechten voorbehouden.
+          </p>
+
+          <div class="social-icons">
+            <a
+              href="https://github.com/The-Deck-Coders"
+              target="_blank"
+              aria-label="GitHub"
+            >
+              <i class="bi bi-github"></i>
+            </a>
+            <a
+              href="https://discord.gg/deckcoders"
+              target="_blank"
+              aria-label="Discord"
+            >
+              <i class="bi bi-discord"></i>
+            </a>
+            <a
+              href="https://www.youtube.com/@TheDeckCoders"
+              target="_blank"
+              aria-label="YouTube"
+            >
+              <i class="bi bi-youtube"></i>
+            </a>
+          </div>
+        </div>
+        <div class="footer-team">
+          <p>Gemaakt door:</p>
+          <span>Hamdaoui Ilias</span>
+          <span>Van Vlierberghe Yara</span>
+          <span>De Jong Jessie</span>
+          <span>Vandevelde Tawan</span>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>

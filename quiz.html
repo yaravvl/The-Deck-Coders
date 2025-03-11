@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quiz</title>
     <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/quiz.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Oswald&family=Qwitcher+Grypen:wght@400;700&display=swap"
@@ -12,6 +13,29 @@
     />
   </head>
   <body>
+    <header>
+      <nav>
+        <div class="nav-links">
+          <a href="./quiz.html">Quiz</a>
+          <a href="./favorites.html">Favorieten</a>
+          <a href="./blacklist.html">Blacklist</a>
+        </div>
+
+        <div class="user-stats">
+          <div class="user-info">
+            <span class="user-level">Lvl 12</span>
+            <span class="seperator"> | </span>
+            <span class="user-type">Hobbit</span>
+          </div>
+        </div>
+
+        <div class="profile-icon">
+          <a href="./account-settings.html">
+            <i class="bi bi-person-fill"></i>
+          </a>
+        </div>
+      </nav>
+    </header>
     <main>
       <section>
         <article
@@ -29,7 +53,6 @@
 
         <article id="article-two">
           <a href="sudden-death.html" target="_blank">
-
             <h2>Sudden Death</h2>
             <p>
               Bij deze quiz blijf je quotes krijgen om de juiste combinatie van
@@ -39,6 +62,47 @@
         </article>
       </section>
     </main>
-    <footer></footer>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-content">
+          <div class="social-placeholder"></div>
+
+          <p class="copyright">
+            © 2025 The Deck Coders. Alle rechten voorbehouden.
+          </p>
+
+          <div class="social-icons">
+            <a
+              href="https://github.com/The-Deck-Coders"
+              target="_blank"
+              aria-label="GitHub"
+            >
+              <i class="bi bi-github"></i>
+            </a>
+            <a
+              href="https://discord.gg/deckcoders"
+              target="_blank"
+              aria-label="Discord"
+            >
+              <i class="bi bi-discord"></i>
+            </a>
+            <a
+              href="https://www.youtube.com/@TheDeckCoders"
+              target="_blank"
+              aria-label="YouTube"
+            >
+              <i class="bi bi-youtube"></i>
+            </a>
+          </div>
+        </div>
+        <div class="footer-team">
+          <p>Gemaakt door:</p>
+          <span>Hamdaoui Ilias</span>
+          <span>Van Vlierberghe Yara</span>
+          <span>De Jong Jessie</span>
+          <span>Vandevelde Tawan</span>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
