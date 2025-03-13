@@ -75,9 +75,7 @@ section {
                     font-size: 25px;
                 }
 
-                i:hover{
-                    cursor: pointer;
-                }
+                
                
             }
 
@@ -89,21 +87,27 @@ section {
                 display: block; /* Show extra quotes when expanded */
             }
 
+            .bi-pencil-square{
+                position: relative;
+                right: 130px;
+                top: 40px;
+            }
+
            .blocked{
             width:90%;
             max-width: 300px;
+            margin-top: 20px;
             position: relative;
             left: 30px;
             align-items: flex-end;
             text-align: end;
             color: grey;
             font-style: italic;
-
-            i:hover{
-                cursor: pointer;
-            }
-                
            }
+
+           i:hover{
+            cursor: pointer;
+        }
         }
 
         .toggle-quotes {
