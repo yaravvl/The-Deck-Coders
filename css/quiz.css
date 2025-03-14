@@ -1,36 +1,21 @@
 body{
-    margin: 0;
-    font-family: 'Cinzel', serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    
     height: 100vh;
-
+    
     background-image: url('../assets/images/login-background-temp.webp');
     background-repeat: no-repeat;
 }
 
-
-/* DIT EVEN ERUIT GEHAALD ZODAT DE NAV BAR ZOU WERKEN */
-/* nav{ 
+header{
     width: 100%;
-    background: #2d2013;
-    padding: 15px 0;
-    text-align: center;
-    position: absolute;
-    top: 0;
-    left: 0;
+}
 
-    a{
-        color: #f4d03f;
-        text-decoration: none;
-        margin: 0 15px;
-        font-size: 18px;
-        font-weight: bold;
-    
-    }
-} */
+main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+}
 
 section{
     display: flex;
@@ -60,9 +45,14 @@ section{
             font-size: 15px;
         }
 
-        &:hover {
-            transition: ease 0.99s;
-            transform:  scale(1.15);
+        transition: transform 0.50s ease-in-out;
+        &:hover{
+            p{
+                font-size: 15px;
+                background-color: #2d2013;
+                display: block;
+            }
+            transform: scale(1.2);
         }
     }
 }
@@ -70,35 +60,30 @@ section{
 
 #article-one:hover{
     background-image: url('../assets/images/hobbitLandschap.webp');
-    background-position: center;
     background-size:cover;
     background-repeat: no-repeat;
     text-align: center;
-    
-    p{
-        font-size: 15px;
-        background-color: #2d2013;
-        display: block;
-    }
 }
 
 #article-two:hover{
     background-image: url('../assets/images/toren.webp');
-    background-position: center;
     background-size:cover;
     background-repeat: no-repeat;
     text-align: center;
-    p{
-        font-size: 15px;
-        background-color: #2d2013;
-        display: block;
-    }
+}
+
+#article-three:hover{
+    background-image: url('../assets/images/timed-quiz.webp');
+    background-size:cover;
+    background-repeat: no-repeat;
+    text-align: center;
 }
 
 
-
 .quiz{
-    margin-top: 100px;
+    flex-direction: column;
+    margin: 50px;
+    align-self: center;
     width: 530px;
     text-align: center;
     background-color: rgba(210, 180, 140, 0.7);
@@ -146,6 +131,16 @@ section{
             }
         }
     }
+
+    .bi-hourglass-top{
+        font-size: 25px;
+    }
+}
+
+
+
+footer{
+    width: 100%;
 }
 
 
