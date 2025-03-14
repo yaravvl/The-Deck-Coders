@@ -26,17 +26,65 @@
     .login-container, .register-container, .account-settings {
         width: 400px;
         padding: 40px;
+        margin-top: 40px;
+        margin-bottom: 40px;
         border: 2px solid var(--color-tan);
         border-radius: 10px;
         color: var(--color-dark-brown);
         background-color: rgba(46, 46, 46, 0.7); 
         backdrop-filter: blur(10px);
     
+        dialog {
+            outline: none;
+            border: 2px solid var(--color-tan);
+            border-radius: 10px;
+            width: 500px;
+            padding: 20px;
+            text-align: center;
+            background-color: rgba(46, 46, 46); 
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            &::backdrop {
+                background-color: rgba(0, 0, 0, 0.5);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        
+            .profiel-fotos {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+        
+                .profile-options {
+                    display: flex;
+                    justify-content: center;
+                    gap: 10px;
+        
+                    .picture-option {
+                        width: 150px;
+                        height: 150px;
+                        border-radius: 50%;
+                        cursor: pointer;
+                        transition: transform 0.3s;
+        
+                        &:hover {
+                            transform: scale(1.1);
+                        }
+                    }
+                }
+            }
+        }
+
         .title {
             font-size: 32px;
             font-weight: bold;
             text-align: center;
             margin-bottom: 20px;
+            color: var(--color-dark-brown);
         }
         .skill-bar{
             h1 {
@@ -148,6 +196,12 @@
     
         img {
             border-radius: 50%;
+            width: 150px;
+            height: 150px;
+
+            &:hover {
+                filter:brightness(0.7)
+            }
         }
     }
     
@@ -173,6 +227,10 @@
         transform: translateY(-50%);
         font-size: 40px;
         color: var(--color-dark-brown);
+
+        &:hover{
+            cursor: pointer;
+        }
     }
 }
 
@@ -196,9 +254,59 @@
         padding: 40px;
         border: 2px solid var(--color-tan);
         border-radius: 10px;
+        margin-top: 40px;
+        margin-bottom: 40px;
         color: var(--color-dark-brown);
         background-color: rgba(210, 180, 140, 0.7);
         backdrop-filter: blur(10px);
+
+        dialog {
+            outline: none;
+            border: 2px solid var(--color-tan);
+            border-radius: 10px;
+            width: 500px;
+            padding: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            background-color: rgba(210, 180, 140);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        
+            &::backdrop {
+                background-color: rgba(0, 0, 0, 0.5);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        
+            .profiel-fotos {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+        
+                .profile-options {
+                    display: flex;
+                    justify-content: center;
+                    gap: 10px;
+        
+                    .picture-option {
+                        width: 150px;
+                        height: 150px;
+                        border-radius: 50%;
+                        cursor: pointer;
+                        transition: transform 0.3s;
+        
+                        &:hover {
+                            transform: scale(1.1);
+                        }
+                    }
+                }
+            }
+        }
+        
+        
     
         .title {
             font-size: 32px;
@@ -317,6 +425,12 @@
     
         img {
             border-radius: 50%;
+            width: 150px;
+            height: 150px;
+
+            &:hover {
+                filter:brightness(0.7)
+            }
         }
     }
     
@@ -342,6 +456,10 @@
         transform: translateY(-50%);
         font-size: 40px;
         color: var(--color-dark-brown);
+
+        &:hover{
+            cursor: pointer;
+        }
     }
 }
 
