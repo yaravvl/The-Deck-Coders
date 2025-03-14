@@ -9,40 +9,41 @@
     />
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/account.css" />
+    <script src="javascript/profile.js"></script>
   </head>
-  <body class="background-image">
-    <header>
-      <nav>
-        <div class="nav-links">
-          <a href="./quiz.html">Quiz</a>
-          <a href="./favorites.html">Favorieten</a>
-          <a href="./blacklist.html">Blacklist</a>
-        </div>
-
-        <div class="user-stats">
-          <div class="user-info">
-            <span class="user-level">Lvl 12</span>
-            <span class="seperator"> | </span>
-            <span class="user-type">Hobbit</span>
-          </div>
-        </div>
-
-        <div class="profile-icon">
-          <a href="./login.html">
-            <i class="bi bi-person-fill"></i>
-          </a>
-        </div>
-      </nav>
-    </header>
+  <body class="light-mode">
     <section class="register-container">
       <form action="">
         <h1 class="title">Maak een account!</h1>
 
         <figure class="profile-image">
-          <a href="">
-            <img src="https://placehold.co/150" alt="Temp" />
+          <a class="change-picture-button">
+            <img class="image" src="https://placehold.co/150" alt="Temp" />
           </a>
         </figure>
+
+        <dialog class="profiel-fotos-modal">
+          <article class="profiel-fotos">
+            <h1 class="title">Kies een profielfoto!</h1>
+            <section class="profile-options">
+              <img
+                class="picture-option"
+                src="assets/images/characters/frodo/frodoAnime.png"
+                alt="Profiel optie 1"
+              />
+              <img
+                class="picture-option"
+                src="assets/images/characters/frodo/frodoChibi.png"
+                alt="Profiel optie 2"
+              />
+              <img
+                class="picture-option"
+                src="assets/images/characters/frodo/frodoRealistic.png"
+                alt="Profiel optie 3"
+              />
+            </section>
+          </article>
+        </dialog>
 
         <article class="input-container">
           <input type="email" placeholder="e-mail" required />
@@ -62,47 +63,5 @@
         <button type="submit" class="submit-btn">REGISTREER</button>
       </form>
     </section>
-    <footer>
-      <div class="footer-container">
-        <div class="footer-content">
-          <div class="social-placeholder"></div>
-
-          <p class="copyright">
-            © 2025 The Deck Coders. Alle rechten voorbehouden.
-          </p>
-
-          <div class="social-icons">
-            <a
-              href="https://github.com/The-Deck-Coders"
-              target="_blank"
-              aria-label="GitHub"
-            >
-              <i class="bi bi-github"></i>
-            </a>
-            <a
-              href="https://discord.gg/deckcoders"
-              target="_blank"
-              aria-label="Discord"
-            >
-              <i class="bi bi-discord"></i>
-            </a>
-            <a
-              href="https://www.youtube.com/@TheDeckCoders"
-              target="_blank"
-              aria-label="YouTube"
-            >
-              <i class="bi bi-youtube"></i>
-            </a>
-          </div>
-        </div>
-        <div class="footer-team">
-          <p>Gemaakt door:</p>
-          <span>Hamdaoui Ilias</span>
-          <span>Van Vlierberghe Yara</span>
-          <span>De Jong Jessie</span>
-          <span>Vandevelde Tawan</span>
-        </div>
-      </div>
-    </footer>
   </body>
 </html>
