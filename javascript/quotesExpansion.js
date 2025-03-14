@@ -22,9 +22,9 @@ function toggleClass(event) {
   );
 
   if (!isAnyItemHidden) {
-    button.textContent = "Show Less";
+    button.textContent = "Toon minder quotes";
   } else {
-    button.textContent = "Show More";
+    button.textContent = "Toon 2 andere quotes";
   }
 }
 

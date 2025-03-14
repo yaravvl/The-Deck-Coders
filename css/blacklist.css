@@ -64,7 +64,6 @@ section {
                 display: flex;
                 align-items: center;
                 position: relative;
-              
                 justify-content: space-between;
 
                 .bi-x-circle-fill{
@@ -74,8 +73,6 @@ section {
                     top: -25px;
                     font-size: 25px;
                 }
-
-                
                
             }
 
@@ -89,14 +86,16 @@ section {
 
             .bi-pencil-square{
                 position: relative;
-                right: 130px;
-                top: 40px;
+                font-size: 20px;
+                right: 135px;
+                top: 35px;
             }
 
            .blocked{
             width:90%;
             max-width: 300px;
-            margin-top: 20px;
+            margin-top: 5px;
+            margin-bottom: 1px;
             position: relative;
             left: 30px;
             align-items: flex-end;

@@ -58,6 +58,24 @@ section {
                 width: 300px;
                 margin-top: 15px;
                 padding: 10px;
+                position: relative;
+
+                a {
+                    background-color: white;
+                    height: 15px;
+                    width: 15px;
+                }
+
+                .bi-x-circle-fill{
+                    color: darkred;
+                    border-radius: 85%;
+                    position: absolute;
+                    right: -13px;
+                    top: -25px;
+                    font-size: 25px;
+                    cursor: pointer;
+                }
+
             }
 
 
@@ -72,8 +90,9 @@ section {
         }
 
         .toggle-quotes {
-            margin-top: 20px;
-            padding: 5px 8px;
+            position: relative;
+            top: -6px;
+            padding: 8px 12px;
             background-color: #455641;
             color: white;
             border: none;
@@ -115,7 +134,7 @@ a.up {
     i {
         font-size: 35px;
         position: relative;
-        top: -15px;
+        top: -17px;
         left: -2.5px;
     }
 }
