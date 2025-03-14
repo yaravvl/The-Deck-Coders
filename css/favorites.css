@@ -24,13 +24,13 @@ section {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 35px;
+        padding: 25px;
         border-radius: 10px;
         height: 100%;
         min-width: 350px;
         border: solid #455641 0.5px;
-        background-color: rgba(224, 201, 173, 0.5); 
-        /* background-color: rgba(210, 180, 140, 0.7); */
+        /* background-color: rgba(224, 201, 173, 0.5);  */
+        background-color: rgba(210, 180, 140, 0.7);
         backdrop-filter: blur(10px);
 
         a {
@@ -85,14 +85,17 @@ section {
             
             .expanded  {
                 display: block; /* Show extra quotes when expanded */
+                padding: 10px;
             }
            
         }
 
         .toggle-quotes {
             position: relative;
-            top: -6px;
+            top: 5px;
             padding: 8px 12px;
+            margin-top: 20px;
+            margin-bottom: 10px;
             background-color: #455641;
             color: white;
             border: none;
