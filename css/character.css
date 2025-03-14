@@ -38,20 +38,18 @@ main {
                 transition: transform 0.2s ease;
     
                 &:hover {
-                    transform: scale(1.065);
+                    transform: scaleY(1.45) scaleX(1.015);
+                    /* transform-origin: left; */
+
                 }
     
                 &:active {
-                    transform: scale(1.065);
+                    transform: scaleY(1.45) scaleX(1.015);
                 }
             }
 
             .h2 {
                 font-weight: bold;
-            }
-
-            ul {
-
             }
 
         }
@@ -76,16 +74,19 @@ main {
             li {
                 border: solid rgb(121, 113, 102);
                 background-color: rgba(255, 255, 255, 0.65);
-                width: 250px;
+                min-width: 300px;
                 margin-top: 15px;
                 padding: 10px;
-                
+                position: relative;
             
             }
         }
     }
+}
 
-
-
-    
+@media (max-width: 923px) {
+    h1 {
+        display: flex;
+        justify-self: center;
+    }
 }
