@@ -1,10 +1,17 @@
-body {
-    background-image: url("../assets/images/login-background-temp.webp");
-    background-position: fixed;
-    /* opacity: 35%; */
+:root {
+    --background-image: url('/assets/images/login-background-temp.webp');
 }
 
-main {
+body {
+    background-image: var(--background-image);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+}
+
+.character-page {
     padding-top: 50px;
     font-family: "Oswald", sans-serif;
     text-align: center;

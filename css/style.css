@@ -7,26 +7,6 @@
   --color-brown: #734E20;
   --color-dark-brown: #401E01;
 }
-
-/* INFO KNOP*/
-.info-container {
-  position: absolute;
-  left: 20px;
-}
-
-#info-button {
-  color: var(--color-light-gold);
-  text-decoration: none;
-  font-weight: bold;
-}
-
-#info-button:hover {
-  color: var(--color-tan);
-}
-
-#info-button i.bi-info-circle {
-  margin-right: 4px;
-}
 /* BASIS */
 * {
   font-family: "Oswald", sans-serif;
@@ -56,72 +36,90 @@ header {
   background-image: linear-gradient(to bottom, rgba(115, 78, 32, 0.8), rgba(64, 30, 1, 0.8)); 
   border-bottom: 2px solid var(--color-beige);
   width: 100%;
-}
 
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-
-  .nav-links {
+  nav {
     display: flex;
-    justify-content: center;
-    flex: 1;
-
-    a {
-      margin: 0 1.5rem;
-      text-decoration: none;
-      color: var(--color-light-gold);
-      font-weight: bold;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-
-      &:hover {
-        color: var(--color-tan);
-      }
-    }
-  }
-
-  .user-stats {
-    margin-right: 1rem;
-    
-    .user-info {
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+  
+    .nav-links {
       display: flex;
-      flex-direction: row;
-      align-items: center;
-      
-      .user-level {
+      justify-content: center;
+      flex: 1;
+  
+      a {
+        margin: 0 1.5rem;
+        text-decoration: none;
         color: var(--color-light-gold);
-        font-weight: 600;
-        font-size: 1rem; 
-      }
-      
-      .seperator {
-        color: var(--color-tan);
-        opacity: 0.7;
-        margin: 0 0.2rem;
-      }
-      
-      .user-type {
-        color: var(--color-beige);
-        font-size: 0.9rem;
+        font-weight: bold;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+  
+        &:hover {
+          color: var(--color-tan);
+        }
       }
     }
-  }
-
-  .profile-icon {
-    a {
+    
+    .info-container {
+      position: absolute;
+      left: 20px;
+    }
+    
+    #info-button {
       color: var(--color-light-gold);
-      font-size: 20px;
-
-      &:hover {
-        color: var(--color-tan);
+      text-decoration: none;
+      font-weight: bold;
+    }
+    
+    #info-button:hover {
+      color: var(--color-tan);
+    }
+    
+    #info-button i.bi-info-circle {
+      margin-right: 4px;
+    }
+    .user-stats {
+      margin-right: 1rem;
+      
+      .user-info {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        
+        .user-level {
+          color: var(--color-light-gold);
+          font-weight: 600;
+          font-size: 1rem; 
+        }
+        
+        .seperator {
+          color: var(--color-tan);
+          opacity: 0.7;
+          margin: 0 0.2rem;
+        }
+        
+        .user-type {
+          color: var(--color-beige);
+          font-size: 0.9rem;
+        }
+      }
+    }
+  
+    .profile-icon {
+      a {
+        color: var(--color-light-gold);
+        font-size: 20px;
+        &:hover {
+          color: var(--color-tan);
+        }
       }
     }
   }
 }
+
 
 /* FOOTER */
 footer {

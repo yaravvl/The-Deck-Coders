@@ -1,23 +1,23 @@
-body{
-    
-    height: 100vh;
-    
-    background-image: url('../assets/images/login-background-temp.webp');
-    background-repeat: no-repeat;
+:root {
+    --background-image: url('/assets/images/login-background-temp.webp');
 }
 
-header{
-    width: 100%;
+body {
+    background-image: var(--background-image);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
 }
 
 main{
     display: flex;
     align-items: center;
     justify-content: center;
-  
 }
 
-section{
+.quiz-pagina{
     display: flex;
     gap: 40px;
     margin-top: 80px;

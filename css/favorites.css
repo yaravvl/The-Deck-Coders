@@ -1,11 +1,15 @@
+:root {
+    --background-image: url('/assets/images/login-background-temp.webp');
+}
 body {
-    background-image: url("../assets/images/login-background-temp.webp");
-    /* background-position: fixed; */
+    background-image: var(--background-image);
     background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     background-attachment: fixed;
 }
 
-section {
+.blacklist-page {
     display: flex;
     flex-direction: row;
     justify-content: center;
