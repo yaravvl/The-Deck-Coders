@@ -68,12 +68,18 @@ section {
 
                 .bi-x-circle-fill{
                     color: darkred;
-                    border-radius: 85%;
                     position: absolute;
-                    right: -13px;
-                    top: -25px;
+                    right: -10px;
+                    top: -10px;
                     font-size: 25px;
                     cursor: pointer;
+                    background-color: white;
+                    border-radius: 50%;
+                    width: 25px;
+                    height: 25px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
                 }
 
             }

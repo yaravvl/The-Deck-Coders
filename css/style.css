@@ -8,6 +8,25 @@
   --color-dark-brown: #401E01;
 }
 
+/* INFO KNOP*/
+.info-container {
+  position: absolute;
+  left: 20px;
+}
+
+#info-button {
+  color: var(--color-light-gold);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#info-button:hover {
+  color: var(--color-tan);
+}
+
+#info-button i.bi-info-circle {
+  margin-right: 4px;
+}
 /* BASIS */
 * {
   font-family: "Oswald", sans-serif;
