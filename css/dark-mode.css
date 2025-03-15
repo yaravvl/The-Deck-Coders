@@ -12,7 +12,35 @@
         background-image: var(--background-image);
     }
 
-    .blacklist-page {
+    .quiz-pagina {
+        article {
+            background-color: var(--color-beige);
+            border: solid var(--color-brown) 0.5px;
+        }
+    }
+
+    .character-page {
+        article {
+            section {
+                background-color: var(--background-overlay);
+                border: solid var(--color-brown); 
+                li {
+                    color: var(--color-dark-brown);
+                }
+            }
+        }
+        .quotes {
+            background-color: var(--background-overlay);
+            border: solid var(--color-brown); 
+            h1, .h2, li {
+                background-color: var(--color-beige);
+                border: solid var(--color-brown); 
+                color: var(--color-dark-brown);
+            }
+        }
+    }
+
+    .blacklist-page /* Dit is ook de pagina voor favorieten */{
         article {
             background-color: var(--background-overlay);
             border: solid var(--color-brown) 0.5px;
