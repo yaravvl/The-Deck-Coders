@@ -112,7 +112,6 @@ header {
       a {
         color: var(--color-light-gold);
         font-size: 20px;
-  
         &:hover {
           color: var(--color-tan);
         }

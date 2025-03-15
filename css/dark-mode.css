@@ -9,7 +9,18 @@
     --background-overlay: rgba(46, 46, 46, 0.7);
 
     body {
-        background-image: var(--background-image);
+        background-color: var(--background-image);
+    }
+
+    .quiz {
+        background-color: var(--background-overlay);
+        h2, h3, i {
+            color: var(--color-dark-brown);
+        }
+        /* button { Dit is als je de button wilt veranderen van kleur
+            color: pink;
+            background-color: purple;
+        } */
     }
 
     .quiz-pagina {
