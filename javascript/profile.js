@@ -4,6 +4,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const modal = document.querySelector(".profiel-fotos-modal");
     const pictureOptions = document.querySelectorAll(".picture-option");
 
+    const toggleButton = document.querySelector(".bi-cloud-sun-fill"); 
+    const body = document.body;
+
+    toggleButton.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+    localStorage.setItem("theme", body.classList.contains("dark-mode") ? "dark" : "light");
+    });
+
+
+    if (localStorage.getItem("theme") === "dark") {
+        body.classList.add("dark-mode");
+    }
+    
     changePictureBtn.addEventListener("click", () => {
         modal.showModal();
     });
