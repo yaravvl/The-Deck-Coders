@@ -7,10 +7,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const toggleButton = document.querySelector(".bi-cloud-sun-fill"); 
     const body = document.body;
 
-    toggleButton.addEventListener("click", () => {
-    body.classList.toggle("dark-mode");
-    localStorage.setItem("theme", body.classList.contains("dark-mode") ? "dark" : "light");
-    });
+    if (toggleButton) {
+        toggleButton.addEventListener("click", () => {
+            body.classList.toggle("dark-mode");
+            localStorage.setItem("theme", body.classList.contains("dark-mode") ? "dark" : "light");
+        });
+    }
 
 
     if (localStorage.getItem("theme") === "dark") {
