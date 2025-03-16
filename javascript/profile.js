@@ -1,7 +1,7 @@
 //Doorverwijzen van de pagina's nadat er op submit wordt gedrukt
 document.querySelector("form").addEventListener("submit", function (event) {
   event.preventDefault();
-  window.location.href = "./quiz.html";
+  window.location.href = "./welcomepage.html";
 });
 
 document.addEventListener("DOMContentLoaded", () => {
