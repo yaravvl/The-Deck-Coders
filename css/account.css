@@ -21,8 +21,8 @@ body {
     justify-content: center;
     align-items: center;
     background-image: var(--background-image);
-    background-size: cover;
-    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     background-color: black;
 
     .login-container, .register-container, .account-settings {
