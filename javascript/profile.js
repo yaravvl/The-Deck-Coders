@@ -1,9 +1,3 @@
-//Doorverwijzen van de pagina's nadat er op submit wordt gedrukt
-document.querySelector("form").addEventListener("submit", function (event) {
-  event.preventDefault();
-  window.location.href = "./welcomepage.html";
-});
-
 document.addEventListener("DOMContentLoaded", () => {
   const profilePicture = document.querySelector(".image");
   const changePictureBtn = document.querySelector(".change-picture-button");
@@ -43,4 +37,10 @@ document.addEventListener("DOMContentLoaded", () => {
       modal.close();
     }
   });
+});
+
+//Doorverwijzen van de pagina's nadat er op submit wordt gedrukt
+document.querySelector("form").addEventListener("submit", function (event) {
+  event.preventDefault();
+  window.location.href = "./welcomepage.html";
 });
