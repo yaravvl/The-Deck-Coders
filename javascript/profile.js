@@ -6,9 +6,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const toggleButton = document.querySelector(".bi-cloud-sun-fill");
   const body = document.body;
+  const formButton = document.getElementsByTagName("form");
 
   const savedProfilePic = localStorage.getItem("profilePicture");
-  if (savedProfilePic) {
+
+  if (profilePicture) {
     profilePicture.src = savedProfilePic;
   }
 
@@ -46,7 +48,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 //Doorverwijzen van de pagina's nadat er op submit wordt gedrukt
-document.querySelector("form").addEventListener("submit", function (event) {
-  event.preventDefault();
-  window.location.href = "./welcomepage.html";
-});
+// if (formButton) {
+//   formButton.addEventListener("submit", function (event) {
+//     event.preventDefault();
+//     window.location.href = "./welcomepage.html";
+//   });
+// }
