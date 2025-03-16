@@ -61,7 +61,7 @@
             ul {
                 li {
                     background-color: var(--color-beige);
-                    border: solid var(--color-brown);
+                    border: solid rgb(177, 139, 44);
                     color: var(--color-dark-brown)
                 }
                 .blocked {
@@ -71,10 +71,12 @@
                     color: var(--color-dark-brown);
                 }
             }
-            /* .toggle-quotes { --Verander dit als je de kleuren wilt aanpassen van de buttons -Tawan
-                color: purple;
-                background-color: pink;
-            } */
+
+            /* Verander dit als je de kleuren wilt aanpassen van de buttons -Tawan */
+            .toggle-quotes { 
+                color: var(--color-dark-brown);
+                background-color: darkred;
+            }
         }
     }
 
