@@ -25,6 +25,7 @@ main{
     article{
         width: 350px;
         height: 250px;
+        margin-bottom: 20px;
         border: solid #455641 0.5px;
         background-color: rgba(210, 180, 140, 0.7);
         backdrop-filter: blur(10px);
