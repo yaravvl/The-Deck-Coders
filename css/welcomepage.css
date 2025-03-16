@@ -21,6 +21,7 @@ body {
     background-attachment: fixed;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     min-height: 100vh;
     color: #401E01;
     overflow-x: hidden;
@@ -47,13 +48,13 @@ body {
     width: 90%;
     text-align: center;
     animation: fadeIn 1s;
-    margin: 50px auto 20px auto;
+    margin: 50px auto 50px auto;
     position: relative;
     z-index: 1;
 }
 
 .welcome-box {
-    h1 {
+    h1, .h1 {
         font-family: 'Cinzel Decorative', serif;
         font-size: 1.8rem;
         margin-bottom: 0.8rem;
