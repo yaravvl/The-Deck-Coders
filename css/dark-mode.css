@@ -5,7 +5,7 @@
     --color-brown: #D14B28;
     --color-dark-brown: #E5D5C5;
     --color-dialog-bg: #2e2e2e;
-    --background-image: url('/assets/images/test-background.webp');
+    --background-image: url('/assets/images/toren.webp');
     --background-overlay: rgba(46, 46, 46, 0.7);
 
     body {
@@ -17,10 +17,10 @@
         h2, h3, i {
             color: var(--color-dark-brown);
         }
-        /* button { Dit is als je de button wilt veranderen van kleur
-            color: pink;
-            background-color: purple;
-        } */
+        button {
+            color: var(--color-dark-brown);
+            background-color: darkred;
+        }
     }
 
     .quiz-pagina {
