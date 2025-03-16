@@ -7,6 +7,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const toggleButton = document.querySelector(".bi-cloud-sun-fill");
   const body = document.body;
 
+  const savedProfilePic = localStorage.getItem("profilePicture");
+  if (savedProfilePic) {
+    profilePicture.src = savedProfilePic;
+  }
+
   if (toggleButton) {
     toggleButton.addEventListener("click", () => {
       body.classList.toggle("dark-mode");
@@ -28,6 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
   pictureOptions.forEach((option) => {
     option.addEventListener("click", function () {
       profilePicture.src = this.src;
+      localStorage.setItem("profilePicture", this.src)
       modal.close();
     });
   });
