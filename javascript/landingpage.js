@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   projects.forEach((project) => {
     project.addEventListener("click", () => {
       if (project.dataset.project === "lotr") {
-        window.location.href = "welcomepage.html";
+        window.location.href = "login.html";
       } else {
         noAccessMessage.style.display = "block";
         setTimeout(() => {
