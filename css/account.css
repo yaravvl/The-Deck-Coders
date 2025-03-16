@@ -212,6 +212,10 @@ body {
     .account-settings {
         width: 45%;
 
+        .change-picture-button:hover {
+            cursor: pointer;
+        }
+
         .information {
             display: flex;
             flex-direction: row;
