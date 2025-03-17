@@ -212,10 +212,6 @@ body {
     .account-settings {
         width: 45%;
 
-        .change-picture-button:hover {
-            cursor: pointer;
-        }
-
         .information {
             display: flex;
             flex-direction: row;
@@ -224,6 +220,9 @@ body {
 
             .input-container {
                 width: 45%;
+            }
+            select {
+                background-color: var(--background-overlay);
             }
         }
     }
@@ -243,19 +242,23 @@ body {
     }
 }
 
-@media (max-width: 765px) {
-    .account-settings {
+@media (max-width: 768px) {
+    body .account-settings {
         width: 90%;
-
+    
         .information {
             display: flex;
             flex-direction: column;
             flex-wrap: wrap;
             justify-content: space-evenly;
-
+    
             .input-container {
                 width: 100%;
             }
+        }
+        .profile-options {
+            flex-direction: column;
+            align-items: center;
         }
     }
 }

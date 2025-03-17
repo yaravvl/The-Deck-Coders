@@ -1,9 +1,3 @@
-//Doorverwijzen van de pagina's nadat er op submit wordt gedrukt
-document.querySelector("form").addEventListener("submit", function (event) {
-  event.preventDefault();
-  window.location.href = "./welcomepage.html";
-});
-
 document.addEventListener("DOMContentLoaded", () => {
   const profilePicture = document.querySelector(".image");
   const changePictureBtn = document.querySelector(".change-picture-button");
@@ -12,6 +6,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const toggleButton = document.querySelector(".bi-cloud-sun-fill");
   const body = document.body;
+  const formButton = document.getElementsByTagName("form");
+
+  const savedProfilePic = localStorage.getItem("profilePicture");
+
+  if (profilePicture) {
+    profilePicture.src = savedProfilePic;
+  }
 
   if (toggleButton) {
     toggleButton.addEventListener("click", () => {
@@ -34,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
   pictureOptions.forEach((option) => {
     option.addEventListener("click", function () {
       profilePicture.src = this.src;
+      localStorage.setItem("profilePicture", this.src)
       modal.close();
     });
   });
@@ -44,3 +46,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
+//Doorverwijzen van de pagina's nadat er op submit wordt gedrukt
+// if (formButton) {
+//   formButton.addEventListener("submit", function (event) {
+//     event.preventDefault();
+//     window.location.href = "./welcomepage.html";
+//   });
+// }

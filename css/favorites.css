@@ -15,9 +15,9 @@ body {
     justify-content: center;
     flex-wrap: wrap;
     align-items: start;
-    gap: 55px;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    gap: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     /* margin: 25px; */
     font-family: "Oswald", sans-serif;
     text-align: center;
@@ -28,10 +28,11 @@ body {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        margin: 25px;
         padding: 25px;
         border-radius: 10px;
         height: 100%;
-        min-width: 350px;
+        width: 350px;
         border: solid #455641 0.5px;
         /* background-color: rgba(224, 201, 173, 0.5);  */
         background-color: rgba(210, 180, 140, 0.7);

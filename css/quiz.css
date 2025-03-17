@@ -8,7 +8,6 @@ body {
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-
 }
 
 main{
@@ -19,11 +18,13 @@ main{
 
 .quiz-pagina{
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 40px;
     margin-top: 80px;
 
     article{
-        width: 350px;
+        width: 300px;
         height: 250px;
         margin-bottom: 20px;
         border: solid #455641 0.5px;

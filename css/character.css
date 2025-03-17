@@ -26,13 +26,13 @@ body {
         display: flex;
         flex-direction: row;
         justify-content:center;
-        gap: 50px;
+        gap: 20px;
         flex-wrap: wrap;
         margin: 25px;
 
         section {
             padding: 35px;
-            margin: 25px;
+            margin: 15px;
             border-radius: 5px;
             border: solid #455641 0.5px;
             background-color: rgba(210, 180, 140, 0.7);
@@ -69,7 +69,7 @@ body {
         justify-content: center;
         flex-wrap: wrap;
         height: 100%;
-        width: 75%;
+        width: 85%;
         padding: 35px;
         margin: 25px;
         border-radius: 5px;
@@ -81,7 +81,7 @@ body {
             li {
                 border: solid rgb(121, 113, 102);
                 background-color: rgba(255, 255, 255, 0.65);
-                min-width: 300px;
+                min-width: 200px;
                 margin-top: 15px;
                 padding: 10px;
                 position: relative;
