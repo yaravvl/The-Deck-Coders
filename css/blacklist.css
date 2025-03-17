@@ -102,6 +102,19 @@
                     display: block; /* Show extra quotes when expanded */
                     position: relative;
                     padding: 10px;
+
+
+                        width:90%;
+                        max-width: 300px;
+                        margin-top: 5px;
+                        margin-bottom: 1px;
+                        position: relative;
+                        left: 30px;
+                        align-items: flex-end;
+                        text-align: right;
+                        color: grey;
+                        font-style: italic;
+
     
                 }
     
