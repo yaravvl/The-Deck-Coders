@@ -35,6 +35,9 @@
             section {
                 background-color: var(--background-overlay);
                 border: solid var(--color-brown); 
+                h1{
+                    color: var(--color-dark-brown);
+                }
                 li {
                     color: var(--color-dark-brown);
                 }
