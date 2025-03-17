@@ -79,6 +79,10 @@
             .toggle-quotes { 
                 color: var(--color-dark-brown);
                 background-color: darkred;
+
+                &:hover {
+                    background-color: rgb(148, 74, 74);
+                }
             }
         }
     }
