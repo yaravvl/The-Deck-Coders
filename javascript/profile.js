@@ -8,11 +8,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const body = document.body;
   const formButton = document.getElementsByTagName("form");
 
-  const savedProfilePic = localStorage.getItem("profilePicture");
+  // const savedProfilePic = localStorage.getItem("profilePicture");
 
-  if (profilePicture) {
-    profilePicture.src = savedProfilePic;
-  }
+  // if (profilePicture) {
+  //   profilePicture.src = savedProfilePic;
+  // }
 
   if (toggleButton) {
     toggleButton.addEventListener("click", () => {
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
   pictureOptions.forEach((option) => {
     option.addEventListener("click", function () {
       profilePicture.src = this.src;
-      localStorage.setItem("profilePicture", this.src)
+      localStorage.setItem("profilePicture", this.src);
       modal.close();
     });
   });
