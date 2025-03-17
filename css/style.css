@@ -48,6 +48,7 @@ header {
       display: flex;
       justify-content: center;
       align-items: center;
+      /* flex-wrap: wrap; */
       flex: 1;
       position: relative;
   
@@ -169,6 +170,8 @@ header {
 }
 }
 
+
+
 /* MOBIEL*/
 @media (max-width: 768px) {
   header nav {
@@ -185,7 +188,6 @@ header {
     justify-content: center;
     align-items: center;
     flex: 1;
-    padding: 0 30px;
   }
   
   header nav .info-container {
@@ -228,5 +230,11 @@ header {
 
   .user-stats {
     display: none; 
+  }
+}
+
+@media (max-width: 321px) {
+  .nav-links{
+    flex-direction: column;
   }
 }
