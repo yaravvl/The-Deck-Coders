@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register Screen</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/account.css" />
+    <script type="module" src="./javascript/profile.js" defer></script>
+  </head>
+  <body>
+    <section class="register-container">
+      <form action="">
+        <h1 class="title">Maak een account!</h1>
+
+        <figure class="profile-image">
+          <a class="change-picture-button">
+            <img
+              class="image"
+              src="https://placehold.co/150x150?text=KIES+JE+AVATAR"
+              alt="Temp"
+            />
+          </a>
+        </figure>
+
+        <dialog class="profiel-fotos-modal">
+          <article class="profiel-fotos">
+            <h1 class="title">Kies een profielfoto!</h1>
+            <section class="profile-options">
+              <img
+                class="picture-option"
+                src="assets/images/characters/frodo/frodoChibli02.webp"
+                alt="Profiel optie 1"
+              />
+              <img
+                class="picture-option"
+                src="assets/images/characters/gandalf/gandalfChibli.webp"
+                alt="Profiel optie 2"
+              />
+              <img
+                class="picture-option"
+                src="assets/images/characters/legolas/legolasChibi.png"
+                alt="Profiel optie 3"
+              />
+            </section>
+          </article>
+        </dialog>
+
+        <article class="input-container">
+          <input type="email" placeholder="e-mail" />
+          <i class="bi bi-envelope-fill input-icon"></i>
+        </article>
+
+        <article class="input-container">
+          <input type="text" placeholder="gebruikersnaam" />
+          <i class="bi bi-person-fill input-icon"></i>
+        </article>
+
+        <article class="input-container">
+          <input type="password" placeholder="wachtwoord" />
+          <i class="bi bi-shield-lock-fill input-icon"></i>
+        </article>
+
+        <button type="button" class="submit-btn" onclick="window.location.href='welcomepage'">REGISTREER</button>      
+      </form>
+    </section>
+  </body>
+</html>

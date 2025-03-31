@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Favorites</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="./css/reset.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/favorites.css" />
+    <link rel="stylesheet" href="./css/dark-mode.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald&family=Qwitcher+Grypen:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+    />
+    <script type="module" src="./javascript/quotesExpansion.js" defer></script>
+    <script src="./javascript/profile.js"></script>
+  </head>
+  <body>
+    <%- include("partials/nav") %>
+    <main>
+      <section class="blacklist-page">
+        <article>
+          <a href="./character.html"
+            ><img
+              src="./assets/images/characters/frodo/frodoChibli02.webp"
+              alt=""
+            />
+            <h1>Frodo</h1>
+          </a>
+
+          <ul>
+            <li>
+              We set out to save the Shire, Sam, and it has been saved. But not
+              for me.
+              <a><i class="bi bi-x-circle-fill"></i></a>
+            </li>
+            <li class="hidden-quote">
+              "Character quote"
+              <a><i class="bi bi-x-circle-fill"></i></a>
+            </li>
+          </ul>
+          <button class="toggle-quotes">Toon 2 andere quotes</button>
+        </article>
+
+        <article>
+          <a href="./character.html"
+            ><img
+              src="./assets/images/characters/smeagol/smeagolChibli.webp"
+              alt=""
+            />
+            <h1>Smeagol</h1>
+          </a>
+
+          <ul>
+            <li>
+              "Character quote"
+              <a><i class="bi bi-x-circle-fill"></i></a>
+            </li>
+          </ul>
+        </article>
+
+        <article>
+          <a href="./character.html"
+            ><img
+              src="./assets/images/characters/gandalf/gandalfChibli.webp"
+              alt=""
+            />
+            <h1>Gandalf</h1>
+          </a>
+
+          <ul>
+            <li>
+              "Character quote"
+              <a><i class="bi bi-x-circle-fill"></i></a>
+            </li>
+            <li class="hidden-quote">
+              "Character quote"
+              <a><i class="bi bi-x-circle-fill"></i></a>
+            </li>
+            <li class="hidden-quote">
+              "Character quote"
+              <a><i class="bi bi-x-circle-fill"></i></a>
+            </li>
+          </ul>
+          <button class="toggle-quotes">Toon 2 andere quotes</button>
+        </article>
+
+        <article>
+          <a href="./character.html"
+            ><img
+              src="./assets/images/characters/pippin/pippinChibi03NBG.png"
+              alt=""
+            />
+            <h1>Pippin</h1>
+          </a>
+
+          <ul>
+            <li>
+              "My friends, you bow to no-one."
+              <a><i class="bi bi-x-circle-fill"></i></a>
+            </li>
+          </ul>
+        </article>
+
+        <article>
+          <a href="./character.html"
+            ><img
+              src="./assets/images/characters/sam/samChibi01NBG.png"
+              alt=""
+            />
+            <h1>Sam</h1>
+          </a>
+
+          <ul>
+            <li>
+              "Character quote"
+              <a><i class="bi bi-x-circle-fill"></i></a>
+            </li>
+            <li class="hidden-quote">
+              "Character quote"
+              <a><i class="bi bi-x-circle-fill"></i></a>
+            </li>
+          </ul>
+          <button class="toggle-quotes">Toon 2 andere quotes</button>
+        </article>
+
+        <article>
+          <a href="./character.html"
+            ><img
+              src="./assets/images/characters/legolas/legolasChibiNBG.png"
+              alt=""
+            />
+            <h1>Legolas</h1>
+          </a>
+
+          <ul>
+            <li>
+              "Character quote"
+              <a><i class="bi bi-x-circle-fill"></i></a>
+            </li>
+          </ul>
+        </article>
+      </section>
+
+      <a class="up" href="#top"><i class="bi bi-arrow-up-circle"></i></a>
+    </main>
+    <%- include("partials/footer") %>
