@@ -27,14 +27,14 @@ async function getCharacters() {
         });
 
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            throw new Error(`Er is iets misgelopen met het ophalen van de API-data: ${response.status}`);
         }
 
         const data = await response.json();
         // Deze stap is er omdat de response voor alle characters in een object zit dat docs noemt. 
         CHARACTERS = data.docs;
     } catch (error) {
-        console.error("Error fetching characters:", error);
+        console.error(`Error: ${error}`);
     }
 }
 
