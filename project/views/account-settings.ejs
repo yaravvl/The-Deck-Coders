@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Account settings</title>
+    <title><%=title%></title>
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/account.css" />
     <link rel="stylesheet" href="./css/dark-mode.css" />
@@ -12,9 +12,13 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
     />
     <script type="module" src="./javascript/profile.js"></script>
+    <link rel="icon" type="image/jpg" href="/assets/images/favicon.jpg">
   </head>
   <body class="light-mode">
     <%- include("partials/nav") %>
+    <form action="/exp-test" method="POST">
+      <button class="test_button" type="submit">TEST KNOP</button>
+    </form>
     <section class="account-settings">
       <i class="bi bi-cloud-sun-fill top-right-icon" id="toggle-mode"></i>
       <form action="">
@@ -36,17 +40,17 @@
             <section class="profile-options">
               <img
                 class="picture-option"
-                src="assets/images/characters/frodo/frodoChibli02.webp"
+                src="/assets/images/characters/frodo/frodo.webp"
                 alt="Profiel optie 1"
               />
               <img
                 class="picture-option"
-                src="assets/images/characters/gandalf/gandalfChibli.webp"
+                src="/assets/images/characters/gandalf/gandalf.webp"
                 alt="Profiel optie 2"
               />
               <img
                 class="picture-option"
-                src="assets/images/characters/legolas/legolasChibi.png"
+                src="/assets/images/characters/pippin/pippin.png"
                 alt="Profiel optie 3"
               />
             </section>
@@ -54,9 +58,11 @@
         </dialog>
 
         <section class="skill-bar">
-          <h1 class="skill-current-level">Level 12 | Hobbit</h1>
+          <h1 class="skill-current-level">Level <%=player.level%> | Hobbit</h1>
           <article class="skill-container">
-            <span class="skill-level skill">70%</span>
+            <span <% /* eslint-disable css-propertyvalueexpected */ %> class="skill-level skill" style="width: <%=exp_progress%>%">
+              <%= exp_progress %>%
+            </span>
           </article>
         </section>
 

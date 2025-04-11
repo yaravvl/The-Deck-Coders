@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const body = document.body;
   const formButton = document.getElementsByTagName("form");
 
+
   // const savedProfilePic = localStorage.getItem("profilePicture");
 
   // if (profilePicture) {
