@@ -2,6 +2,7 @@ import express, { Express } from "express";
 import dotenv from "dotenv";
 import path from "path";
 import { Character } from "./types";
+import { addExp,  createPlayer, ExpPercentage } from "./public/javascript/experience";
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("port", process.env.PORT ?? 3000);
 
 let CHARACTERS: Character[] = [];
+let player = createPlayer()
 
 async function getCharacters() {
     try {
@@ -45,13 +47,19 @@ app.get("/", (req, res) => {
 
 app.get("/:index", (req, res) => {
     let index: string = req.params.index
-    res.render(index)
+    const expPercentage: number = ExpPercentage(player)
+    res.render(index, {
+        title: index.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
+        player: player,
+        exp_progress: expPercentage
+    })
 });
 
-//Fix om de error "cannot find module 'ico' te silencen"
-app.get('/favico.ico', (req, res) => {
-    res.sendStatus(404);
-});
+app.post('/exp-test', (req, res) => {
+    player = addExp(player, 50)
+    console.log(player)
+    res.redirect('/account-settings')
+})
 
 app.listen(app.get("port"), () => {
     getCharacters();
