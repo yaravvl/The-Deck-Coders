@@ -9,3 +9,10 @@ export interface Character {
     hair: string;
     spouse: string;
 }
+
+export interface Quote {
+    _id: string;
+    dialog: string;
+    movie: string;
+    character: string;
+}
