@@ -1,25 +1,5 @@
+import { PlayerInfo } from "../../types"
 //ALLES HIER IS GEWOON TEMPORARY OM EEN LEVEL SYSTEEM TE TESTEN
-
-export interface PlayerInfo {
-    name: string
-    password: string
-    email: string
-    level: number
-    exp: number
-    requiredExp: number
-}
-
-//Dit gaat gemixed worden met mongodb maar is gewoon een kleine test nu
-export function createPlayer(): PlayerInfo {
-    return {
-        name: "Test",
-        password: "Test",
-        email: "Test",
-        level: 1,
-        exp: 0,
-        requiredExp: 100,
-    }
-}
 
 export function addExp(player: PlayerInfo, experience: number): PlayerInfo {
     player.exp += experience

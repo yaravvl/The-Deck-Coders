@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const changePictureBtn = document.querySelector(".change-picture-button");
   const modal = document.querySelector(".profiel-fotos-modal");
   const pictureOptions = document.querySelectorAll(".picture-option");
+  const hiddenProfileInput = document.getElementById('profile_picture');
 
   const toggleButton = document.querySelector(".bi-cloud-sun-fill");
   const body = document.body;
@@ -37,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
     option.addEventListener("click", function () {
       profilePicture.src = this.src;
       localStorage.setItem("profilePicture", this.src);
+      hiddenProfileInput.value = this.src;
       modal.close();
     });
   });
