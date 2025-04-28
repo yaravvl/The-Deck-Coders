@@ -1,7 +1,7 @@
 import express, { Express } from "express";
 import dotenv from "dotenv";
 import path from "path";
-import { Character, Quote } from "./types";
+import { Character, Movie, Quote } from "./types";
 import { addExp, createPlayer, ExpPercentage, PlayerInfo } from "./public/javascript/experience";
 
 
@@ -22,19 +22,41 @@ let CHARACTERS: Character[] = [];
 let QUOTES: Quote[] = [];
 let player: PlayerInfo = createPlayer();
 let quizTeam: Character[] = [];
+let selectedCharacter: Character;
+let movies: Movie[] = [];
 
 
 function generateRandomNumber(max: number): number {
     return Math.floor(Math.random() * max) + 1;
 }
 
+function generatedSelectedCharacter() {
+    const randomNum = generateRandomNumber(quizTeam.length);
+    selectedCharacter = quizTeam[randomNum];
+}
+
 function generateTeam() {
+    const usedNumbers: number[] = [];
     let randomNum = -1;
-    for (let index = 0; index < 3; index++) {
+
+    while (quizTeam.length < 3) {
         randomNum = generateRandomNumber(CHARACTERS.length);
-        const character = CHARACTERS[randomNum];
-        quizTeam.push(character);
+
+        //Dit is een check om te kijken of de nieuw gemaakte nummer al eens is gebruikt geweest met het maken van dit team.
+        if (!usedNumbers.includes(randomNum)) {
+            const character = CHARACTERS[randomNum];
+            usedNumbers.push(randomNum);
+            quizTeam.push(character);
+        }
     }
+}
+
+async function getMovies() {
+    const response = await fetch("data/movies.json");
+    if (!response.ok) {
+        throw new Error("Failed to fetch movies");
+    }
+    movies = await response.json();
 }
 
 async function getCharactersWithQuotes() {
@@ -83,14 +105,13 @@ async function getCharactersWithQuotes() {
     }
 }
 
-let randomNum = -1;
-
 app.get("/", (req, res) => {
     res.render("landingpage")
 });
 
 app.get("/:index", (req, res) => {
     generateTeam();
+    generatedSelectedCharacter();
 
     let index: string = req.params.index
     const expPercentage: number = ExpPercentage(player)
@@ -99,7 +120,9 @@ app.get("/:index", (req, res) => {
         title: index.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
         player: player,
         exp_progress: expPercentage,
-        characters: quizTeam
+        characters: quizTeam,
+        movies: movies,
+        selectedCharacter: selectedCharacter
     })
 });
 
@@ -112,4 +135,5 @@ app.post('/exp-test', (req, res) => {
 app.listen(app.get("port"), async () => {
     console.log("Server started on http://localhost:" + app.get("port"));
     await getCharactersWithQuotes();
+    await getMovies();
 });

@@ -17,3 +17,8 @@ export interface Quote {
     movie: string;
     character: string;
 }
+
+export interface Movie {
+    name: string;
+    id: string;
+}
