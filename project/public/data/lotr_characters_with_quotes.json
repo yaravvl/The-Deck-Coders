@@ -98,13 +98,6 @@
     "quote": "I will kill you if you touch him."
   },
   {
-    "name": "Goldberry",
-    "race": "Hobbit",
-    "gender": null,
-    "id": "5cd99d4bde30eff6ebccfe78",
-    "quote": "No known quote."
-  },
-  {
     "name": "Irolas",
     "race": "Human",
     "gender": null,
@@ -112,46 +105,7 @@
     "quote": "Quick! Hurry!"
   },
   {
-    "name": "Bilbo Gamgee",
-    "race": "Hobbit",
-    "gender": null,
-    "id": "5cd99d4bde30eff6ebccfe7c",
-    "quote": "No known quote."
-  },
-  {
-    "name": "Ivy (Goodenough) Boffin",
-    "race": "Hobbit",
-    "gender": "Female",
-    "id": "5cd99d4bde30eff6ebccfc45",
-    "quote": "No known quote."
-  },
-  {
-    "name": "Tar-Amandil",
-    "race": "Human",
-    "gender": "Male",
-    "id": "5cd99d4bde30eff6ebccfdf3",
-    "quote": "No known quote."
-  },
-  {
-    "name": "Rose Gamgee",
-    "race": "Hobbit",
-    "gender": null,
-    "id": "5cd99d4bde30eff6ebccfe7e",
-    "quote": "No known quote."
-  },
-  {
-    "name": "Hareth",
-    "race": "Human",
-    "gender": "Female",
-    "id": "5cd99d4bde30eff6ebccfd4b",
-    "quote": "No known quote."
-  },
-  {
-    "name": "Borlas",
-    "race": "Human",
-    "gender": "Male",
-    "id": "5cd99d4bde30eff6ebccfc56",
-    "quote": "No known quote."
+    "id": "5cd9d576844dc4c55e47afee"
   },
   {
     "name": "Maeglin",
@@ -201,5 +155,8 @@
     "gender": "Male",
     "id": "5cd99d4bde30eff6ebccfd0a",
     "quote": "No known quote."
+  },
+  {
+    "id": "5cd9d533844dc4c55e47afed"
   }
 ]

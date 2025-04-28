@@ -8,6 +8,7 @@ export interface Character {
     death: string;
     hair: string;
     spouse: string;
+    quotes: Quote[];
 }
 
 export interface Quote {

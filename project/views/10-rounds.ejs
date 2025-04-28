@@ -30,7 +30,7 @@
     <main class="quiz">
       <h2>Vraag: 01/10</h2>
       <h2>
-        "Quote van karakter"
+        "<%=characters[1].quotes[0].dialog%>"
         <i class="bi bi-hand-thumbs-up"></i>
         <i class="bi bi-hand-thumbs-down"></i>
       </h2>
@@ -41,7 +41,7 @@
       <section class="options">
         <figure>
           <img src="./assets/images/characters/frodo/frodo.webp" alt="" />
-          <figcaption>Frodo</figcaption>
+          <figcaption><%=characters[0].name%></figcaption>
         </figure>
         
         <figure>
@@ -49,11 +49,11 @@
           src="./assets/images/characters/gandalf/gandalf.webp"
           alt=""
         />
-        <figcaption>Gandalf</figcaption>
+        <figcaption><%=characters[1].name%></figcaption>
         </figure>
         <figure>
           <img src="./assets/images/characters/legolas/legolas.png" alt="" />
-          <figcaption>Legolas</figcaption>
+          <figcaption><%=characters[2].name%></figcaption>
         </figure>
         
       </section>
