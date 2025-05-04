@@ -1,7 +1,10 @@
 import { Collection, MongoClient } from "mongodb";
 import { PlayerInfo, Quote} from "../../types";
+import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+dotenv.config();
 
-const URI = "mongodb+srv://tawan:similon@cluster0.2l2r0lb.mongodb.net/";
+const URI = process.env.URI!;
 
 const CLIENT = new MongoClient(URI);
 export const userCollection: Collection = CLIENT.db("wpl").collection("users");
@@ -14,6 +17,19 @@ async function exit(){
         console.error(e)
     } finally {
         process.exit(0)
+    }
+}
+
+export async function checkLogin(username: string, password: string): Promise<boolean>{
+    const existingPlayer = await userCollection.findOne({ username });
+    if (!existingPlayer) {
+        return false
+    }
+    const checkPassword = await bcrypt.compare(password, existingPlayer.password)
+    if (!checkPassword) {
+        return false
+    } else {
+        return true
     }
 }
 

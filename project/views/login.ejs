@@ -15,26 +15,16 @@
   </head>
   <body class="light-mode">
     <section class="login-container">
-      <form action="">
+      <form action="/login" method="post">
         <h1 class="title">Aanmelden</h1>
 
         <article class="input-container">
-          <input
-            id="username"
-            type="text"
-            placeholder="gebruikersnaam"
-            required
-          />
+          <input id="username" name="username" type="text" placeholder="gebruikersnaam" required/>
           <i class="bi bi-person-fill input-icon"></i>
         </article>
 
         <article class="input-container">
-          <input
-            id="password"
-            type="password"
-            placeholder="wachtwoord"
-            required
-          />
+          <input id="password" name="password" type="password" placeholder="wachtwoord" required/>
           <i class="bi bi-shield-lock-fill input-icon"></i>
         </article>
 
@@ -42,13 +32,10 @@
           <a href="#" class="text-link">Wachtwoord vergeten?</a>
         </section>
 
-        <button type="button" class="submit-btn" onclick="window.location.href='welcomepage'">LOGIN</button>
+        <button type="submit" class="submit-btn">LOGIN</button>
 
         <section class="text-center">
-          <p class="text-secondary">
-            Nog geen account?
-            <a href="./register">Registreer hier!</a>
-          </p>
+          <p class="text-secondary">Nog geen account?<a href="./register">Registreer hier!</a></p>
         </section>
       </form>
     </section>

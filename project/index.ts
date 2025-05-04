@@ -3,7 +3,8 @@ import dotenv from "dotenv";
 import path from "path";
 import { Character } from "./types";
 import { addExp, ExpPercentage } from "./public/javascript/experience";
-import { createPlayer, connect, addUser, checkExistingPlayer } from "./public/javascript/database";
+import { createPlayer, connect, addUser, checkExistingPlayer, checkLogin } from "./public/javascript/database";
+import bcrypt from 'bcrypt';
 
 dotenv.config();
 
@@ -65,13 +66,25 @@ app.get("/register", (req, res) => {
     res.redirect("register");
   });
 
+app.post("/login", async (req, res) => {
+    let username: string = req.body.username;
+    let password: string = req.body.password;
+    let userExists: boolean = await checkLogin(username, password)
+    if (!userExists) {
+        return res.status(400).json({ message: "Username or email is wrong!." });
+    }
+
+    res.redirect("landingpage")
+})
+
 app.post("/register", async (req, res) => {
   let email: string = req.body.email;
   let username: string = req.body.username;
   let password: string = req.body.password;
   let image_url: string = req.body.profile_picture;
+  const hashedPassword : string = await bcrypt.hash(password, 10)
   if (!(await checkExistingPlayer(email, username))) {
-    await addUser(createPlayer(username, password, email, image_url))
+    await addUser(createPlayer(username, hashedPassword, email, image_url))
     res.redirect("quiz")
   } else {
     return res.status(400).json({ message: "Username or email already exists." });
