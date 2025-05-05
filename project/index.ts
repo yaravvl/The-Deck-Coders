@@ -52,7 +52,7 @@ function generateTeam() {
 }
 
 async function getMovies() {
-    const response = await fetch("data/movies.json");
+    const response = await fetch("http://localhost:3000/data/movies.json");
     if (!response.ok) {
         throw new Error("Failed to fetch movies");
     }

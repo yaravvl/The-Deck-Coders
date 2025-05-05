@@ -60,20 +60,12 @@
 
       <h3>Van welke film is deze quote?</h3>
       <section class="options">
-        <figure>
-          <img src="./assets/images/LOTR.webp" alt="" />
-          <figcaption>The Fellowship of the Ring</figcaption>
-        </figure>
-
-        <figure>
-          <img src="./assets/images/LOTR.webp" alt="" />
-          <figcaption>The Two Towers</figcaption>
-        </figure>
-
-        <figure>
-          <img src="./assets/images/LOTR.webp" alt="" />
-          <figcaption>The Return of the King</figcaption>
-        </figure>
+        <% for (let movie of movies ) {%>
+          <figure>
+            <img src="./assets/images/LOTR.webp" alt="" />
+            <figcaption><%=movie.name%></figcaption>
+          </figure>
+        <% } %> 
       </section>
 
       <button><a href="">Volgende vraag</a></button>
