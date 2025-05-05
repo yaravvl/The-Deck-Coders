@@ -71,7 +71,7 @@ app.post("/login", async (req, res) => {
     let password: string = req.body.password;
     let userExists: boolean = await checkLogin(username, password)
     if (!userExists) {
-        return res.status(400).json({ message: "Username or email is wrong!." });
+        return res.status(404).send("Username or email is wrong!")
     }
 
     res.redirect("landingpage")
@@ -88,7 +88,7 @@ app.post("/register", async (req, res) => {
     await addUser(createPlayer(username, hashedPassword, email, image_url))
     res.redirect("quiz")
   } else {
-    return res.status(400).json({ message: "Username or email already exists." });
+    return res.status(404).send("Username or email already exists!")
   }
 });
 
