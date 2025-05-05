@@ -75,6 +75,7 @@ app.post("/login", async (req, res) => {
     }
 
     res.redirect("landingpage")
+    console.log("test")
 })
 
 app.post("/register", async (req, res) => {
