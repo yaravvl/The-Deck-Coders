@@ -59,8 +59,8 @@
         <section class="skill-bar">
           <h1 class="skill-current-level">Level <%=player.level%> | Hobbit</h1>
           <article class="skill-container">
-            <span <% /* eslint-disable css-propertyvalueexpected */ %> class="skill-level skill" style="width: <%=exp_progress%>%">
-              <%= exp_progress %>%
+            <span <% /* eslint-disable css-propertyvalueexpected */ %> class="skill-level skill" style="width: <%=(player.exp/player.requiredExp)*100%>%">
+              <%=(player.exp/player.requiredExp)*100%>%
             </span>
           </article>
         </section>
@@ -380,6 +380,9 @@
         </section>
 
         <button type="submit" class="submit-btn">UPDATE</button>
+      </form>
+      <form action="/logout" method="post">
+        <button type="submit" class="submit-btn">UITLOGGEN</button>
       </form>
     </section>
     <%- include("partials/footer") %>

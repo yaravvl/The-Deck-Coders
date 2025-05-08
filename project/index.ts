@@ -1,10 +1,13 @@
 import express, { Express } from "express";
 import dotenv from "dotenv";
 import path from "path";
-import { Character } from "./types";
+import { Character, PlayerInfo } from "./types";
 import { addExp, ExpPercentage } from "./public/javascript/experience";
 import { createPlayer, connect, addUser, checkExistingPlayer, checkLogin } from "./public/javascript/database";
 import bcrypt from 'bcrypt';
+import session from "./public/javascript/session";
+import { secureMiddleware, loggedIn } from "./public/javascript/secureMiddleware";
+
 
 dotenv.config();
 
@@ -12,6 +15,7 @@ const app: Express = express();
 
 app.set("view engine", "ejs");
 app.use(express.json());
+app.use(session)
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "views"));
@@ -41,41 +45,31 @@ async function getCharacters() {
     }
 }
 
-
-app.get("/", (req, res) => {
-    res.render("landingpage")
-});
-
-app.get("/:index", (req, res) => {
-    let index: string = req.params.index
-    const expPercentage: number = 0
-    res.render(index, {
-        title: index.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
-        // player: player,
-        exp_progress: expPercentage
-    })
-});
-
-// app.post('/exp-test', (req, res) => {
-//     player = addExp(player, 50)
-//     console.log(player)
-//     res.redirect('/account-settings')
-// })
-
-app.get("/register", (req, res) => {
-    res.redirect("register");
+app.get("/register", loggedIn, (req, res) => {
+    res.render("register", {
+        error: null
+    });
   });
 
+app.get("/login", loggedIn, (req, res) => {
+    res.render("login", {
+        error: null
+    })
+})
+
 app.post("/login", async (req, res) => {
+    console.log("Debug test", req.body);
     let username: string = req.body.username;
     let password: string = req.body.password;
-    let userExists: boolean = await checkLogin(username, password)
+    let userExists: PlayerInfo | undefined = await checkLogin(username, password)
+    console.log(userExists)
     if (!userExists) {
-        return res.status(404).send("Username or email is wrong!")
+        return res.render("login", {
+            error: "Gebruikersnaam of wachtwoord is onjuist."
+        })
     }
-
-    res.redirect("landingpage")
-    console.log("test")
+    req.session.user = userExists
+    res.redirect("welcomepage")
 })
 
 app.post("/register", async (req, res) => {
@@ -88,8 +82,31 @@ app.post("/register", async (req, res) => {
     await addUser(createPlayer(username, hashedPassword, email, image_url))
     res.redirect("quiz")
   } else {
-    return res.status(404).send("Username or email already exists!")
+    return res.render("register", {
+        error: "Username or email already exists!"
+    })
   }
+});
+
+app.post("/logout", (req, res) => {
+    req.session.destroy(() => {
+        res.redirect("/login")
+    })
+})
+
+app.get("/", (req, res) => {
+    res.render("landingpage")
+});
+
+app.get("/:index", secureMiddleware, async (req, res) => {
+    let index: string = req.params.index
+    const expPercentage: number = 0
+    res.render(index, {
+        title: index.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
+        player: req.session.user,
+        exp_progress: expPercentage,
+        error: null
+    })
 });
 
 app.listen(app.get("port"), async() => {

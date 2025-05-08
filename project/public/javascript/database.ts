@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 dotenv.config();
 
-const URI = process.env.URI!;
+export const URI = process.env.URI!;
 
 const CLIENT = new MongoClient(URI);
 export const userCollection: Collection = CLIENT.db("wpl").collection("users");
@@ -20,17 +20,17 @@ async function exit(){
     }
 }
 
-export async function checkLogin(username: string, password: string): Promise<boolean>{
-    const existingPlayer = await userCollection.findOne({ username });
+export async function checkLogin(username: string, password: string){
+    const existingPlayer = await userCollection.findOne({ $or: [{email: username}, {username: username}] }) as PlayerInfo | null;
+    console.log(existingPlayer)
     if (!existingPlayer) {
-        return false
+        return
     }
     const checkPassword = await bcrypt.compare(password, existingPlayer.password)
     if (!checkPassword) {
-        return false
-    } else {
-        return true
+        return
     }
+    return existingPlayer
 }
 
 export async function checkExistingPlayer(email: string, username: string): Promise<boolean>{
