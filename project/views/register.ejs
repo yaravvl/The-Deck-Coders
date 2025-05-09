@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%=title%></title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
@@ -15,7 +14,7 @@
   </head>
   <body>
     <section class="register-container">
-      <form action="">
+      <form action="/register" method="post">
         <h1 class="title">Maak een account!</h1>
 
         <figure class="profile-image">
@@ -27,46 +26,49 @@
             />
           </a>
         </figure>
-
+        <input type="hidden" name="profile_picture" id="profile_picture" value="">
         <dialog class="profiel-fotos-modal">
           <article class="profiel-fotos">
             <h1 class="title">Kies een profielfoto!</h1>
             <section class="profile-options">
               <img
                 class="picture-option"
-                src="assets/images/characters/frodo/frodoChibli02.webp"
+                src="/assets/images/characters/frodo/frodo.webp"
                 alt="Profiel optie 1"
               />
               <img
                 class="picture-option"
-                src="assets/images/characters/gandalf/gandalfChibli.webp"
+                src="/assets/images/characters/gandalf/gandalf.webp"
                 alt="Profiel optie 2"
               />
               <img
                 class="picture-option"
-                src="assets/images/characters/legolas/legolasChibi.png"
+                src="/assets/images/characters/pippin/pippin.png"
                 alt="Profiel optie 3"
               />
             </section>
           </article>
         </dialog>
 
+        <% if (error) {%>
+          <i class="bi bi-exclamation-circle-fill error-message"><%= error %></i>
+        <%}%>
         <article class="input-container">
-          <input type="email" placeholder="e-mail" />
+          <input type="email" name="email" placeholder="e-mail" required/>
           <i class="bi bi-envelope-fill input-icon"></i>
         </article>
 
         <article class="input-container">
-          <input type="text" placeholder="gebruikersnaam" />
+          <input type="text" name="username" placeholder="gebruikersnaam" required/>
           <i class="bi bi-person-fill input-icon"></i>
         </article>
 
         <article class="input-container">
-          <input type="password" placeholder="wachtwoord" />
+          <input type="password" name="password" placeholder="wachtwoord" required/>
           <i class="bi bi-shield-lock-fill input-icon"></i>
         </article>
 
-        <button type="button" class="submit-btn" onclick="window.location.href='welcomepage'">REGISTREER</button>      
+        <button class="submit-btn" type="submit">REGISTREER</button>      
       </form>
     </section>
   </body>

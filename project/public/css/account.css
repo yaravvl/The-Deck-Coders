@@ -35,6 +35,14 @@ body {
         background-color: var(--background-overlay);
         backdrop-filter: blur(10px);
 
+        .error-message {
+            color: red;
+            display: block;
+            text-align: center;
+            padding-bottom: 0.5rem;
+            margin-top: -1rem;
+        }
+
         dialog {
             outline: none;
             border: 2px solid var(--color-tan);

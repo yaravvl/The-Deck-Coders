@@ -5,7 +5,7 @@
     --color-brown: #D14B28;
     --color-dark-brown: #E5D5C5;
     --color-dialog-bg: #2e2e2e;
-    --background-image: url('/assets/images/toren.webp');
+    --background-image: url('../assets/images/Toren.webp');
     --background-overlay: rgba(46, 46, 46, 0.7);
 
     body {

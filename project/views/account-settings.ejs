@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%=title%></title>
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/account.css" />
     <link rel="stylesheet" href="./css/dark-mode.css" />
@@ -16,24 +15,21 @@
   </head>
   <body class="light-mode">
     <%- include("partials/nav") %>
-    <form action="/exp-test" method="POST">
-      <button class="test_button" type="submit">TEST KNOP</button>
-    </form>
     <section class="account-settings">
       <i class="bi bi-cloud-sun-fill top-right-icon" id="toggle-mode"></i>
-      <form action="">
+      <form action="/update-account" method="post">
         <h1 class="title">Account instellingen</h1>
 
         <figure class="profile-image">
           <a class="change-picture-button">
             <img
               class="image"
-              src="https://placehold.co/150x150?text=KIES+JE+AVATAR"
+              src="<%=player.imageUrl%>"
               alt="Temp"
             />
           </a>
         </figure>
-
+        <input type="hidden" name="profile_picture" id="profile_picture" value="">
         <dialog class="profiel-fotos-modal">
           <article class="profiel-fotos">
             <h1 class="title">Kies een profielfoto!</h1>
@@ -60,35 +56,36 @@
         <section class="skill-bar">
           <h1 class="skill-current-level">Level <%=player.level%> | Hobbit</h1>
           <article class="skill-container">
-            <span <% /* eslint-disable css-propertyvalueexpected */ %> class="skill-level skill" style="width: <%=exp_progress%>%">
-              <%= exp_progress %>%
+            <span <% /* eslint-disable css-propertyvalueexpected */ %> class="skill-level skill" style="width: <%=(player.exp/player.requiredExp)*100%>%">
+              <%=(player.exp/player.requiredExp)*100%>%
             </span>
           </article>
         </section>
-
+        <% if (error) {%>
+          <i class="bi bi-exclamation-circle-fill error-message"><%= error %></i>
+        <%}%>
         <section class="information">
           <article class="input-container">
-            <input type="text" placeholder="gebruikersnaam" required />
+            <input type="text" name="username" placeholder="<%=player.username%>" required/>
+            <i class="bi bi-person-fill input-icon"></i>
+          </article>
+          <article class="input-container">
+            <input type="text" placeholder="naam" name="name" required/>
             <i class="bi bi-person-fill input-icon"></i>
           </article>
 
           <article class="input-container">
-            <input type="text" placeholder="naam" required />
-            <i class="bi bi-person-fill input-icon"></i>
-          </article>
-
-          <article class="input-container">
-            <input type="password" placeholder="nieuw wachtwoord" required />
+            <input type="password" placeholder="nieuw wachtwoord" name="password" required/>
             <i class="bi bi-shield-lock-fill input-icon"></i>
           </article>
 
           <article class="input-container">
-            <input type="password" placeholder="herhaal wachtwoord" required />
+            <input type="password" placeholder="herhaal wachtwoord" name="repeated_password" required/>
             <i class="bi bi-shield-lock-fill input-icon"></i>
           </article>
 
           <article class="input-container">
-            <input type="email" placeholder="email" required />
+            <input type="email" placeholder="<%=player.email%>" name="email" required/>
             <i class="bi bi-mailbox2 input-icon"></i>
           </article>
 
@@ -381,6 +378,9 @@
         </section>
 
         <button type="submit" class="submit-btn">UPDATE</button>
+      </form>
+      <form action="/logout" method="post">
+        <button type="submit" class="submit-btn">UITLOGGEN</button>
       </form>
     </section>
     <%- include("partials/footer") %>

@@ -1,8 +1,13 @@
 import express, { Express } from "express";
 import dotenv from "dotenv";
 import path from "path";
-import { Character, Movie, Quote } from "./types";
-import { addExp, createPlayer, ExpPercentage, PlayerInfo } from "./public/javascript/experience";
+
+import { Character, PlayerInfo, Movie, Quote  } from "./types";
+import { addExp, ExpPercentage } from "./public/javascript/experience";
+import { createPlayer, connect, addUser, checkExistingPlayer, checkLogin, updateProfile, findByX } from "./public/javascript/database";
+import bcrypt from 'bcrypt';
+import session from "./public/javascript/session";
+import { secureMiddleware, loggedIn } from "./public/javascript/secureMiddleware";
 
 
 dotenv.config();
@@ -11,6 +16,7 @@ const app: Express = express();
 
 app.set("view engine", "ejs");
 app.use(express.json());
+app.use(session)
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.set("views", path.join(__dirname, "views"));
@@ -58,6 +64,9 @@ async function getMovies() {
     }
     movies = await response.json();
 }
+
+const ERROR_MESSAGE_UPDATE_ACCOUNT= ["Het herhaalde wachtwoord is niet hetzelfde!", "Deze gebruiksnaam is al in gebruik!", "Deze email is al in gebruik!"]
+
 
 async function getCharactersWithQuotes() {
     try {
@@ -116,25 +125,98 @@ async function getCharactersWithQuotes() {
     }
 }
 
-app.get("/", (req, res) => {
-    res.render("landingpage")
+
+app.get("/register", loggedIn, (req, res) => {
+    res.render("register", {
+        error: null
+    });
+  });
+
+app.get("/login", loggedIn, (req, res) => {
+    res.render("login", {
+        error: null
+    })
+})
+
+app.post("/login", async (req, res) => {
+    console.log("Debug test", req.body);
+    let username: string = req.body.username;
+    let password: string = req.body.password;
+    let userExists: PlayerInfo | undefined = await checkLogin(username, password)
+    console.log(userExists)
+    if (!userExists) {
+        return res.render("login", {
+            error: "Gebruikersnaam of wachtwoord is onjuist."
+        })
+    }
+    req.session.user = userExists
+    res.redirect("welcomepage")
+})
+
+app.post("/register", async (req, res) => {
+  let email: string = req.body.email;
+  let username: string = req.body.username;
+  let password: string = req.body.password;
+  let image_url: string = req.body.profile_picture;
+  const hashedPassword : string = await bcrypt.hash(password, 10)
+  if (!(await checkExistingPlayer(email, username))) {
+    await addUser(createPlayer(username, hashedPassword, email, image_url))
+    res.redirect("quiz")
+  } else {
+    return res.render("register", {
+        error: "Username or email already exists!"
+    })
+  }
 });
 
-app.get("/:index", (req, res) => {
-    generateTeam();
-    generatedSelectedCharacter();
+app.post("/update-account", async (req, res) => {
+    if (req.session.user) {
+        const user: PlayerInfo = req.session.user
+        //Check of de wachtwoorden wel hetzelfde zijn
+        if (req.body.password !== req.body.repeated_password) {
+            return res.render("account-settings", {
+                player: req.session.user,
+                error: ERROR_MESSAGE_UPDATE_ACCOUNT[0]
+            })
+        }
+        //Check of de username als is gepakt door iemand
+        if (await findByX(user, req.body.username, "username")) {
+            return res.render("account-settings", {
+                player: req.session.user,
+                error: ERROR_MESSAGE_UPDATE_ACCOUNT[1]
+            })
+        }
+        //Check of het email al is gepakt door iemand
+        if (req.body.username !== user.username && await findByX(user, req.body.username, "username")) {
+            return res.render("account-settings", {
+                player: req.session.user,
+                error: ERROR_MESSAGE_UPDATE_ACCOUNT[2]
+            })
+        }
+        req.session.user.imageUrl = req.body.profile_picture;
+        req.session.user.name = req.body.name;
+        req.session.user.email = req.body.email;
+        req.session.user.username = req.body.username;
+        req.session.user.password = await bcrypt.hash(req.body.password, 10);
+        console.log(req.session.user)
+        await updateProfile(req.session.user)
+        res.render("account-settings", {
+            player: req.session.user,
+            error: null
+        })
+    }
+})
 
-    let index: string = req.params.index
-    const expPercentage: number = ExpPercentage(player)
-
-    res.render(index, {
-        title: index.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
-        player: player,
-        exp_progress: expPercentage,
-        characters: quizTeam,
-        movies: movies,
-        selectedCharacter: selectedCharacter
+app.post("/logout", async (req, res) => {
+    await updateProfile(req.session.user)
+    req.session.destroy(() => {
+        res.redirect("/login")
     })
+})
+
+
+app.get("/", (req, res) => {
+    res.render("landingpage")
 });
 
 app.post('/exp-test', (req, res) => {
@@ -143,8 +225,26 @@ app.post('/exp-test', (req, res) => {
     res.redirect('/account-settings')
 })
 
-app.listen(app.get("port"), async () => {
+
+app.get("/:index", secureMiddleware, async (req, res) => {
+    generateTeam();
+    generatedSelectedCharacter();
+    let index: string = req.params.index
+    const expPercentage: number = 0
+    res.render(index, {
+        title: index.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
+        player: req.session.user,
+        exp_progress: expPercentage,
+        error: null,
+        characters: quizTeam,
+        movies: movies,
+        selectedCharacter: selectedCharacter
+    })
+});
+
+app.listen(app.get("port"), async() => {
     console.log("Server started on http://localhost:" + app.get("port"));
     await getCharactersWithQuotes();
     await getMovies();
+    await connect();
 });
