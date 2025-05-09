@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb";
+
 export interface Character {
     _id: string;
     name: string;
@@ -11,6 +13,7 @@ export interface Character {
 }
 
 export interface PlayerInfo {
+    _id?: ObjectId
     username: string,
     name: string,
     password: string,

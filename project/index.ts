@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import path from "path";
 import { Character, PlayerInfo } from "./types";
 import { addExp, ExpPercentage } from "./public/javascript/experience";
-import { createPlayer, connect, addUser, checkExistingPlayer, checkLogin } from "./public/javascript/database";
+import { createPlayer, connect, addUser, checkExistingPlayer, checkLogin, updateProfile, findByX } from "./public/javascript/database";
 import bcrypt from 'bcrypt';
 import session from "./public/javascript/session";
 import { secureMiddleware, loggedIn } from "./public/javascript/secureMiddleware";
@@ -23,6 +23,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("port", process.env.PORT ?? 3000);
 
 let CHARACTERS: Character[] = [];
+const ERROR_MESSAGE_UPDATE_ACCOUNT= ["Het herhaalde wachtwoord is niet hetzelfde!", "Deze gebruiksnaam is al in gebruik!", "Deze email is al in gebruik!"]
 
 async function getCharacters() {
     try {
@@ -88,7 +89,46 @@ app.post("/register", async (req, res) => {
   }
 });
 
-app.post("/logout", (req, res) => {
+app.post("/update-account", async (req, res) => {
+    if (req.session.user) {
+        const user: PlayerInfo = req.session.user
+        //Check of de wachtwoorden wel hetzelfde zijn
+        if (req.body.password !== req.body.repeated_password) {
+            return res.render("account-settings", {
+                player: req.session.user,
+                error: ERROR_MESSAGE_UPDATE_ACCOUNT[0]
+            })
+        }
+        //Check of de username als is gepakt door iemand
+        if (await findByX(user, req.body.username, "username")) {
+            return res.render("account-settings", {
+                player: req.session.user,
+                error: ERROR_MESSAGE_UPDATE_ACCOUNT[1]
+            })
+        }
+        //Check of het email al is gepakt door iemand
+        if (req.body.username !== user.username && await findByX(user, req.body.username, "username")) {
+            return res.render("account-settings", {
+                player: req.session.user,
+                error: ERROR_MESSAGE_UPDATE_ACCOUNT[2]
+            })
+        }
+        req.session.user.imageUrl = req.body.profile_picture;
+        req.session.user.name = req.body.name;
+        req.session.user.email = req.body.email;
+        req.session.user.username = req.body.username;
+        req.session.user.password = await bcrypt.hash(req.body.password, 10);
+        console.log(req.session.user)
+        await updateProfile(req.session.user)
+        res.render("account-settings", {
+            player: req.session.user,
+            error: null
+        })
+    }
+})
+
+app.post("/logout", async (req, res) => {
+    await updateProfile(req.session.user)
     req.session.destroy(() => {
         res.redirect("/login")
     })

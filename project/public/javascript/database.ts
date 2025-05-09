@@ -1,4 +1,4 @@
-import { Collection, MongoClient } from "mongodb";
+import { Collection, MongoClient, ObjectId } from "mongodb";
 import { PlayerInfo, Quote} from "../../types";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
@@ -8,6 +8,41 @@ export const URI = process.env.URI!;
 
 const CLIENT = new MongoClient(URI);
 export const userCollection: Collection = CLIENT.db("wpl").collection("users");
+
+export async function findByX(user: PlayerInfo | undefined, input: string, field: "username" | "email") {
+    if (user) {
+        const email = await userCollection.findOne({[field]: input, _id: { $ne: new ObjectId(user._id) }})
+            if (email) {
+                return true;
+            }
+        }
+    return false;
+}
+
+export async function updateProfile(player: PlayerInfo | undefined) {
+    //Mijn idee is om ook ineens gewoon deze functie te kunnen gebruiken bij update gegevens en voor het uitloggen om de db te syncen
+    if (player) {
+        const updateOne = await userCollection.updateOne({ _id: new ObjectId(player._id) }, 
+            { $set: 
+                {
+                    username: player.username,
+                    name: player.name,
+                    level: player.level,
+                    email: player.email,
+                    password: player.password,
+                    imageUrl: player.imageUrl,
+                    exp: player.exp,
+                    requiredExp: player.requiredExp,
+                    favoritedQuotes: player.favoritedQuotes,
+                    blacklistedQuotes: player.blacklistedQuotes,
+                    hsSd: player.hsSd,
+                    hs10: player.hs10,
+                    hsTq: player.hsTq
+                }
+            })
+        console.log(`Matched: ${updateOne.matchedCount}, Modified: ${updateOne.modifiedCount}`);
+    }
+}
 
 async function exit(){
     try {
