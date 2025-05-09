@@ -10,6 +10,7 @@ export interface Character {
     death: string;
     hair: string;
     spouse: string;
+    quotes: Quote[];
 }
 
 export interface PlayerInfo {
@@ -34,4 +35,9 @@ export interface Quote {
     dialog: string;
     movie: string;
     character: string;
+}
+
+export interface Movie {
+    name: string;
+    id: string;
 }

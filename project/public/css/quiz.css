@@ -83,7 +83,6 @@ main {
     text-align: center;
 }
 
-
 .quiz {
     position: relative;
     flex-direction: column;
@@ -119,6 +118,7 @@ main {
         gap: 20px;
         margin-top: 20px;
         margin-bottom: 40px;
+        color: var(--color-dark-brown);
 
         img {
             width: 120px;
