@@ -3,11 +3,11 @@ import dotenv from "dotenv";
 import path from "path";
 
 import { Character, PlayerInfo, Movie, Quote  } from "./types";
-import { addExp, ExpPercentage } from "./public/javascript/experience";
-import { createPlayer, connect, addUser, checkExistingPlayer, checkLogin, updateProfile, findByX } from "./public/javascript/database";
+import { addExp, ExpPercentage } from "./experience";
+import { createPlayer, connect, addUser, checkExistingPlayer, checkLogin, updateProfile, findByX } from "./database";
 import bcrypt from 'bcrypt';
-import session from "./public/javascript/session";
-import { secureMiddleware, loggedIn } from "./public/javascript/secureMiddleware";
+import session from "./session";
+import { secureMiddleware, loggedIn } from "./secureMiddleware";
 
 
 dotenv.config();
@@ -26,7 +26,6 @@ app.set("port", process.env.PORT ?? 3000);
 let CHARACTERS: Character[] = [];
 // let CHARACTERS_WITHOUT_QUOTE: Character[] = [];
 let QUOTES: Quote[] = [];
-let player: PlayerInfo = createPlayer();
 let quizTeam: Character[] = [];
 let selectedCharacter: Character;
 let movies: Movie[] = [];
@@ -218,13 +217,6 @@ app.post("/logout", async (req, res) => {
 app.get("/", (req, res) => {
     res.render("landingpage")
 });
-
-app.post('/exp-test', (req, res) => {
-    player = addExp(player, 50)
-    console.log(player)
-    res.redirect('/account-settings')
-})
-
 
 app.get("/:index", secureMiddleware, async (req, res) => {
     generateTeam();
