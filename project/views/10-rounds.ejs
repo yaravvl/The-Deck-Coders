@@ -31,44 +31,35 @@
     <main class="quiz">
       <h2>Vraag: 01/10</h2>
       <h2>
-        "<%=characters[1].quotes[0].dialog%>"
+        "<%=selectedQuote.dialog%>"
         <i class="bi bi-hand-thumbs-up"></i>
         <i class="bi bi-hand-thumbs-down"></i>
       </h2>
       <br />
-
+ 
       <h3>Van welk karakter is deze quote?</h3>
-
+ 
       <section class="options">
-        <figure>
+        <%for (let character of characters) { %>
+        <figure name="<%=character._id%>" class="character_choices">
           <img src="./assets/images/characters/frodo/frodo.webp" alt="" />
-          <figcaption><%=characters[0].name%></figcaption>
+          <figcaption><%=character.name%></figcaption>
         </figure>
-        
-        <figure>
-          <img
-          src="./assets/images/characters/gandalf/gandalf.webp"
-          alt=""
-        />
-        <figcaption><%=characters[1].name%></figcaption>
-        </figure>
-        <figure>
-          <img src="./assets/images/characters/legolas/legolas.png" alt="" />
-          <figcaption><%=characters[2].name%></figcaption>
-        </figure>
-        
+        <% } %>
+       
+       
       </section>
-
+ 
       <h3>Van welke film is deze quote?</h3>
       <section class="options">
         <% for (let movie of movies ) {%>
-          <figure>
+          <figure name="<%=movie.id%>" class="movie_choices">
             <img src="./assets/images/LOTR.webp" alt="" />
             <figcaption><%=movie.name%></figcaption>
           </figure>
-        <% } %> 
+        <% } %>
       </section>
-
+ 
       <button><a href="">Volgende vraag</a></button>
     </main>
 <%- include("partials/footer") %>
