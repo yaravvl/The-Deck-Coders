@@ -40,7 +40,7 @@ export async function updateProfile(player: PlayerInfo | undefined) {
                     hsTq: player.hsTq
                 }
             })
-        console.log(`Matched: ${updateOne.matchedCount}, Modified: ${updateOne.modifiedCount}`);
+        // console.log(`Gevonden: ${updateOne.matchedCount}, Aangepast: ${updateOne.modifiedCount}`); -- debug
     }
 }
 
