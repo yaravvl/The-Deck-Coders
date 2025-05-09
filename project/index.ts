@@ -86,15 +86,26 @@ async function getCharactersWithQuotes() {
         }
         const charactersData = await charactersResponse.json();
 
+        //Dit is om een lijst te maken met alle id's die toegelaten zijn van de api
+        const localIdsResponse = await fetch("http://localhost:3000/data/lotr_characters_with_quotes.json");
+        if (!localIdsResponse.ok) {
+            throw new Error("Failed to fetch local character IDs");
+        };
+        const localIdsData = await localIdsResponse.json();
+        const allowedIds = new Set(localIdsData.map((char: { id: string }) => char.id));
+
         //Alle characters filteren die minstens 1 movie-quote hebben
         CHARACTERS = charactersData.docs.filter((character: Character) =>
-            characterIdsWithQuotes.has(character._id)
-        ).slice(0, 10);
+            characterIdsWithQuotes.has(character._id) && allowedIds.has(character._id)
+        );
 
         //Alle quotes die een character heeft bijhouden in hun property quotes.
         for (const character of CHARACTERS) {
             character.quotes = QUOTES.filter((quote: Quote) => quote.character === character._id && quote.dialog.length <= 50);
         }
+
+        //Alle characters filteren zodat enkel de characters overblijven die in de json file zitten
+
 
         for (const character of CHARACTERS) {
             console.log(character.name)
