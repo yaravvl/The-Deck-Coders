@@ -1,5 +1,5 @@
 import { Collection, MongoClient, ObjectId } from "mongodb";
-import { PlayerInfo, Quote} from "../../types";
+import { PlayerInfo, Quote} from "./types";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 dotenv.config();

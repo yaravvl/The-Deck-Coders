@@ -1,6 +1,6 @@
 import { URI } from "./database";
 import session, { MemoryStore } from "express-session";
-import { PlayerInfo } from "../../types";
+import { PlayerInfo } from "./types";
 import mongoDbSession from "connect-mongodb-session";
 const MongoDBStore = mongoDbSession(session);
 

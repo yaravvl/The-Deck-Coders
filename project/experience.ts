@@ -1,4 +1,4 @@
-import { PlayerInfo } from "../../types"
+import { PlayerInfo } from "./types"
 //ALLES HIER IS GEWOON TEMPORARY OM EEN LEVEL SYSTEEM TE TESTEN
 
 export function addExp(player: PlayerInfo, experience: number): PlayerInfo {
