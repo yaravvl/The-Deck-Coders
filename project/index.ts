@@ -2,7 +2,7 @@ import express, { Express } from "express";
 import dotenv from "dotenv";
 import path from "path";
 
-import { Character, PlayerInfo, Movie, Quote  } from "./types";
+import { Character, PlayerInfo, Movie, Quote } from "./types";
 import { addExp, ExpPercentage } from "./experience";
 import { createPlayer, connect, addUser, checkExistingPlayer, checkLogin, updateProfile, findByX } from "./database";
 import bcrypt from 'bcrypt';
@@ -26,34 +26,42 @@ app.set("port", process.env.PORT ?? 3000);
 let CHARACTERS: Character[] = [];
 // let CHARACTERS_WITHOUT_QUOTE: Character[] = [];
 let QUOTES: Quote[] = [];
-let quizTeam: Character[] = [];
+// let quizTeam: Character[] = [];
 let selectedCharacter: Character;
+let selectedQuote: Quote;
 let movies: Movie[] = [];
 
 
 function generateRandomNumber(max: number): number {
-    return Math.floor(Math.random() * max) + 1;
+    return Math.floor(Math.random() * max);
 }
 
-function generatedSelectedCharacter() {
-    const randomNum = generateRandomNumber(quizTeam.length);
-    selectedCharacter = quizTeam[randomNum];
+async function generatedSelectedCharacter(number: number) {
+    const randomNum = generateRandomNumber(number);
+    selectedCharacter = CHARACTERS[randomNum];
+
+    const selectedQuoteIndex = generateRandomNumber(selectedCharacter.quotes.length);
+    selectedQuote = selectedCharacter.quotes[selectedQuoteIndex];
+    console.log("Debug;" + selectedQuoteIndex, selectedCharacter.quotes.length - 1)
 }
 
-function generateTeam() {
+async function generateTeam(): Promise<Character[]> {
     const usedNumbers: number[] = [];
+    const team: Character[] = [];
     let randomNum = -1;
 
-    while (quizTeam.length < 3) {
+    while (team.length < 3) {
         randomNum = generateRandomNumber(CHARACTERS.length);
 
         //Dit is een check om te kijken of de nieuw gemaakte nummer al eens is gebruikt geweest met het maken van dit team.
         if (!usedNumbers.includes(randomNum)) {
             const character = CHARACTERS[randomNum];
             usedNumbers.push(randomNum);
-            quizTeam.push(character);
+            team.push(character);
         }
     }
+    console.log(team.map((e) => e.name))
+    return team;
 }
 
 async function getMovies() {
@@ -64,7 +72,7 @@ async function getMovies() {
     movies = await response.json();
 }
 
-const ERROR_MESSAGE_UPDATE_ACCOUNT= ["Het herhaalde wachtwoord is niet hetzelfde!", "Deze gebruiksnaam is al in gebruik!", "Deze email is al in gebruik!"]
+const ERROR_MESSAGE_UPDATE_ACCOUNT = ["Het herhaalde wachtwoord is niet hetzelfde!", "Deze gebruiksnaam is al in gebruik!", "Deze email is al in gebruik!"]
 
 
 async function getCharactersWithQuotes() {
@@ -129,7 +137,7 @@ app.get("/register", loggedIn, (req, res) => {
     res.render("register", {
         error: null
     });
-  });
+});
 
 app.get("/login", loggedIn, (req, res) => {
     res.render("login", {
@@ -153,19 +161,19 @@ app.post("/login", async (req, res) => {
 })
 
 app.post("/register", async (req, res) => {
-  let email: string = req.body.email;
-  let username: string = req.body.username;
-  let password: string = req.body.password;
-  let image_url: string = req.body.profile_picture;
-  const hashedPassword : string = await bcrypt.hash(password, 10)
-  if (!(await checkExistingPlayer(email, username))) {
-    await addUser(createPlayer(username, hashedPassword, email, image_url))
-    res.redirect("quiz")
-  } else {
-    return res.render("register", {
-        error: "Username or email already exists!"
-    })
-  }
+    let email: string = req.body.email;
+    let username: string = req.body.username;
+    let password: string = req.body.password;
+    let image_url: string = req.body.profile_picture;
+    const hashedPassword: string = await bcrypt.hash(password, 10)
+    if (!(await checkExistingPlayer(email, username))) {
+        await addUser(createPlayer(username, hashedPassword, email, image_url))
+        res.redirect("quiz")
+    } else {
+        return res.render("register", {
+            error: "Username or email already exists!"
+        })
+    }
 });
 
 app.post("/update-account", async (req, res) => {
@@ -219,8 +227,9 @@ app.get("/", (req, res) => {
 });
 
 app.get("/:index", secureMiddleware, async (req, res) => {
-    generateTeam();
-    generatedSelectedCharacter();
+    const quizTeam: Character[] = await generateTeam();
+    await generatedSelectedCharacter(quizTeam.length);
+    console
     let index: string = req.params.index
     const expPercentage: number = 0
     res.render(index, {
@@ -230,13 +239,18 @@ app.get("/:index", secureMiddleware, async (req, res) => {
         error: null,
         characters: quizTeam,
         movies: movies,
-        selectedCharacter: selectedCharacter
+        selectedCharacter: selectedCharacter,
+        selectedQuote: selectedQuote
     })
 });
 
-app.listen(app.get("port"), async() => {
+app.listen(app.get("port"), async () => {
     console.log("Server started on http://localhost:" + app.get("port"));
-    await getCharactersWithQuotes();
-    await getMovies();
+    try {
+        await getCharactersWithQuotes();
+        await getMovies();
+    } catch (e) {
+        console.log(e)
+    }
     await connect();
 });
