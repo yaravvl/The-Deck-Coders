@@ -57,7 +57,7 @@ async function exit(){
 
 export async function checkLogin(username: string, password: string){
     const existingPlayer = await userCollection.findOne({ $or: [{email: username}, {username: username}] }) as PlayerInfo | null;
-    console.log(existingPlayer)
+    // console.log(existingPlayer) -- debug
     if (!existingPlayer) {
         return
     }

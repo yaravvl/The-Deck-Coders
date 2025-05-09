@@ -1,0 +1,1 @@
+const CHARACTER_CHOICES : HTMLElement | null = document.querySelector(".character_choices")
