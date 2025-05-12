@@ -5,7 +5,7 @@ import path from "path";
 import { Character, PlayerInfo, Movie, Quote } from "./types";
 import { addExp, ExpPercentage } from "./experience";
 import { createPlayer, connect, addUser, checkExistingPlayer, checkLogin, updateProfile, findByX } from "./database";
-import bcrypt from 'bcrypt';
+import bcrypt from "bcrypt";
 import session from "./session";
 import { secureMiddleware, loggedIn } from "./secureMiddleware";
 
