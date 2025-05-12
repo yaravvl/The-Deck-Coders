@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
     <script src="javascript/profile.js"></script>
     <script src="./javascript/thumbToggle.js" defer></script>
-    <script src="./javascript/quoteManager.js" defer></script>
+    <script src="./javascript/test.js"></script>
     <link rel="icon" type="image/jpg" href="/assets/images/favicon.jpg">
   </head>
   <style>
@@ -59,7 +59,11 @@
           </figure>
         <% } %>
       </section>
- 
-      <button><a href="">Volgende vraag</a></button>
+      <form action="/" method="post">
+        <input type="hidden" name="character_id" id="profile_picture" value="">
+        <input type="hidden" name="movie_id" id="movie_id" value="">
+        <input type="hidden" name="quote_choice" id="quote_id" value="">
+        <button type="submit">Volgende vraag</button>
+      </form>
     </main>
 <%- include("partials/footer") %>
