@@ -29,6 +29,8 @@ let QUOTES: Quote[] = [];
 let selectedCharacter: Character;
 let selectedQuote: Quote;
 let movies: Movie[] = [];
+let userCurrentScore: number = 0;
+let userCurrentQuestion: number = 1;
 
 function generateRandomNumber(max: number): number {
     return Math.floor(Math.random() * max);
@@ -71,10 +73,6 @@ async function getMovies() {
 }
 
 const ERROR_MESSAGE_UPDATE_ACCOUNT = ["Het herhaalde wachtwoord is niet hetzelfde!", "Deze gebruiksnaam is al in gebruik!", "Deze email is al in gebruik!"]
-<<<<<<< HEAD
-
-=======
->>>>>>> 940013d940f91f6b419d924a793f5437b79de496
 
 async function getCharactersWithQuotes() {
     try {
@@ -217,7 +215,15 @@ app.post("/next", (req, res) => {
     const character_id = req.body.character_id
     const movie_id = req.body.movie_id
     const choice_quote = req.body.quote_choice
-    console.log(character_id, movie_id, choice_quote)
+    console.log(character_id, movie_id, choice_quote);
+
+    if (choice_quote.movie === movie_id && choice_quote.character === character_id) {
+        userCurrentScore = userCurrentScore + 1;
+        userCurrentQuestion = userCurrentQuestion + 1;
+    } else {
+        userCurrentQuestion = userCurrentQuestion + 1;
+    }
+
     res.redirect("/10-rounds")
 
 })
@@ -247,7 +253,9 @@ app.get("/:index", secureMiddleware, async (req, res) => {
         characters: quizTeam,
         movies: movies,
         selectedCharacter: selectedCharacter,
-        selectedQuote: selectedQuote
+        selectedQuote: selectedQuote,
+        userCurrentQuestion: userCurrentQuestion,
+        userCurrentScore: userCurrentScore
     })
 });
 
