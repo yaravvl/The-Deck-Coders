@@ -9,7 +9,6 @@ import bcrypt from 'bcrypt';
 import session from "./session";
 import { secureMiddleware, loggedIn } from "./secureMiddleware";
 
-
 dotenv.config();
 
 const app: Express = express();
@@ -30,7 +29,6 @@ let QUOTES: Quote[] = [];
 let selectedCharacter: Character;
 let selectedQuote: Quote;
 let movies: Movie[] = [];
-
 
 function generateRandomNumber(max: number): number {
     return Math.floor(Math.random() * max);
@@ -73,7 +71,10 @@ async function getMovies() {
 }
 
 const ERROR_MESSAGE_UPDATE_ACCOUNT = ["Het herhaalde wachtwoord is niet hetzelfde!", "Deze gebruiksnaam is al in gebruik!", "Deze email is al in gebruik!"]
+<<<<<<< HEAD
 
+=======
+>>>>>>> 940013d940f91f6b419d924a793f5437b79de496
 
 async function getCharactersWithQuotes() {
     try {
@@ -122,7 +123,6 @@ async function getCharactersWithQuotes() {
 
         //Alle characters filteren zodat enkel de characters overblijven die in de json file zitten
 
-
         for (const character of CHARACTERS) {
             console.log(character.name)
         }
@@ -131,7 +131,6 @@ async function getCharactersWithQuotes() {
         console.error(`Error: ${error}`);
     }
 }
-
 
 app.get("/register", loggedIn, (req, res) => {
     res.render("register", {
@@ -214,13 +213,21 @@ app.post("/update-account", async (req, res) => {
     }
 })
 
+app.post("/next", (req, res) => {
+    const character_id = req.body.character_id
+    const movie_id = req.body.movie_id
+    const choice_quote = req.body.quote_choice
+    console.log(character_id, movie_id, choice_quote)
+    res.redirect("/10-rounds")
+
+})
+
 app.post("/logout", async (req, res) => {
     await updateProfile(req.session.user)
     req.session.destroy(() => {
         res.redirect("/login")
     })
 })
-
 
 app.get("/", (req, res) => {
     res.render("landingpage")
@@ -254,3 +261,4 @@ app.listen(app.get("port"), async () => {
     }
     await connect();
 });
+

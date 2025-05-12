@@ -35,9 +35,7 @@ export async function updateProfile(player: PlayerInfo | undefined) {
                     requiredExp: player.requiredExp,
                     favoritedQuotes: player.favoritedQuotes,
                     blacklistedQuotes: player.blacklistedQuotes,
-                    hsSd: player.hsSd,
-                    hs10: player.hs10,
-                    hsTq: player.hsTq
+                    highscores: player.highscores
                 }
             })
         // console.log(`Gevonden: ${updateOne.matchedCount}, Aangepast: ${updateOne.modifiedCount}`); -- debug
@@ -57,7 +55,7 @@ async function exit(){
 
 export async function checkLogin(username: string, password: string){
     const existingPlayer = await userCollection.findOne({ $or: [{email: username}, {username: username}] }) as PlayerInfo | null;
-    console.log(existingPlayer)
+    // console.log(existingPlayer) -- debug
     if (!existingPlayer) {
         return
     }
@@ -93,9 +91,11 @@ export function createPlayer(username: string, password: string, email: string, 
         requiredExp: 100,
         favoritedQuotes: [],
         blacklistedQuotes: [],
-        hsSd: 0,
-        hs10: 0,
-        hsTq: 0
+        highscores: [
+            { name: "tenRounds", score: 0},
+            { name: "suddenDeath", score: 0},
+            { name: "timedQuiz", score: 0}
+        ]
     }
     return newUser
 }
