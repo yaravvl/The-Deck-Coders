@@ -45,20 +45,15 @@
           <figcaption><%=character.name%></figcaption>
         </figure>
         <% } %>
-<<<<<<< HEAD
         
         
-=======
-       
-       
->>>>>>> 940013d940f91f6b419d924a793f5437b79de496
       </section>
  
       <h3>Van welke film is deze quote?</h3>
       <section class="options">
         <% for (let movie of movies ) {%>
           <figure name="<%=movie.id%>" class="movie_choices">
-            <img src="./assets/images/LOTR.webp" alt="" />
+            <img src="./assets/images/<%=movie.id%>.webp" alt="" />
             <figcaption><%=movie.name%></figcaption>
           </figure>
         <% } %>
