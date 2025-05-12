@@ -83,6 +83,12 @@ main {
     text-align: center;
 }
 
+.selected {
+    transform: scale(1.065);
+    border: 5px solid #f4d03f;
+    border-radius: 10px;
+}
+
 .quiz {
     position: relative;
     flex-direction: column;

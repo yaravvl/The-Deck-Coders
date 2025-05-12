@@ -176,6 +176,15 @@ app.post("/register", async (req, res) => {
     }
 });
  
+async function pushBlackListed(user: PlayerInfo, quote: Quote) {
+    
+}
+
+app.post("/:id/upvote", (req, res) => {
+    let name : String = req.params.id
+    req.session.user?.favoritedQuotes.push
+})
+
 app.post("/update-account", async (req, res) => {
     if (req.session.user) {
         const user: PlayerInfo = req.session.user
@@ -200,6 +209,7 @@ app.post("/update-account", async (req, res) => {
                 error: ERROR_MESSAGE_UPDATE_ACCOUNT[2]
             })
         }
+
         req.session.user.imageUrl = req.body.profile_picture;
         req.session.user.name = req.body.name;
         req.session.user.email = req.body.email;
