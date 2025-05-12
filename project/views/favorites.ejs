@@ -23,128 +23,35 @@
     <%- include("partials/nav") %>
     <main>
       <section class="blacklist-page">
-        <article>
+        <% for (let quote of sortedQuotes) {%>
+          <article>
           <a href="./character"
             ><img
               src="./assets/images/characters/frodo/frodo.webp"
               alt=""
             />
-            <h1>Frodo</h1>
+            <h1><%=quote.character.name%></h1>
           </a>
 
           <ul>
             <li>
-              We set out to save the Shire, Sam, and it has been saved. But not
-              for me.
+              <%=quote.dialog[0]%>
               <a><i class="bi bi-x-circle-fill"></i></a>
             </li>
-            <li class="hidden-quote">
-              "Character quote"
-              <a><i class="bi bi-x-circle-fill"></i></a>
+            <%if (quote.dialog.length > 1) {%>
+              <%for (let i = 1; i < quote.dialog.length; i++) {%>
+                <li class="hidden-quote">
+                <%=quote.dialog[i]%>
+                <a><i class="bi bi-x-circle-fill"></i></a>
             </li>
+              <%}%>
+            <%}%>
           </ul>
-          <button class="toggle-quotes">Toon 2 andere quotes</button>
+          <%if (quote.dialog.length > 1) {%>
+            <button class="toggle-quotes">Toon <%=quote.dialog.length - 1%> andere quotes</button>
+          <%}%>
         </article>
-
-        <article>
-          <a href="./character"
-            ><img
-              src="./assets/images/characters/smeagol/smeagol.webp"
-              alt=""
-            />
-            <h1>Smeagol</h1>
-          </a>
-
-          <ul>
-            <li>
-              "Character quote"
-              <a><i class="bi bi-x-circle-fill"></i></a>
-            </li>
-          </ul>
-        </article>
-
-        <article>
-          <a href="./character"
-            ><img
-              src="./assets/images/characters/gandalf/gandalf.webp"
-              alt=""
-            />
-            <h1>Gandalf</h1>
-          </a>
-
-          <ul>
-            <li>
-              "Character quote"
-              <a><i class="bi bi-x-circle-fill"></i></a>
-            </li>
-            <li class="hidden-quote">
-              "Character quote"
-              <a><i class="bi bi-x-circle-fill"></i></a>
-            </li>
-            <li class="hidden-quote">
-              "Character quote"
-              <a><i class="bi bi-x-circle-fill"></i></a>
-            </li>
-          </ul>
-          <button class="toggle-quotes">Toon 2 andere quotes</button>
-        </article>
-
-        <article>
-          <a href="./character"
-            ><img
-              src="./assets/images/characters/pippin/pippin.png"
-              alt=""
-            />
-            <h1>Pippin</h1>
-          </a>
-
-          <ul>
-            <li>
-              "My friends, you bow to no-one."
-              <a><i class="bi bi-x-circle-fill"></i></a>
-            </li>
-          </ul>
-        </article>
-
-        <article>
-          <a href="./character"
-            ><img
-              src="./assets/images/characters/sam/sam.png"
-              alt=""
-            />
-            <h1>Sam</h1>
-          </a>
-
-          <ul>
-            <li>
-              "Character quote"
-              <a><i class="bi bi-x-circle-fill"></i></a>
-            </li>
-            <li class="hidden-quote">
-              "Character quote"
-              <a><i class="bi bi-x-circle-fill"></i></a>
-            </li>
-          </ul>
-          <button class="toggle-quotes">Toon 2 andere quotes</button>
-        </article>
-
-        <article>
-          <a href="./character"
-            ><img
-              src="./assets/images/characters/legolas/legolas.png"
-              alt=""
-            />
-            <h1>Legolas</h1>
-          </a>
-
-          <ul>
-            <li>
-              "Character quote"
-              <a><i class="bi bi-x-circle-fill"></i></a>
-            </li>
-          </ul>
-        </article>
-      </section>
+        <%}%>
 
       <a class="up" href="#top"><i class="bi bi-arrow-up-circle"></i></a>
     </main>

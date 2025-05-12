@@ -34,7 +34,7 @@ function boxSelector() {
     }
     if (movie_choices) {
         movie_choices.forEach(function (option) {
-            option.addEventListener("click", function () {
+            option.addEventListener("click", function (e) {
                 movie_choices.forEach(function (e) {
                     e.classList.remove("selected");
                 });

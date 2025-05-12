@@ -34,9 +34,10 @@ function boxSelector() {
             });
         });
     }
+
     if (movie_choices) {
         movie_choices.forEach((option) => {
-            option.addEventListener("click", () => {
+            option.addEventListener("click", (e) => {
                 movie_choices.forEach((e) => {
                     e.classList.remove("selected");
                 });
@@ -50,5 +51,4 @@ function boxSelector() {
 
 document.addEventListener("DOMContentLoaded", () => {
     boxSelector();
-
 });

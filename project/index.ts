@@ -2,9 +2,9 @@ import express, { Express } from "express";
 import dotenv from "dotenv";
 import path from "path";
 
-import { Character, PlayerInfo, Movie, Quote } from "./types";
+import { Character, PlayerInfo, Movie, Quote, FavoritedQuote } from "./types";
 import { addExp, ExpPercentage } from "./experience";
-import { createPlayer, connect, addUser, checkExistingPlayer, checkLogin, updateProfile, findByX } from "./database";
+import { createPlayer, connect, addUser, checkExistingPlayer, checkLogin, updateProfile, findByX, addQuoteToBlacklist, addQuoteToFavorites } from "./database";
 import bcrypt from 'bcrypt';
 import session from "./session";
 import { secureMiddleware, loggedIn } from "./secureMiddleware";
@@ -42,7 +42,7 @@ async function generatedSelectedCharacter(number: number) {
 
     const selectedQuoteIndex = generateRandomNumber(selectedCharacter.quotes.length);
     selectedQuote = selectedCharacter.quotes[selectedQuoteIndex];
-    console.log("Debug;" + selectedQuoteIndex, selectedCharacter.quotes.length - 1)
+    // console.log("Debug;" + selectedQuoteIndex, selectedCharacter.quotes.length - 1)
 }
 
 async function generateTeam(): Promise<Character[]> {
@@ -60,7 +60,7 @@ async function generateTeam(): Promise<Character[]> {
             team.push(character);
         }
     }
-    console.log(team.map((e) => e.name))
+    // console.log(team.map((e) => e.name))
     return team;
 }
 
@@ -121,9 +121,9 @@ async function getCharactersWithQuotes() {
 
         //Alle characters filteren zodat enkel de characters overblijven die in de json file zitten
 
-        for (const character of CHARACTERS) {
-            console.log(character.name)
-        }
+        // for (const character of CHARACTERS) {
+        //     console.log(character.name)
+        // }
 
     } catch (error) {
         console.error(`Error: ${error}`);
@@ -143,11 +143,9 @@ app.get("/login", loggedIn, (req, res) => {
 })
 
 app.post("/login", async (req, res) => {
-    console.log("Debug test", req.body);
     let username: string = req.body.username;
     let password: string = req.body.password;
     let userExists: PlayerInfo | undefined = await checkLogin(username, password)
-    console.log(userExists)
     if (!userExists) {
         return res.render("login", {
             error: "Gebruikersnaam of wachtwoord is onjuist."
@@ -202,7 +200,6 @@ app.post("/update-account", async (req, res) => {
         req.session.user.email = req.body.email;
         req.session.user.username = req.body.username;
         req.session.user.password = await bcrypt.hash(req.body.password, 10);
-        console.log(req.session.user)
         await updateProfile(req.session.user)
         res.render("account-settings", {
             player: req.session.user,
@@ -216,12 +213,27 @@ app.post("/next", (req, res) => {
     const movie_id = req.body.movie_id
     const choice_quote = req.body.quote_choice
     console.log(character_id, movie_id, choice_quote);
+    console.log(selectedQuote, selectedCharacter._id)
 
-    if (choice_quote.movie === movie_id && choice_quote.character === character_id) {
-        userCurrentScore = userCurrentScore + 1;
-        userCurrentQuestion = userCurrentQuestion + 1;
+    if (choice_quote === "favorited") {
+        addQuoteToFavorites(selectedQuote, req.session.user!)
+    } else if (choice_quote === "blacklisted"){
+        addQuoteToBlacklist(selectedQuote, req.session.user!)
     } else {
-        userCurrentQuestion = userCurrentQuestion + 1;
+    }
+
+    if (req.session.userCurrentQuestion === undefined) {
+        req.session.userCurrentQuestion = 1;
+    }
+    if (req.session.userCurrentScore === undefined) {
+        req.session.userCurrentScore = 0
+    }
+
+    if (selectedQuote.movie === movie_id && selectedQuote.character === character_id) {
+        req.session.userCurrentScore += 1;
+        req.session.userCurrentQuestion += 1;
+    } else {
+        req.session.userCurrentQuestion += 1;
     }
 
     res.redirect("/10-rounds")
@@ -239,10 +251,52 @@ app.get("/", (req, res) => {
     res.render("landingpage")
 });
 
-app.get("/:index", secureMiddleware, async (req, res) => {
+app.get("/10-rounds", secureMiddleware, async (req, res) => {
+    if (!req.session.gameStarted) {
+        req.session.userCurrentQuestion = 1;
+        req.session.userCurrentScore = 0;
+    }
+    req.session.gameStarted = true;
     const quizTeam: Character[] = await generateTeam();
     await generatedSelectedCharacter(quizTeam.length);
-    console
+    res.render("10-rounds", {
+        player: req.session.user,
+        characters: quizTeam,
+        movies: movies,
+        selectedCharacter: selectedCharacter,
+        selectedQuote: selectedQuote,
+        userCurrentQuestion: req.session.userCurrentQuestion || 1,
+        userCurrentScore: req.session.userCurrentScore || 0
+    })
+})
+
+app.get("/favorites", secureMiddleware, async (req, res) => {
+    const quotesByCharacter: FavoritedQuote[] = []
+    req.session.user?.favoritedQuotes.forEach((quotes) => {
+        const foundCharacter = CHARACTERS.find((characters) => {
+            return characters._id === quotes.character
+        })
+        let charInArray = quotesByCharacter.find((q) => {
+            return q.character._id === foundCharacter!._id
+        })
+        if (!charInArray) {
+            charInArray = {
+                character: foundCharacter!,
+                dialog: []
+            }
+            quotesByCharacter.push(charInArray)
+        }
+        charInArray.dialog.push(quotes.dialog)
+    })
+    res.render("favorites", {
+        title: "Favorites",
+        quotes: req.session.user?.blacklistedQuotes,
+        sortedQuotes: quotesByCharacter
+    })
+})
+
+app.get("/:index", secureMiddleware, async (req, res) => {
+    req.session.gameStarted = false;
     let index: string = req.params.index
     const expPercentage: number = 0
     res.render(index, {
@@ -250,12 +304,6 @@ app.get("/:index", secureMiddleware, async (req, res) => {
         player: req.session.user,
         exp_progress: expPercentage,
         error: null,
-        characters: quizTeam,
-        movies: movies,
-        selectedCharacter: selectedCharacter,
-        selectedQuote: selectedQuote,
-        userCurrentQuestion: userCurrentQuestion,
-        userCurrentScore: userCurrentScore
     })
 });
 

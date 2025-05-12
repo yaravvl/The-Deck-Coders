@@ -38,9 +38,15 @@ export interface Quote {
     dialog: string;
     movie: string;
     character: string;
+    id: string;
 }
 
 export interface Movie {
     name: string;
     id: string;
+}
+
+export interface FavoritedQuote {
+    character: Character;
+    dialog: string[];
 }

@@ -19,6 +19,18 @@ export async function findByX(user: PlayerInfo | undefined, input: string, field
     return false;
 }
 
+export async function addQuoteToFavorites(quote: Quote, player: PlayerInfo) {
+    if (player) {
+        player.favoritedQuotes.push(quote)
+    }
+}
+
+export async function addQuoteToBlacklist(quote: Quote, player: PlayerInfo) {
+    if (player) {
+        player.blacklistedQuotes.push(quote)
+    }
+}
+
 export async function updateProfile(player: PlayerInfo | undefined) {
     //Mijn idee is om ook ineens gewoon deze functie te kunnen gebruiken bij update gegevens en voor het uitloggen om de db te syncen
     if (player) {

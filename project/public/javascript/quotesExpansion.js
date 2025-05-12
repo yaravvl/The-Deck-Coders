@@ -14,22 +14,24 @@ function toggleClass(event) {
 
   const listItems = container.querySelectorAll("li, .hidden-quote"); // Select <li> and hidden quotes
 
-  let hasHiddenQuotes = false;
+  let hasHiddenQuotes = true;
 
   listItems.forEach((li) => {
     if (li.classList.contains("hidden-quote")) {
       li.classList.remove("hidden-quote");
       li.classList.add("expanded");
+      hasHiddenQuotes = false;
     } else if (li.classList.contains("expanded")) {
       li.classList.remove("expanded");
       li.classList.add("hidden-quote");
-      hasHiddenQuotes = true;
     }
   });
 
-  button.textContent = hasHiddenQuotes
-    ? "Toon 2 andere quotes"
-    : "Toon minder quotes";
+  if (!hasHiddenQuotes){
+      button.textContent = "Toon minder quotes"
+    } else {
+      button.textContent = "Toon alle quotes"
+    }
 }
 
 // Apply to both pages

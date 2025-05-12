@@ -28,7 +28,7 @@
   <body>
     <%- include("partials/nav") %>
     <main class="quiz">
-      <h2>Vraag: 01/10</h2>
+      <h2>Vraag: <%=userCurrentQuestion%>/10</h2>
       <h2>
         "<%=selectedQuote.dialog%>"
         <i class="bi bi-hand-thumbs-up"></i>
@@ -62,7 +62,7 @@
         <input type="hidden" name="character_id" id="profile_picture" value="">
         <input type="hidden" name="movie_id" id="movie_id" value="">
         <input type="hidden" name="quote_choice" id="quote_id" value="">
-        <button type="submit">Volgende vraag</button>
+        <button type="submit" id="next_question">Volgende vraag</button>
       </form>
     </main>
 <%- include("partials/footer") %>

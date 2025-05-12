@@ -12,7 +12,10 @@ const mongoStore = new MongoDBStore({
 
 declare module 'express-session' {
     export interface SessionData {
-        user?: PlayerInfo
+        user?: PlayerInfo;
+        userCurrentQuestion: number;
+        userCurrentScore: number;
+        gameStarted: boolean;
     }
 }
 
