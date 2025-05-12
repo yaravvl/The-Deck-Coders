@@ -83,14 +83,23 @@ header {
     
     #info-button i.bi-info-circle {
       margin-right: 4px;
-    }
-    .user-stats {
+    }    .user-stats {
       margin-right: 1rem;
       
       .user-info {
         display: flex;
         flex-direction: row;
         align-items: center;
+        
+        #highscore-button {
+          margin-right: 20px;
+          color: var(--color-light-gold);
+          text-decoration: none;
+          
+          &:hover {
+            color: var(--color-tan);
+          }
+        }
         
         .user-level {
           color: var(--color-light-gold);
@@ -205,9 +214,7 @@ header {
     left: 0;
     display: flex;
     align-items: center;
-  }
-
-  header nav .profile-icon {
+  }  header nav .profile-icon {
     position: absolute;
     right: 0;
   }
