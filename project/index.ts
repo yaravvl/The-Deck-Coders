@@ -5,7 +5,7 @@ import path from "path";
 import { Character, PlayerInfo, Movie, Quote } from "./types";
 import { addExp, ExpPercentage } from "./experience";
 import { createPlayer, connect, addUser, checkExistingPlayer, checkLogin, updateProfile, findByX } from "./database";
-import bcrypt from "bcrypt";
+import bcrypt from 'bcrypt';
 import session from "./session";
 import { secureMiddleware, loggedIn } from "./secureMiddleware";
 
@@ -207,6 +207,15 @@ app.post("/update-account", async (req, res) => {
             error: null
         })
     }
+})
+
+app.post("/next", (req, res) => {
+    const character_id = req.body.character_id
+    const movie_id = req.body.movie_id
+    const choice_quote = req.body.quote_choice
+    console.log(character_id, movie_id, choice_quote)
+    res.redirect("/10-rounds")
+
 })
 
 app.post("/logout", async (req, res) => {

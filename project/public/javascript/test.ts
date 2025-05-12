@@ -7,6 +7,9 @@ function boxSelector() {
     let movie_id : HTMLInputElement | null = document.getElementById("movie_id") as HTMLInputElement
     let quote_choice : HTMLInputElement | null = document.getElementById("quote_id") as HTMLInputElement
 
+    quote_choice.value = "";
+    movie_id.value = "";
+    character_id.value = "";
     if(dislike_button || like_button) {
         like_button!.addEventListener("click", (e) => {
            quote_choice.value = "favorited"
@@ -47,4 +50,5 @@ function boxSelector() {
 
 document.addEventListener("DOMContentLoaded", () => {
     boxSelector();
+
 });

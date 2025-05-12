@@ -6,6 +6,9 @@ function boxSelector() {
     var character_id = document.getElementById("profile_picture");
     var movie_id = document.getElementById("movie_id");
     var quote_choice = document.getElementById("quote_id");
+    quote_choice.value = "";
+    movie_id.value = "";
+    character_id.value = "";
     if (dislike_button || like_button) {
         like_button.addEventListener("click", function (e) {
             quote_choice.value = "favorited";
