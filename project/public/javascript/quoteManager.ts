@@ -2,11 +2,7 @@
 import { Quote } from '../../types';
 
 // Lijst van geblackliste quotes
-let blacklistedQuotes: Quote[] = [
-    { _id: "1", dialog: "We set out to save the Shire, Sam, and it has been saved. But not for me.", movie: "The Lord of the Rings: The Return of the King", character: "Frodo" },
-    { _id: "2", dialog: "Lorem ipsum dolor sit amet consectetur, adipisicing elit.", movie: "The Lord of the Rings: The Two Towers", character: "Legolas" },
-    { _id: "3", dialog: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.", movie: "The Lord of the Rings: The Fellowship of the Ring", character: "Gandalf" }
-];
+let blacklistedQuotes: Quote[] = [];
 
 // Lijst van favoriete quotes
 let favoriteQuotes: Quote[] = [];
@@ -90,7 +86,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         _id: newId,
                         dialog: quoteText,
                         movie: movie,
-                        character: character
+                        character: character,
+                        id: "1"
                     });
                     alert('Quote geblacklist!');
                 });
@@ -163,7 +160,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     _id: newId,
                     dialog: quoteText,
                     movie: movie,
-                    character: character
+                    character: character,
+                    id: "1"
                 });
                 alert('Quote toegevoegd aan favorieten!');
             });

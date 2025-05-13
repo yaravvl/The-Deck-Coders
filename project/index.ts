@@ -288,28 +288,49 @@ app.get("/favorites", secureMiddleware, async (req, res) => {
         }
         charInArray.dialog.push(quotes.dialog)
     })
+    req.session.favoritedQuotes = quotesByCharacter;
     res.render("favorites", {
         title: "Favorites",
-        quotes: req.session.user?.blacklistedQuotes,
+        quotes: req.session.user?.favoritedQuotes,
         sortedQuotes: quotesByCharacter
     })
+})
+
+app.post("/favorites/:id", (req, res) => {
+    let index: string = req.params.id
+    console.log(index)
+    let findCharacter: FavoritedQuote | undefined = req.session.favoritedQuotes?.find((e) => {
+        return e.dialog.includes(index)
+    })
+    if (findCharacter) {
+        findCharacter.dialog = findCharacter.dialog.filter((e) => e !== index);
+        req.session.favoritedQuotes?.forEach((e) => {
+            if (e === findCharacter) {
+                e = findCharacter
+            }
+        })
+        req.session.user!.favoritedQuotes = req.session.user!.favoritedQuotes.filter((e) => e.dialog !== index)
+    }
+    res.redirect("/favorites")
 })
 
 app.get("/:index", secureMiddleware, async (req, res) => {
     req.session.gameStarted = false;
     let index: string = req.params.index
     const expPercentage: number = 0
-    res.render(index, {
+    if(index !== "favicon") {
+        res.render(index, {
         title: index.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
         player: req.session.user,
         exp_progress: expPercentage,
         error: null,
     })
+    }
 });
 
 app.listen(app.get("port"), async () => {
     console.log("Server started on http://localhost:" + app.get("port"));
-    try {
+    try { 
         await getCharactersWithQuotes();
         await getMovies();
     } catch (e) {
