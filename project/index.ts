@@ -2,7 +2,7 @@ import express, { Express } from "express";
 import dotenv from "dotenv";
 import path from "path";
 
-import { Character, PlayerInfo, Movie, Quote, FavoritedQuote } from "./types";
+import { Character, PlayerInfo, Movie, Quote, FavoritedQuote, BlackListedQuote } from "./types";
 import { addExp, ExpPercentage } from "./experience";
 import { createPlayer, connect, addUser, checkExistingPlayer, checkLogin, updateProfile, findByX, addQuoteToBlacklist, addQuoteToFavorites } from "./database";
 import bcrypt from 'bcrypt';
@@ -212,13 +212,38 @@ app.post("/next", (req, res) => {
     const character_id = req.body.character_id
     const movie_id = req.body.movie_id
     const choice_quote = req.body.quote_choice
+    const blacklist_reason = req.body.blacklist_reason
     console.log(character_id, movie_id, choice_quote);
-    console.log(selectedQuote, selectedCharacter._id)
+    // console.log(selectedQuote, selectedCharacter._id, blacklist_reason) //debug
 
     if (choice_quote === "favorited") {
         addQuoteToFavorites(selectedQuote, req.session.user!)
-    } else if (choice_quote === "blacklisted"){
+    } else if (choice_quote === "blacklist"){
         addQuoteToBlacklist(selectedQuote, req.session.user!)
+        console.log("added quote")
+        const blackListedQuotesArray: BlackListedQuote[] = []
+        req.session.user?.blacklistedQuotes.forEach((quotes) => {
+        const foundCharacter = CHARACTERS.find((characters) => {
+            return characters._id === quotes.character
+        })
+        let charInArray = blackListedQuotesArray.find((q) => {
+            return q.character._id === foundCharacter!._id
+        })
+        if (!charInArray) {
+            charInArray = {
+                character: foundCharacter!,
+                dialog: []
+            }
+            blackListedQuotesArray.push(charInArray)
+        }
+        charInArray.dialog.push({
+            quoteText: quotes.dialog,
+            blackListReason: blacklist_reason
+        })
+        req.session.blackListedQuotes = blackListedQuotesArray;
+        // req.session.blackListedQuotes.forEach((e) => console.log(e.dialog)) //debug
+        // console.log(req.session.user?.blacklistedQuotes)
+    })
     } else {
     }
 
@@ -270,6 +295,13 @@ app.get("/10-rounds", secureMiddleware, async (req, res) => {
     })
 })
 
+app.get("/blacklist", secureMiddleware, async(req, res) => {
+
+    res.render("blacklist", {
+        title: "Blacklist"
+    })
+})
+
 app.get("/favorites", secureMiddleware, async (req, res) => {
     const quotesByCharacter: FavoritedQuote[] = []
     req.session.user?.favoritedQuotes.forEach((quotes) => {
@@ -296,7 +328,7 @@ app.get("/favorites", secureMiddleware, async (req, res) => {
     })
 })
 
-app.post("/favorites/:id", (req, res) => {
+app.post("/favorites/:id", secureMiddleware, (req, res) => {
     let index: string = req.params.id
     console.log(index)
     let findCharacter: FavoritedQuote | undefined = req.session.favoritedQuotes?.find((e) => {
@@ -318,7 +350,7 @@ app.get("/:index", secureMiddleware, async (req, res) => {
     req.session.gameStarted = false;
     let index: string = req.params.index
     const expPercentage: number = 0
-    if(index !== "favicon") {
+    if(index !== "ico") {
         res.render(index, {
         title: index.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
         player: req.session.user,

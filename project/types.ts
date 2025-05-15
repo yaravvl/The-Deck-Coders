@@ -50,3 +50,13 @@ export interface FavoritedQuote {
     character: Character;
     dialog: string[];
 }
+
+export interface BlackListedQuote {
+    character: Character;
+    dialog: BlackListedQuoteTemplate[]
+}
+
+export interface BlackListedQuoteTemplate {
+    quoteText: string;
+    blackListReason: string;
+}
