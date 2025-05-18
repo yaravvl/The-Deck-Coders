@@ -25,9 +25,16 @@ export async function addQuoteToFavorites(quote: Quote, player: PlayerInfo) {
     }
 }
 
-export async function addQuoteToBlacklist(quote: Quote, player: PlayerInfo) {
+export async function addQuoteToBlacklist(quote: Quote, player: PlayerInfo, bqReason: string) {
     if (player) {
-        player.blacklistedQuotes.push(quote)
+        player.blacklistedQuotes.push({
+                _id: quote._id,
+                dialog: quote.dialog,
+                movie: quote.movie,
+                character: quote.character,
+                id: quote.id,
+                reason: bqReason,
+        })
     }
 }
 

@@ -18,6 +18,7 @@ declare module 'express-session' {
         gameStarted: boolean;
         favoritedQuotes: FavoritedQuote[];
         blackListedQuotes: BlackListedQuote[];
+        editQuote: BlackListedQuote[];
     }
 }
 

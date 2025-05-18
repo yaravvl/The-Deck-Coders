@@ -39,6 +39,7 @@ export interface Quote {
     movie: string;
     character: string;
     id: string;
+    reason?: string;
 }
 
 export interface Movie {
