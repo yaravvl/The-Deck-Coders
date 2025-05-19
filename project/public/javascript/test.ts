@@ -6,20 +6,48 @@ function boxSelector() {
     let character_id : HTMLInputElement | null= document.getElementById("profile_picture") as HTMLInputElement
     let movie_id : HTMLInputElement | null = document.getElementById("movie_id") as HTMLInputElement
     let quote_choice : HTMLInputElement | null = document.getElementById("quote_id") as HTMLInputElement
+    let blacklist_reason : HTMLInputElement | null = document.getElementById("blacklist_reason") as HTMLInputElement
+
+    let likeClicked: boolean = false;
+    let dislikeClicked: boolean = false;
 
     quote_choice.value = "";
     movie_id.value = "";
     character_id.value = "";
     if(dislike_button || like_button) {
         like_button!.addEventListener("click", (e) => {
-           quote_choice.value = "favorited"
-           alert('Quote toegevoegd aan favorieten!');
+            if (!likeClicked || dislikeClicked) {
+                quote_choice.value = "favorited"
+                alert('Quote toegevoegd aan favorieten!');
+                likeClicked = true;
+                dislikeClicked = false;
+                blacklist_reason.value = ""
+            } else {
+                quote_choice.value = "";
+                alert('Quote terug verwijdert uit favorieten!');
+                likeClicked = false;
+            }
         })
         dislike_button!.addEventListener("click", (e) => {
-           quote_choice.value = "blacklist"
-           alert('test!');
+            if (likeClicked || !dislikeClicked) {
+                quote_choice.value = "blacklist"
+                const reason = prompt('Geef hier de reden in waarom u de quote wilt blacklisten.') //deze check is omdat je op annuleren kunt drukken waardoor het null is.
+                if (reason !== null) {
+                    blacklist_reason.value = reason
+                    alert("Quote toegvoegd aan de blacklist!")
+                } else {
+                    blacklist_reason.value = "U heeft geen reden ingegeven."
+                }
+                dislikeClicked = true;
+                likeClicked = false;
+            } else {
+                blacklist_reason.value = "";
+                quote_choice.value = ""
+                alert('Quote terug verwijdert uit blackilist!');
+                dislikeClicked = false;
+            }
         })
-     }
+    }
 
     console.log(character_choices, movie_choices)
     if (character_choices) {

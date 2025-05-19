@@ -1,6 +1,6 @@
 import { URI } from "./database";
 import session, { MemoryStore } from "express-session";
-import { PlayerInfo } from "./types";
+import { PlayerInfo, FavoritedQuote, BlackListedQuote } from "./types";
 import mongoDbSession from "connect-mongodb-session";
 const MongoDBStore = mongoDbSession(session);
 
@@ -16,6 +16,9 @@ declare module 'express-session' {
         userCurrentQuestion: number;
         userCurrentScore: number;
         gameStarted: boolean;
+        favoritedQuotes: FavoritedQuote[];
+        blackListedQuotes: BlackListedQuote[];
+        editQuote: BlackListedQuote[];
     }
 }
 

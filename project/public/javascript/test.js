@@ -6,17 +6,47 @@ function boxSelector() {
     var character_id = document.getElementById("profile_picture");
     var movie_id = document.getElementById("movie_id");
     var quote_choice = document.getElementById("quote_id");
+    var blacklist_reason = document.getElementById("blacklist_reason");
+    var likeClicked = false;
+    var dislikeClicked = false;
     quote_choice.value = "";
     movie_id.value = "";
     character_id.value = "";
     if (dislike_button || like_button) {
         like_button.addEventListener("click", function (e) {
-            quote_choice.value = "favorited";
-            alert('Quote toegevoegd aan favorieten!');
+            if (!likeClicked || dislikeClicked) {
+                quote_choice.value = "favorited";
+                alert('Quote toegevoegd aan favorieten!');
+                likeClicked = true;
+                dislikeClicked = false;
+                blacklist_reason.value = "";
+            }
+            else {
+                quote_choice.value = "";
+                alert('Quote terug verwijdert uit favorieten!');
+                likeClicked = false;
+            }
         });
         dislike_button.addEventListener("click", function (e) {
-            quote_choice.value = "blacklist";
-            alert('test!');
+            if (likeClicked || !dislikeClicked) {
+                quote_choice.value = "blacklist";
+                var reason = prompt('Geef hier de reden in waarom u de quote wilt blacklisten.'); //deze check is omdat je op annuleren kunt drukken waardoor het null is.
+                if (reason !== null) {
+                    blacklist_reason.value = reason;
+                    alert("Quote toegvoegd aan de blacklist!");
+                }
+                else {
+                    blacklist_reason.value = "U heeft geen reden ingegeven.";
+                }
+                dislikeClicked = true;
+                likeClicked = false;
+            }
+            else {
+                blacklist_reason.value = "";
+                quote_choice.value = "";
+                alert('Quote terug verwijdert uit blackilist!');
+                dislikeClicked = false;
+            }
         });
     }
     console.log(character_choices, movie_choices);
