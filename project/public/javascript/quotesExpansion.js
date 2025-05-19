@@ -12,7 +12,7 @@ function toggleClass(event) {
     return;
   }
 
-  const listItems = container.querySelectorAll("li, .hidden-quote"); // Select <li> and hidden quotes
+  const listItems = container.querySelectorAll("li, .hidden-quote, .expanded"); // Select <li> and hidden quotes
 
   let hasHiddenQuotes = true;
 
