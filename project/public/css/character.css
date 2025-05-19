@@ -18,14 +18,14 @@ body {
     font-size: 20px;
 
     img {
-    border-radius: 100%;
-    height: 275px;
+        border-radius: 100%;
+        height: 275px;
     }
 
     article {
         display: flex;
         flex-direction: row;
-        justify-content:center;
+        justify-content: center;
         gap: 20px;
         flex-wrap: wrap;
         margin: 25px;
@@ -43,13 +43,13 @@ body {
                 font-size: 35px;
                 padding-bottom: 5px;
                 transition: transform 0.2s ease;
-    
+
                 &:hover {
                     transform: scaleY(1.45) scaleX(1.015);
                     /* transform-origin: left; */
 
                 }
-    
+
                 &:active {
                     transform: scaleY(1.45) scaleX(1.015);
                 }
@@ -85,7 +85,7 @@ body {
                 margin-top: 15px;
                 padding: 10px;
                 position: relative;
-            
+
             }
         }
     }
