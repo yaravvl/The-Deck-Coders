@@ -19,10 +19,10 @@ export async function findByX(user: PlayerInfo | undefined, input: string, field
     return false;
 }
 
-export async function userScores() {
-    const users: PlayerInfo[] = userCollection.find({ $sort: { "highscores[0].score": -1 } });
-    console.log(users);
-}
+// export async function userScores() {
+//     const users: PlayerInfo[] = userCollection.find({ $sort: { "highscores[0].score": -1 } });
+//     console.log(users);
+// }
 
 export async function addQuoteToFavorites(quote: Quote, player: PlayerInfo) {
     if (player) {
@@ -33,12 +33,12 @@ export async function addQuoteToFavorites(quote: Quote, player: PlayerInfo) {
 export async function addQuoteToBlacklist(quote: Quote, player: PlayerInfo, bqReason: string) {
     if (player) {
         player.blacklistedQuotes.push({
-                _id: quote._id,
-                dialog: quote.dialog,
-                movie: quote.movie,
-                character: quote.character,
-                id: quote.id,
-                reason: bqReason,
+            _id: quote._id,
+            dialog: quote.dialog,
+            movie: quote.movie,
+            character: quote.character,
+            id: quote.id,
+            reason: bqReason,
         })
     }
 }

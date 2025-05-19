@@ -52,8 +52,8 @@
       <h3>Van welke film is deze quote?</h3>
       <section class="options">
         <% for (let movie of movies ) {%>
-          <figure name="<%=movie.id%>" class="movie_choices">
-            <img src="./assets/images/<%=movie.id%>.png" alt="" />
+          <figure name="<%=movie.id%>" class="movie_choices" >
+            <img src="./assets/images/<%=movie.id%>.png" alt="" class="movie-posters"/>
             <figcaption><%=movie.name%></figcaption>
           </figure>
         <% } %>
