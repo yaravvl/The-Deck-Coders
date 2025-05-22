@@ -251,6 +251,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/10-rounds", secureMiddleware, async (req, res) => {
+    console.log(req.session.favoritedQuotes);
     if (!req.session.gameStarted) {
         req.session.userCurrentQuestion = 1;
         req.session.userCurrentScore = 0;
@@ -265,7 +266,8 @@ app.get("/10-rounds", secureMiddleware, async (req, res) => {
         selectedCharacter: selectedCharacter,
         selectedQuote: selectedQuote,
         userCurrentQuestion: req.session.userCurrentQuestion || 1,
-        userCurrentScore: req.session.userCurrentScore || 0
+        userCurrentScore: req.session.userCurrentScore || 0,
+        favoritedQuotes: req.session.favoritedQuotes
     })
 })
 

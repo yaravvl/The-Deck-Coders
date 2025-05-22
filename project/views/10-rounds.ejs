@@ -31,7 +31,11 @@
       <h2>Vraag: <%=userCurrentQuestion%>/10</h2>
       <h2>
         "<%=selectedQuote.dialog%>"
-        <i class="bi bi-hand-thumbs-up"></i>
+        <% if (favoritedQuotes.some(fav => Array.isArray(fav.dialog) && fav.dialog.includes(selectedQuote.dialog))) { %>
+        <i class="bi bi-hand-thumbs-up-fill"></i>
+        <% } else {%>
+            <i class="bi bi-hand-thumbs-up"></i>
+          <% } %>
         <i class="bi bi-hand-thumbs-down"></i>
       </h2>
       <br />
