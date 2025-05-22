@@ -7,7 +7,7 @@
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="./css/reset.css" />
     <link rel="stylesheet" href="./css/style.css" />
-    <link rel="stylesheet" href="./css/favorites.css" />
+    <!-- <link rel="stylesheet" href="./css/favorites.css" /> -->
     <link rel="stylesheet" href="./css/blacklist.css" />
     <link rel="stylesheet" href="./css/dark-mode.css" />
     <link
@@ -17,133 +17,50 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
     <script type="module" src="./javascript/quotesExpansion.js" defer></script>
     <script src="./javascript/profile.js"></script>
-    <script src="./javascript/quoteManager.js" defer></script>
-    <link rel="icon" type="image/jpg" href="/assets/images/favicon.jpg">
   </head>
   <body>
     <%- include("partials/nav") %>
     <main>
       <section class="blacklist-page">
-        <article>
-          <a href="../character.html"
-            ><img
-              src="./assets/images/characters/frodo/frodo.webp"
-              alt=""
-            />
-            <h1>Frodo</h1>
-          </a>
-
-          <ul>
-            <li>
-              "We set out to save the Shire, Sam, and it has been saved. But not
-              for me."
-              <i class="bi bi-x-circle-fill"></i>
-            </li>
-            <i class="bi bi-pencil-square"></i>
-            <li class="blocked">
-              "Lorem ipsum dolor sit, amet consectetur adipisicing elit..."
-            </li>
-          </ul>
-          <ul>
-            <li>
-              "We set out to save the Shire, Sam, and it has been saved. But not
-              for me."
-              <i class="bi bi-x-circle-fill"></i>
-            </li>
-            <i class="bi bi-pencil-square"></i>
-            <li class="blocked">
-              "Lorem ipsum dolor sit, amet consectetur adipisicing elit..."
-            </li>
-          </ul>
-          <button class="toggle-quotes">Toon minder quotes</button>
-        </article>
-
-        <article>
-          <a href="../character.html"
+        <%for (let item of bQ) {%>
+          <article>
+          <a href="../character"
             ><img
               src="./assets/images/characters/legolas/legolas.png"
               alt=""
             />
-            <h1>Legolas</h1>
+            <h1><%=item.character.name%></h1>
           </a>
 
           <ul>
-            <li>
-              "Lorem ipsum dolor sit amet consectetur, adipisicing elit."
-              <i class="bi bi-x-circle-fill"></i>
-            </li>
-            <i class="bi bi-pencil-square"></i>
-            <li class="blocked">
-              "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem
-              distinctio incidunt labore aut ullam, architecto rerum eveniet
-              inventore suscipit, corporis esse harum facilis laboriosam
-              corrupti ea, assumenda ipsum vitae aspernatur. "
-            </li>
-
-            <section class="hidden-quote">
-              <li>"Character quote" <i class="bi bi-x-circle-fill"></i></li>
-              <i class="bi bi-pencil-square"></i>
-              <li class="blocked">"Reden van blokkering "</li>
+            <section>
+              <form action="/blacklist/<%=encodeURIComponent(item.dialog[0].quoteText)%>" method="post">
+                <li>"<%=item.dialog[0].quoteText%>"<button type="submit"><i class="bi bi-x-circle-fill"></i></button></li>
+              </form>
+              <form action="/edit-quote/<%=encodeURIComponent(item.dialog[0].quoteText)%>" method="get">
+                <button type="submit"><i class="bi bi-pencil-square"></i></button>
+                <li class="blocked"><%=item.dialog[0].blackListReason%></li>
+              </form>
             </section>
-          </ul>
-          <button class="toggle-quotes">Toon 2 andere quotes</button>
-        </article>
-        <article>
-          <a href="../character.html"
-            ><img
-              src="./assets/images/characters/gandalf/gandalf.webp"
-              alt=""
-            />
-            <h1>Gandalf</h1>
-          </a>
-
-          <ul>
-            <li>
-              "Lorem ipsum dolor, sit amet consectetur adipisicing elit."
-              <i class="bi bi-x-circle-fill"></i>
-            </li>
-            <i class="bi bi-pencil-square"></i>
-            <li class="blocked">
-              "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem
-              distinctio incidunt labore aut ullam "
-            </li>
-
-            <section class="hidden-quote">
-              <li>"Character quote" <i class="bi bi-x-circle-fill"></i></li>
-              <i class="bi bi-pencil-square"></i>
-              <li class="blocked">"Reden van blokkering "</li>
+            <%if (item.dialog.length > 1) {%>
+              <%for (let i = 1; i < item.dialog.length; i++) {%>
+                <section class="hidden-quote">
+              <form action="/blacklist/<%=encodeURIComponent(item.dialog[i].quoteText)%>" method="post">
+                <li>"<%=item.dialog[i].quoteText%>"<button type="submit"><i class="bi bi-x-circle-fill"></i></button></li>
+              </form>
+              <form action="/edit-quote/<%=encodeURIComponent(item.dialog[i].quoteText)%>" method="get">
+                <button type="submit"><i class="bi bi-pencil-square"></i></button>
+                <li class="blocked"><%=item.dialog[i].blackListReason%></li>
+              </form>
             </section>
+                <%}%> 
+            <%}%>
           </ul>
-          <button class="toggle-quotes">Toon 2 andere quotes</button>
+          <%if (item.dialog.length > 1) {%>
+            <button class="toggle-quotes">Toon <%=item.dialog.length - 1%> andere quotes</button>
+          <%}%>
         </article>
-        <article>
-          <a href="../character.html"
-            ><img
-              src="./assets/images/characters/smeagol/smeagol.webp"
-              alt=""
-            />
-            <h1>Smeagol</h1>
-          </a>
-
-          <ul>
-            <li>
-              "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem
-              distinctio"
-              <i class="bi bi-x-circle-fill"></i>
-            </li>
-            <i class="bi bi-pencil-square"></i>
-            <li class="blocked">
-              "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem
-              distinctio incidunt labore aut ullam"
-            </li>
-
-            <section class="hidden-quote">
-              <li>"Character quote" <i class="bi bi-x-circle-fill"></i></li>
-              <i class="bi bi-pencil-square"></i>
-              <li class="blocked">"Reden van blokkering "</li>
-            </section>
-          </ul>
-        </article>
+        <%}%>
       </section>
       <a class="up" href="#top"><i class="bi bi-arrow-up-circle"></i></a>
     </main>

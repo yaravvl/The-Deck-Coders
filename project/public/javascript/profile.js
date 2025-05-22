@@ -9,13 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const body = document.body;
   const formButton = document.getElementsByTagName("form");
 
-
-  // const savedProfilePic = localStorage.getItem("profilePicture");
-
-  // if (profilePicture) {
-  //   profilePicture.src = savedProfilePic;
-  // }
-
   if (toggleButton) {
     toggleButton.addEventListener("click", () => {
       body.classList.toggle("dark-mode");
@@ -30,9 +23,11 @@ document.addEventListener("DOMContentLoaded", () => {
     body.classList.add("dark-mode");
   }
 
-  changePictureBtn.addEventListener("click", () => {
+  if(changePictureBtn) {
+    changePictureBtn.addEventListener("click", () => {
     modal.showModal();
   });
+  }
 
   pictureOptions.forEach((option) => {
     option.addEventListener("click", function () {
@@ -43,17 +38,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  modal.addEventListener("click", (event) => {
+  if (modal) {
+    modal.addEventListener("click", (event) => {
     if (event.target === modal) {
       modal.close();
     }
   });
+  }
 });
-
-//Doorverwijzen van de pagina's nadat er op submit wordt gedrukt
-// if (formButton) {
-//   formButton.addEventListener("submit", function (event) {
-//     event.preventDefault();
-//     window.location.href = "./welcomepage.html";
-//   });
-// }

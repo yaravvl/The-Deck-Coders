@@ -25,7 +25,34 @@
         font-family: "Oswald", sans-serif;
         text-align: center;
         
-    
+        .quote-box {
+            width: 50%;
+            h1 {
+                text-decoration: none;
+                margin-top: -0.5rem;
+            }
+            ul {
+                li {
+                width: 100%;
+                display: block;
+                position: static;
+                }
+                .input-li {
+                    padding: 0;
+                    height: 3rem;
+                    input {
+                    width: 100%;
+                    height: 100%;
+                    display: block;
+                    box-sizing: border-box;
+                    border: none;
+                    text-align: center;
+                    font-size: medium;
+                    }
+                }
+            }
+        }
+
         article {
             display: flex;
             flex-direction: column;
@@ -92,30 +119,11 @@
                 }
     
                 .hidden-quote {
-                    display: none; /* Hide extra quotes */
-                    position: absolute;
-                    top: 100%;
-                    padding: 10px;
-                }
-                
+                display: none; /* Hide extra quotes */
+            }
+            
                 .expanded  {
                     display: block; /* Show extra quotes when expanded */
-                    position: relative;
-                    padding: 10px;
-
-
-                        width:90%;
-                        max-width: 300px;
-                        margin-top: 5px;
-                        margin-bottom: 1px;
-                        position: relative;
-                        left: 30px;
-                        align-items: flex-end;
-                        text-align: right;
-                        color: grey;
-                        font-style: italic;
-
-    
                 }
     
                 .bi-pencil-square{
@@ -136,6 +144,9 @@
                 text-align: right;
                 color: grey;
                 font-style: italic;
+                textarea{
+                    width: 100%;
+                }
                }
     
                i:hover{

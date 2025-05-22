@@ -38,9 +38,26 @@ export interface Quote {
     dialog: string;
     movie: string;
     character: string;
+    id: string;
+    reason?: string;
 }
 
 export interface Movie {
     name: string;
     id: string;
+}
+
+export interface FavoritedQuote {
+    character: Character;
+    dialog: string[];
+}
+
+export interface BlackListedQuote {
+    character: Character;
+    dialog: BlackListedQuoteTemplate[]
+}
+
+export interface BlackListedQuoteTemplate {
+    quoteText: string;
+    blackListReason: string;
 }
