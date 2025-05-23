@@ -267,7 +267,6 @@ app.get("/10-rounds", secureMiddleware, async (req, res) => {
     req.session.sDStarted = false;
     req.session.tQStarted = false;
     req.session.tRStarted = true;
-
     const quizTeam: Character[] = await generateTeam();
     await generatedSelectedCharacter(quizTeam, quizTeam.length);
     quizTeam.forEach((e) => {
