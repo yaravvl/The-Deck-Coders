@@ -37,6 +37,7 @@ function generateRandomNumber(max: number): number {
 }
 
 async function generatedSelectedCharacter(number: number) {
+
     const randomNum = generateRandomNumber(number);
     selectedCharacter = CHARACTERS[randomNum];
 
@@ -46,6 +47,8 @@ async function generatedSelectedCharacter(number: number) {
 }
 
 async function generateTeam(): Promise<Character[]> {
+    //Hier de check uitvoeren voor de blacklisted quotes weg te halen
+    //Doe de characters maar in de session variabelen.
     const usedNumbers: number[] = [];
     const team: Character[] = [];
     let randomNum = -1;
@@ -78,7 +81,7 @@ async function getCharactersWithQuotes() {
     try {
         //Dit is momenteel gewoon mijn bearer-token we kunnen zien of we dit houden of later nog dynamisch willen aanpassen per log-in account
         const headers = {
-            authorization: "Bearer FrpwbfRPTwxJOACKq3D_"
+            authorization: process.env.BEARER ?? ""
         };
 
         //Alle quotes ophalen
@@ -114,7 +117,8 @@ async function getCharactersWithQuotes() {
             characterIdsWithQuotes.has(character._id) && allowedIds.has(character._id)
         );
 
-        //Alle quotes die een character heeft bijhouden in hun property quotes.
+        //Alle quotes die een character heeft bijhouden in hun property quotes
+        //Enkel quotes bijhouden die minder dan of net 50 tekens bevatten
         for (const character of CHARACTERS) {
             character.quotes = QUOTES.filter((quote: Quote) => quote.character === character._id && quote.dialog.length <= 50);
         }
