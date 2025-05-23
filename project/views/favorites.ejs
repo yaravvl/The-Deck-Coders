@@ -42,7 +42,8 @@
             </li>
             <%if (quote.dialog.length > 1) {%>
               <%for (let i = 1; i < quote.dialog.length; i++) {%>
-                <li class="hidden-quote">
+                <li class="hidden-quote"> 
+                  <!-- EncodeURIComponent zorgt ervoor dat "?" niet als quries worden gezien -->
                 <form action="/favorites/<%=encodeURIComponent(quote.dialog[i])%>" method="post">
                   <%=quote.dialog[i]%>
                   <button type="submit"><i class="bi bi-x-circle-fill"></i></button>

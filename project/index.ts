@@ -36,10 +36,9 @@ function generateRandomNumber(max: number): number {
     return Math.floor(Math.random() * max);
 }
 
-async function generatedSelectedCharacter(number: number) {
-
+async function generatedSelectedCharacter(selectedTeam: Character[], number: number) {
     const randomNum = generateRandomNumber(number);
-    selectedCharacter = CHARACTERS[randomNum];
+    selectedCharacter = selectedTeam[randomNum];
 
     const selectedQuoteIndex = generateRandomNumber(selectedCharacter.quotes.length);
     selectedQuote = selectedCharacter.quotes[selectedQuoteIndex];
@@ -212,11 +211,12 @@ app.post("/update-account", async (req, res) => {
     }
 })
 
-app.post("/next", (req, res) => {
+app.post("/quiz/10-rounds/next", (req, res) => {
     const character_id = req.body.character_id
     const movie_id = req.body.movie_id
     const choice_quote = req.body.quote_choice
     const blacklist_reason = req.body.blacklist_reason
+    console.log(selectedQuote.dialog)
 
     if (choice_quote === "favorited") {
         addQuoteToFavorites(selectedQuote, req.session.user!)
@@ -235,10 +235,14 @@ app.post("/next", (req, res) => {
     if (selectedQuote.movie === movie_id && selectedQuote.character === character_id) {
         req.session.userCurrentScore += 1;
         req.session.userCurrentQuestion += 1;
+        console.log("antwoord is juist")
     } else {
         req.session.userCurrentQuestion += 1;
+        console.log("antwoord is fout")
     }
-
+    if (req.session.userCurrentQuestion === 10) {
+        console.log(req.session.userCurrentScore)
+    }
     res.redirect("/10-rounds")
 
 })
@@ -255,19 +259,27 @@ app.get("/", (req, res) => {
 });
 
 app.get("/10-rounds", secureMiddleware, async (req, res) => {
-    if (!req.session.gameStarted) {
+    let activeGame = true;
+    if (!req.session.tRStarted) {
         req.session.userCurrentQuestion = 1;
         req.session.userCurrentScore = 0;
     }
-    req.session.gameStarted = true;
-    
-    // Initialize favoritedQuotes if it doesn't exist
-    if (!req.session.favoritedQuotes) {
-        req.session.favoritedQuotes = [];
-    }
-    
+
+    req.session.sDStarted = false;
+    req.session.tQStarted = false;
+    req.session.tRStarted = true;
+
     const quizTeam: Character[] = await generateTeam();
-    await generatedSelectedCharacter(quizTeam.length);
+    await generatedSelectedCharacter(quizTeam, quizTeam.length);
+    quizTeam.forEach((e) => {
+        console.log(e.name)
+    })
+    console.log(selectedQuote)
+    console.log(selectedCharacter.name)
+    if (req.session.userCurrentQuestion! === 10) {
+        req.session.tRStarted = false
+        console.log("the game has finished")
+    }
     res.render("10-rounds", {
         player: req.session.user,
         characters: quizTeam,
@@ -399,7 +411,9 @@ app.get("/:index", secureMiddleware, async (req, res) => {
     // req.session.blackListedQuotes = []
     // req.session.user!.blacklistedQuotes = [] //kleine reset
     // console.log(req.session.blackListArray, req.session.blackListedQuotes)
-    req.session.gameStarted = false;
+    req.session.sDStarted = false;
+    req.session.tQStarted = false;
+    req.session.tRStarted = false;
     let index: string = req.params.index
     const expPercentage: number = 0
     if (index !== "ico") {

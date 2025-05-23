@@ -2,6 +2,7 @@ import { Collection, MongoClient, ObjectId } from "mongodb";
 import { PlayerInfo, Quote } from "./types";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
+import { cp } from "fs";
 dotenv.config();
 
 export const URI = process.env.URI!;
