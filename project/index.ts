@@ -114,7 +114,8 @@ async function getCharactersWithQuotes() {
             characterIdsWithQuotes.has(character._id) && allowedIds.has(character._id)
         );
 
-        //Alle quotes die een character heeft bijhouden in hun property quotes.
+        //Alle quotes die een character heeft bijhouden in hun property quotes
+        //Enkel quotes bijhouden die minder dan of net 50 tekens bevatten
         for (const character of CHARACTERS) {
             character.quotes = QUOTES.filter((quote: Quote) => quote.character === character._id && quote.dialog.length <= 50);
         }
@@ -216,7 +217,7 @@ app.post("/next", (req, res) => {
 
     if (choice_quote === "favorited") {
         addQuoteToFavorites(selectedQuote, req.session.user!)
-    } else if (choice_quote === "blacklist"){
+    } else if (choice_quote === "blacklist") {
         addQuoteToBlacklist(selectedQuote, req.session.user!, blacklist_reason)
     } else {
     }
@@ -269,11 +270,11 @@ app.get("/10-rounds", secureMiddleware, async (req, res) => {
     })
 })
 
-app.get("/blacklist", secureMiddleware, async(req, res) => {
-        const blackListedArray: BlackListedQuote[] = []
-        // req.session.blackListedQuotes.forEach((e) => console.log(e.dialog)) //debug
-        // console.log(req.session.user?.blacklistedQuotes)
-        req.session.user?.blacklistedQuotes.forEach((quotes) => {
+app.get("/blacklist", secureMiddleware, async (req, res) => {
+    const blackListedArray: BlackListedQuote[] = []
+    // req.session.blackListedQuotes.forEach((e) => console.log(e.dialog)) //debug
+    // console.log(req.session.user?.blacklistedQuotes)
+    req.session.user?.blacklistedQuotes.forEach((quotes) => {
         const foundCharacter = CHARACTERS.find((characters) => {
             return characters._id === quotes.character
         })
@@ -281,17 +282,17 @@ app.get("/blacklist", secureMiddleware, async(req, res) => {
             return q.character._id === foundCharacter!._id
         })
         if (!charInArray) {
-                charInArray = {
+            charInArray = {
                 character: foundCharacter!,
                 dialog: []
             }
-        blackListedArray.push(charInArray)
+            blackListedArray.push(charInArray)
         }
         charInArray.dialog.push({
             quoteText: quotes.dialog,
             blackListReason: quotes.reason!
+        })
     })
-})
     req.session.blackListedQuotes = blackListedArray;
     res.render("blacklist", {
         title: "Blacklist",
@@ -344,10 +345,10 @@ app.get("/edit-quote/:id", secureMiddleware, (req, res) => {
         return e.dialog.find((q) => q.quoteText === index)
     })
     if (findQuote) {
-        res.render("blacklisted-quote",{
+        res.render("blacklisted-quote", {
             quote: findQuote
-    }
-    )
+        }
+        )
     } else {
         res.redirect("/blacklist")
     }
@@ -391,19 +392,19 @@ app.get("/:index", secureMiddleware, async (req, res) => {
     req.session.gameStarted = false;
     let index: string = req.params.index
     const expPercentage: number = 0
-    if(index !== "ico") {
+    if (index !== "ico") {
         res.render(index, {
-        title: index.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
-        player: req.session.user,
-        exp_progress: expPercentage,
-        error: null,
-    })
+            title: index.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
+            player: req.session.user,
+            exp_progress: expPercentage,
+            error: null,
+        })
     }
 });
 
 app.listen(app.get("port"), async () => {
     console.log("Server started on http://localhost:" + app.get("port"));
-    try { 
+    try {
         await getCharactersWithQuotes();
         await getMovies();
     } catch (e) {
