@@ -264,7 +264,6 @@ app.get("/10-rounds", secureMiddleware, async (req, res) => {
         req.session.userCurrentQuestion = 1;
         req.session.userCurrentScore = 0;
     }
-
     req.session.sDStarted = false;
     req.session.tQStarted = false;
     req.session.tRStarted = true;
