@@ -192,6 +192,10 @@ header {
     font-size: 0.8rem;
 
     a {
+      text-decoration: none;
+      color: var(--color-light-gold);
+      font-weight: bold;
+
       &:hover {
         color: white;
         text-decoration: underline;
