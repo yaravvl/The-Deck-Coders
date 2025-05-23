@@ -251,12 +251,17 @@ app.get("/", (req, res) => {
 });
 
 app.get("/10-rounds", secureMiddleware, async (req, res) => {
-    console.log(req.session.favoritedQuotes);
     if (!req.session.gameStarted) {
         req.session.userCurrentQuestion = 1;
         req.session.userCurrentScore = 0;
     }
     req.session.gameStarted = true;
+    
+    // Initialize favoritedQuotes if it doesn't exist
+    if (!req.session.favoritedQuotes) {
+        req.session.favoritedQuotes = [];
+    }
+    
     const quizTeam: Character[] = await generateTeam();
     await generatedSelectedCharacter(quizTeam.length);
     res.render("10-rounds", {
@@ -400,6 +405,17 @@ app.get("/:index", secureMiddleware, async (req, res) => {
             exp_progress: expPercentage,
             error: null,
         })
+    }
+});
+
+app.get("/timed-quiz", secureMiddleware, (req, res) => {
+    if (req.session.user && req.session.user.level >= 3) {
+        res.render("timed-quiz", {
+            title: "Timed Quiz",
+            player: req.session.user
+        });
+    } else {
+        res.redirect("/quiz");
     }
 });
 

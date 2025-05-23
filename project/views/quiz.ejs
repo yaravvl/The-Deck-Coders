@@ -18,6 +18,20 @@
     />
     <script src="javascript/profile.js"></script>
     <link rel="icon" type="image/jpg" href="/assets/images/favicon.jpg">
+    <script>
+      function showLockPopup(event) {
+        if (event.currentTarget.classList.contains('locked')) {
+          event.preventDefault();
+          document.getElementById('lockPopup').classList.add('show');
+          document.getElementById('popupOverlay').classList.add('show');
+        }
+      }
+
+      function closeLockPopup() {
+        document.getElementById('lockPopup').classList.remove('show');
+        document.getElementById('popupOverlay').classList.remove('show');
+      }
+    </script>
   </head>
   <body>
     <%- include("partials/nav") %>
@@ -42,7 +56,7 @@
             </p></a
           >
         </article>
-          <article id="article-three">
+        <article id="article-three" class="<%= player.level < 3 ? 'locked' : '' %>" onclick="showLockPopup(event)">
           <a href="timed-quiz">
             <h2>Timed quiz</h2>
             <p>
@@ -53,4 +67,16 @@
         </article>
       </section>
     </main>
+
+    <!-- Popup and overlay -->
+    <div id="popupOverlay" class="popup-overlay" onclick="closeLockPopup()"></div>
+    <div id="lockPopup" class="popup">
+      <h3>Vergrendelde inhoud</h3>
+      <p>Je moet level 3 bereiken om de Timed Quiz te ontgrendelen.</p>
+      <p>Huidig level: <%= player.level %></p>
+      <button onclick="closeLockPopup()">Sluiten</button>
+    </div>
+
     <%- include("partials/footer") %>
+  </body>
+</html>
