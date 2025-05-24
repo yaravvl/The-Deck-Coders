@@ -16,34 +16,6 @@
     <script src="./javascript/thumbToggle.js" defer></script>
     <script src="./javascript/test.js"></script>
     <link rel="icon" type="image/jpg" href="/assets/images/favicon.jpg">
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const currentQuestion = parseInt('<%=userCurrentQuestion%>');
-        const currentScore = parseInt('<%=userCurrentScore%>');
-        
-        if (currentQuestion > 10) {
-          showEndGamePopup(currentScore);
-        }
-      });
-
-      function showEndGamePopup(score) {
-        document.getElementById('endGamePopup').classList.add('show');
-        document.getElementById('popupOverlay').classList.add('show');
-      }
-
-      function closeEndGamePopup() {
-        document.getElementById('endGamePopup').classList.remove('show');
-        document.getElementById('popupOverlay').classList.remove('show');
-      }
-
-      function tryAgain() {
-        window.location.href = '/10-rounds';
-      }
-
-      function backToMenu() {
-        window.location.href = '/quiz';
-      }
-    </script>
   </head>
   <style>
     body {
@@ -67,7 +39,8 @@
         <i class="bi bi-hand-thumbs-down"></i>
       </h2>
       <br />
- 
+      <p>DEBUG: <%=chardebug%></p>
+      <p>DEBUG: <%=mvdebug%></p>
       <h3>Van welk karakter is deze quote?</h3>
  
       <section class="options">
@@ -98,16 +71,20 @@
     </main>
 
     <!-- End Game Popup -->
-    <div id="popupOverlay" class="popup-overlay"></div>
-    <div id="endGamePopup" class="end-game-popup">
-      <h2>Quiz voltooid!</h2>
-      <p class="message">Je hebt alle 10 vragen beantwoord.</p>
-      <div class="score"><%=userCurrentScore%>/10</div>
-      <div class="buttons">
-        <button class="try-again" onclick="tryAgain()">Opnieuw proberen</button>
-        <button class="back-to-menu" onclick="backToMenu()">Terug naar menu</button>
+    <%if (showMenu) {%>
+      <div id="popupOverlay" class="popup-overlay show">
+        <div id="endGamePopup" class="end-game-popup show">
+          <h2>Quiz voltooid!</h2>
+          <p class="message">Je hebt alle 10 vragen beantwoord.</p>
+          <div class="score"><%= userCurrentScore %>/10</div>
+          <p class="meesage">+<%=receivedExp%>exp</p>
+          <div class="buttons">
+            <a href="/10-rounds"><button class="try-again">Opnieuw proberen</button></a>
+            <a href="/quiz"><button class="back-to-menu">Terug naar menu</button></a>
+          </div>
+        </div>
       </div>
-    </div>
+    <%}%>
 
     <%- include("partials/footer") %>
   </body>

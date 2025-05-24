@@ -1,7 +1,7 @@
 function boxSelector() {
     var character_choices = document.querySelectorAll(".character_choices");
     var movie_choices = document.querySelectorAll(".movie_choices");
-    var like_button = document.querySelector(".bi-hand-thumbs-up");
+    var like_button = document.querySelector(".bi-hand-thumbs-up, .bi-hand-thumbs-up-fill");
     var dislike_button = document.querySelector(".bi-hand-thumbs-down");
     var character_id = document.getElementById("profile_picture");
     var movie_id = document.getElementById("movie_id");

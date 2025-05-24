@@ -3,8 +3,8 @@ import dotenv from "dotenv";
 import path from "path";
 
 import { Character, PlayerInfo, Movie, Quote, FavoritedQuote, BlackListedQuote } from "./types";
-import { addExp, ExpPercentage } from "./experience";
-import { createPlayer, connect, addUser, checkExistingPlayer, checkLogin, updateProfile, findByX, addQuoteToBlacklist, addQuoteToFavorites } from "./database";
+import { addExp, ExpPercentage, calculateExp10 } from "./experience";
+import { createPlayer, connect, addUser, checkExistingPlayer, findSdHighscores, findTqHighscores, checkLogin, find10Highscores, updateProfile, findByX, addQuoteToBlacklist, addQuoteToFavorites } from "./database";
 import bcrypt from 'bcrypt';
 import session from "./session";
 import { secureMiddleware, loggedIn } from "./secureMiddleware";
@@ -224,6 +224,18 @@ app.get("/favorites/detail-pagina/:id", secureMiddleware, (req, res) => {
     } 
 })
 
+app.get("/highscores", secureMiddleware, async (req, res) => {
+    const tenRounds = await find10Highscores()
+    const suddenDeath = await findSdHighscores()
+    const timedQuiz = await findTqHighscores()
+    res.render("highscores", {
+        title: "Highscores",
+        tenRounds,
+        suddenDeath,
+        timedQuiz
+    })
+})
+
 app.post("/quiz/10-rounds/next", (req, res) => {
     const character_id = req.body.character_id
     const movie_id = req.body.movie_id
@@ -255,12 +267,11 @@ app.post("/quiz/10-rounds/next", (req, res) => {
 
     if (selectedQuote.movie === movie_id && selectedQuote.character === character_id) {
         req.session.userCurrentScore += 1;
-        req.session.userCurrentQuestion += 1;
         console.log("antwoord is juist")
     } else {
-        req.session.userCurrentQuestion += 1;
         console.log("antwoord is fout")
     }
+    req.session.userCurrentQuestion += 1;
     if (req.session.userCurrentQuestion === 10) {
         console.log(req.session.userCurrentScore)
     }
@@ -287,7 +298,7 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/10-rounds", secureMiddleware, async (req, res) => {
-    let activeGame = true;
+    let showMenu = false;
     if (!req.session.tRStarted) {
         req.session.userCurrentQuestion = 1;
         req.session.userCurrentScore = 0;
@@ -300,16 +311,23 @@ app.get("/10-rounds", secureMiddleware, async (req, res) => {
         quizTeam = await generateTeam(req.session.characters);
     }
     await generatedSelectedCharacter(quizTeam, quizTeam.length);
-    console.log(quizTeam)
-    console.log(generatedSelectedCharacter)
-    quizTeam.forEach((e) => {
-        console.log(e.name)
+    // quizTeam.forEach((e) => {
+    //     console.log(e.name)
+    // })
+    const moviedebug = movies.find((e) => {
+        return e.id === selectedQuote.movie
     })
-    console.log(selectedQuote)
-    console.log(selectedCharacter.name)
-    if (req.session.userCurrentQuestion! === 10) {
+    // console.log(moviedebug?.name)
+    // console.log(selectedCharacter.name)
+    if (req.session.userCurrentQuestion! === 11) {
+        req.session.userCurrentQuestion = 10
         req.session.tRStarted = false
-        console.log("the game has finished")
+        showMenu = true
+        addExp(req.session.user!, calculateExp10(req.session.userCurrentScore!))
+        if (req.session.user?.tenRoundsHs! < req.session.userCurrentScore!) {
+            req.session.user!.tenRoundsHs! = req.session.userCurrentScore!
+        }
+        updateProfile(req.session.user)
     }
     res.render("10-rounds", {
         player: req.session.user,
@@ -319,7 +337,11 @@ app.get("/10-rounds", secureMiddleware, async (req, res) => {
         selectedQuote: selectedQuote,
         userCurrentQuestion: req.session.userCurrentQuestion || 1,
         userCurrentScore: req.session.userCurrentScore || 0,
-        favoritedQuotes: req.session.favoritedQuotes
+        favoritedQuotes: req.session.favoritedQuotes || [],
+        showMenu: showMenu,
+        receivedExp: calculateExp10(req.session.userCurrentScore!),
+        mvdebug: moviedebug?.name, //DEBUG VERWIJDER LATER
+        chardebug: selectedCharacter.name //DEUG
     })
 })
 
@@ -445,6 +467,10 @@ app.get("/:index", secureMiddleware, async (req, res) => {
     // req.session.blackListedQuotes = []
     // req.session.user!.blacklistedQuotes = [] //kleine reset
     // console.log(req.session.blackListArray, req.session.blackListedQuotes)
+    //deze onderste if statement moet 100% in de quiz router
+    if (!req.session.characters) {
+        req.session.characters = await getCharactersWithQuotes()
+    }
     req.session.sDStarted = false;
     req.session.tQStarted = false;
     req.session.tRStarted = false;

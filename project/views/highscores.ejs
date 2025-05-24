@@ -34,21 +34,20 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="current-user">
-                <td><%= player.level %></td>
-                <td><%= player.username %></td>
-                <td><%= player.hs10 %></td>
+              <%for (let i = 0; i < tenRounds.length; i++) {%>
+                <%if (i === 0) {%>
+                  <tr class="current-user">
+                  <td><%= tenRounds[0].level %></td>
+                  <td><%= tenRounds[0].username %></td>
+                  <td><%= tenRounds[0].tenRoundsHs %></td>
               </tr>
-              <tr>
-                <td>25</td>
-                <td>ilias</td>
-                <td>10</td>
-              </tr>
-              <tr>
-                <td>12</td>
-                <td>test</td>
-                <td>7</td>
-              </tr>
+                <%} else {%>
+                  <tr>
+                  <td><%= tenRounds[i].level %></td>
+                  <td><%= tenRounds[i].username %></td>
+                  <td><%= tenRounds[i].tenRoundsHs %></td>
+                <%}%>
+              <%}%>
             </tbody>
           </table>
         </article>
@@ -65,21 +64,20 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="current-user">
-                <td><%= player.level %></td>
-                <td><%= player.username %></td>
-                <td><%= player.hsSd %></td>
+                <%for (let i = 0; i < suddenDeath.length; i++) {%>
+                <%if (i === 0) {%>
+                  <tr class="current-user">
+                  <td><%= suddenDeath[0].level %></td>
+                  <td><%= suddenDeath[0].username %></td>
+                  <td><%= suddenDeath[0].suddenDeathHs %></td>
               </tr>
-              <tr>
-                <td>25</td>
-                <td>tawan</td>
-                <td>20</td>
-              </tr>
-              <tr>
-                <td>12</td>
-                <td>test</td>
-                <td>15</td>
-              </tr>
+                <%} else {%>
+                  <tr>
+                  <td><%= suddenDeath[i].level %></td>
+                  <td><%= suddenDeath[i].username %></td>
+                  <td><%= suddenDeath[i].suddenDeathHs %></td>
+                <%}%>
+              <%}%>
             </tbody>
           </table>
         </article>
@@ -96,21 +94,20 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="current-user">
-                <td><%= player.level %></td>
-                <td><%= player.username %></td>
-                <td><%= player.hsTq %></td>
+              <%for (let i = 0; i < timedQuiz.length; i++) {%>
+                <%if (i === 0) {%>
+                  <tr class="current-user">
+                  <td><%= timedQuiz[0].level %></td>
+                  <td><%= timedQuiz[0].username %></td>
+                  <td><%= timedQuiz[0].timedQuizHs %></td>
               </tr>
-              <tr>
-                <td>25</td>
-                <td>jessie</td>
-                <td>18</td>
-              </tr>
-              <tr>
-                <td>12</td>
-                <td>test</td>
-                <td>14</td>
-              </tr>
+                <%} else {%>
+                  <tr>
+                  <td><%= timedQuiz[i].level %></td>
+                  <td><%= timedQuiz[i].username %></td>
+                  <td><%= timedQuiz[i].timedQuizHs %></td>
+                <%}%>
+              <%}%>
             </tbody>
           </table>
         </article>

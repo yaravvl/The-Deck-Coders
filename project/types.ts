@@ -25,12 +25,9 @@ export interface PlayerInfo {
     requiredExp: number,
     favoritedQuotes: Quote[],
     blacklistedQuotes: Quote[],
-    highscores: Score[]
-}
-
-export interface Score {
-    name: "tenRounds" | "suddenDeath" | "timedQuiz";
-    score: number
+    tenRoundsHs: number,
+    suddenDeathHs: number,
+    timedQuizHs: number
 }
 
 export interface Quote {

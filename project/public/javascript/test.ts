@@ -1,7 +1,7 @@
 function boxSelector() {
     let character_choices: NodeListOf<HTMLElement> = document.querySelectorAll(".character_choices");
     let movie_choices: NodeListOf<HTMLElement> = document.querySelectorAll(".movie_choices");
-    let like_button: HTMLElement | null = document.querySelector(".bi-hand-thumbs-up");
+    let like_button: HTMLElement | null = document.querySelector(".bi-hand-thumbs-up, .bi-hand-thumbs-up-fill");
     let dislike_button: HTMLElement | null= document.querySelector(".bi-hand-thumbs-down");
     let character_id : HTMLInputElement | null= document.getElementById("profile_picture") as HTMLInputElement
     let movie_id : HTMLInputElement | null = document.getElementById("movie_id") as HTMLInputElement
