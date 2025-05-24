@@ -1,6 +1,6 @@
 import { URI } from "./database";
 import session, { MemoryStore } from "express-session";
-import { PlayerInfo, FavoritedQuote, BlackListedQuote, Quote } from "./types";
+import { PlayerInfo, FavoritedQuote, BlackListedQuote, Quote, Character } from "./types";
 import mongoDbSession from "connect-mongodb-session";
 const MongoDBStore = mongoDbSession(session);
 
@@ -22,6 +22,7 @@ declare module 'express-session' {
         tRStarted: boolean;
         sDStarted: boolean;
         tQStarted: boolean;
+        characters: Character[]
     }
 }
 

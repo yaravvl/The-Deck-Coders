@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%=title%></title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="./css/reset.css" />
-    <link rel="stylesheet" href="./css/style.css" />
-    <link rel="stylesheet" href="./css/character.css" />
-    <link rel="stylesheet" href="./css/dark-mode.css">
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/character.css" />
+    <link rel="stylesheet" href="/css/dark-mode.css">
     <link
       href="https://fonts.googleapis.com/css2?family=Oswald&family=Qwitcher+Grypen:wght@400;700&display=swap"
       rel="stylesheet"
@@ -21,30 +21,27 @@
     <%- include("partials/nav") %>
     <main class="character-page">
       <article>
-        <img src="./assets/images/characters/frodo/frodo.webp" alt="" />
+        <img src="/assets/images/characters/frodo/frodo.webp" alt="" />
         <section>
           <a href="https://nl.wikipedia.org/wiki/Frodo_Balings" target="_blank">
-            <h1>Frodo</h1>
+            <h1><%=foundCharacter.character.name%></h1>
           </a>
           <ul>
-            <li><span class="h2">Ras:</span> Hobbit</li>
-            <li><span class="h2">Geboren:</span> 22 September ,TA 2968</li>
+            <li><span class="h2">Ras:</span> <%=foundCharacter.character.race%></li>
+            <li><span class="h2">Geboren:</span> <%=foundCharacter.character.birth%></li>
             <li>
-              <span class="h2">Gestorven:</span> Unknown (Last sighting
-              ,September 29 ,3021,)
+              <span class="h2">Gestorven:</span> <%=foundCharacter.character.death%>
             </li>
-            <li><span class="h2">Haarkleur:</span> Brown</li>
+            <li><span class="h2">Haarkleur:</span> <%=foundCharacter.character.hair%></li>
           </ul>
         </section>
       </article>
 
       <section class="quotes">
         <ul>
-          <li>
-            "We set out to save the Shire, Sam, and it has been saved. But not
-            for me."
-          </li>
-          <li>"Character quote"</li>
+          <%for (const quote of foundCharacter.dialog) {%>
+            <li><%=quote%></li>
+          <%}%>
         </ul>
       </section>
     </main>
