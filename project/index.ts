@@ -269,6 +269,7 @@ app.get("/10-rounds", secureMiddleware, async (req, res) => {
     req.session.tRStarted = true;
     const quizTeam: Character[] = await generateTeam();
     await generatedSelectedCharacter(quizTeam, quizTeam.length);
+
     quizTeam.forEach((e) => {
         console.log(e.name)
     })
@@ -278,6 +279,7 @@ app.get("/10-rounds", secureMiddleware, async (req, res) => {
         req.session.tRStarted = false
         console.log("the game has finished")
     }
+
     res.render("10-rounds", {
         player: req.session.user,
         characters: quizTeam,
@@ -286,7 +288,7 @@ app.get("/10-rounds", secureMiddleware, async (req, res) => {
         selectedQuote: selectedQuote,
         userCurrentQuestion: req.session.userCurrentQuestion || 1,
         userCurrentScore: req.session.userCurrentScore || 0,
-        favoritedQuotes: req.session.favoritedQuotes
+        favoritedQuotes: req.session.user?.favoritedQuotes
     })
 })
 
@@ -382,7 +384,13 @@ app.post("/blacklist/:id", secureMiddleware, (req, res) => {
     findCharacter?.dialog.forEach((e) => console.log(e.quoteText))
     if (findCharacter) {
         findCharacter.dialog = findCharacter.dialog.filter((e) => e.quoteText !== index);
-        req.session.user!.blacklistedQuotes = req.session.user!.blacklistedQuotes.filter((e) => e.dialog !== index)
+
+        if (req.session.user) {
+            req.session.user.blacklistedQuotes = req.session.user.blacklistedQuotes.filter((e) => e.dialog !== index)
+        }
+        else {
+            throw new Error("The session.user is undefined")
+        }
     }
     res.redirect("/blacklist")
 })
@@ -400,7 +408,13 @@ app.post("/favorites/:id", secureMiddleware, (req, res) => {
                 e = findCharacter
             }
         })
-        req.session.user!.favoritedQuotes = req.session.user!.favoritedQuotes.filter((e) => e.dialog !== index)
+
+        if (req.session.user) {
+            req.session.user.favoritedQuotes = req.session.user.favoritedQuotes.filter((e) => e.dialog !== index)
+        }
+        else {
+            throw new Error("The session.user is undefined")
+        }
     }
     res.redirect("/favorites")
 })
@@ -435,11 +449,16 @@ app.get("/timed-quiz", secureMiddleware, (req, res) => {
     }
 });
 
+app.use((req, res, next) => {
+    res.redirect("/welcomepage");
+})
+
 app.listen(app.get("port"), async () => {
     console.log("Server started on http://localhost:" + app.get("port"));
     try {
         await getCharactersWithQuotes();
         await getMovies();
+
     } catch (e) {
         console.log(e)
     }
