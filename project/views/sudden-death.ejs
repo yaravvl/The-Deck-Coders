@@ -16,6 +16,7 @@
     <script src="javascript/profile.js"></script>
     <script src="./javascript/thumbToggle.js" defer></script>
     <script src="./javascript/quoteManager.js" defer></script>
+    <script src="./javascript/test.js"></script>
     <link rel="icon" type="image/jpg" href="../public/assets/images/favicon.jpg">
   </head>
   <style>
@@ -29,54 +30,61 @@
   <body>
     <%- include("partials/nav") %>
     <main class="quiz">
-      <h2>Vraag: 01</h2>
+      <h2>Vraag: <%=userCurrentQuestion%></h2>
       <h2>
-        "Quote van karakter"
-        <i class="bi bi-hand-thumbs-up"></i>
+        "<%=selectedQuote.dialog%>"
+        <% if (favoritedQuotes.some(fav => Array.isArray(fav.dialog) && fav.dialog.includes(selectedQuote.dialog))) { %>
+        <i class="bi bi-hand-thumbs-up-fill"></i>
+        <% } else {%>
+            <i class="bi bi-hand-thumbs-up"></i>
+          <% } %>
         <i class="bi bi-hand-thumbs-down"></i>
       </h2>
       <br />
-
+      <p>DEBUG: <%=chardebug%></p>
+      <p>DEBUG: <%=mvdebug%></p>
       <h3>Van welk karakter is deze quote?</h3>
-
+ 
       <section class="options">
-        <figure>
+        <%for (let character of characters) { %>
+        <figure name="<%=character._id%>" class="character_choices">
           <img src="./assets/images/characters/frodo/frodo.webp" alt="" />
-          <figcaption>Frodo</figcaption>
+          <figcaption><%=character.name%></figcaption>
         </figure>
-        
-        <figure>
-          <img
-          src="./assets/images/characters/gandalf/gandalf.webp"
-          alt=""
-        />
-        <figcaption>Gandalf</figcaption>
-        </figure>
-        <figure>
-          <img src="./assets/images/characters/legolas/legolas.png" alt="" />
-          <figcaption>Legolas</figcaption>
-        </figure>
-        
+        <% } %>
       </section>
-
+ 
       <h3>Van welke film is deze quote?</h3>
       <section class="options">
-        <figure>
-          <img src="./assets/images/LOTR.webp" alt="" />
-          <figcaption>The Fellowship of the Ring</figcaption>
-        </figure>
-
-        <figure>
-          <img src="./assets/images/LOTR.webp" alt="" />
-          <figcaption>The Two Towers</figcaption>
-        </figure>
-
-        <figure>
-          <img src="./assets/images/LOTR.webp" alt="" />
-          <figcaption>The Return of the King</figcaption>
-        </figure>
+        <% for (let movie of movies ) {%>
+          <figure name="<%=movie.id%>" class="movie_choices" >
+            <img src="./assets/images/<%=movie.id%>.png" alt="" class="movie-posters"/>
+            <figcaption><%=movie.name%></figcaption>
+          </figure>
+        <% } %>
       </section>
-
-      <button><a href="">Volgende vraag</a></button>
+      <form action="/quiz/sudden-death/next" method="post">
+        <input type="hidden" name="character_id" id="profile_picture" value="">
+        <input type="hidden" name="movie_id" id="movie_id" value="">
+        <input type="hidden" name="quote_choice" id="quote_id" value="">
+        <input type="hidden" name="blacklist_reason" id="blacklist_reason" value="">
+        <button type="submit" id="next_question">Volgende vraag</button>
+      </form>
     </main>
+
+    <!-- End Game Popup -->
+    <%if (showMenu) {%>
+      <div id="popupOverlay" class="popup-overlay show">
+        <div id="endGamePopup" class="end-game-popup show">
+          <h2>Quiz voltooid!</h2>
+          <p class="message">Je hebt een fout antwoord gegeven!</p>
+          <div class="score">Score: <%= userCurrentScore %></div>
+          <p class="meesage">+<%=receivedExp%>exp</p>
+          <div class="buttons">
+            <a href="/sudden-death"><button class="try-again">Opnieuw proberen</button></a>
+            <a href="/quiz"><button class="back-to-menu">Terug naar menu</button></a>
+          </div>
+        </div>
+      </div>
+    <%}%>
     <%- include("partials/footer") %>

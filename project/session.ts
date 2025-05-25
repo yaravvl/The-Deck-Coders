@@ -22,7 +22,8 @@ declare module 'express-session' {
         tRStarted: boolean;
         sDStarted: boolean;
         tQStarted: boolean;
-        characters: Character[]
+        characters: Character[];
+        gameOver: boolean;
     }
 }
 

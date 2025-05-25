@@ -3,11 +3,12 @@ import dotenv from "dotenv";
 import path from "path";
 
 import { Character, PlayerInfo, Movie, Quote, FavoritedQuote, BlackListedQuote } from "./types";
-import { addExp, ExpPercentage, calculateExp10 } from "./experience";
+import { addExp, ExpPercentage, calculateExp10, calculateSuddenDeath } from "./experience";
 import { createPlayer, connect, addUser, checkExistingPlayer, findSdHighscores, findTqHighscores, checkLogin, find10Highscores, updateProfile, findByX, addQuoteToBlacklist, addQuoteToFavorites } from "./database";
 import bcrypt from 'bcrypt';
 import session from "./session";
 import { secureMiddleware, loggedIn } from "./secureMiddleware";
+import { ReadableStreamBYOBRequest } from "stream/web";
 
 dotenv.config();
 
@@ -236,6 +237,52 @@ app.get("/highscores", secureMiddleware, async (req, res) => {
     })
 })
 
+app.post("/quiz/sudden-death/next", async (req, res) => {
+    const character_id = req.body.character_id
+    const movie_id = req.body.movie_id
+    const choice_quote = req.body.quote_choice
+    const blacklist_reason = req.body.blacklist_reason
+    console.log(selectedQuote.dialog)
+
+    if (choice_quote === "favorited") {
+        await addQuoteToFavorites(selectedQuote, req.session.user!)
+    } else if (choice_quote === "blacklist") {
+        await addQuoteToBlacklist(selectedQuote, req.session.user!, blacklist_reason)
+        const foundCharacter = req.session.characters?.find((e) => {
+            return e._id === character_id
+        })
+        if (foundCharacter) {
+            foundCharacter.quotes = foundCharacter.quotes.filter((e) => {
+                e._id !== selectedQuote._id
+            })
+        }
+    } else {
+    }
+
+    if (req.session.userCurrentQuestion === undefined) {
+        req.session.userCurrentQuestion = 1;
+    }
+    if (req.session.userCurrentScore === undefined) {
+        req.session.userCurrentScore = 0
+    }
+
+    if (selectedQuote.movie === movie_id && selectedQuote.character === character_id) {
+        req.session.userCurrentScore += 1;
+        console.log("antwoord is juist")
+    } else {
+        console.log("antwoord is fout")
+        req.session.gameOver = true;
+    }
+    req.session.userCurrentQuestion += 1;
+    req.session.save((e) => {
+        if (e) {
+            console.error(e)
+        }
+        res.redirect("/sudden-death")
+    })
+
+})
+
 app.post("/quiz/10-rounds/next", (req, res) => {
     const character_id = req.body.character_id
     const movie_id = req.body.movie_id
@@ -297,6 +344,58 @@ app.get("/", async (req, res) => {
     res.render("landingpage")
 });
 
+app.get("/sudden-death", secureMiddleware, async (req, res) => {
+    let showMenu = false;
+    if (!req.session.sDStarted) {
+        req.session.userCurrentQuestion = 1;
+        req.session.userCurrentScore = 0;
+    }
+    req.session.sDStarted = true;
+    req.session.tQStarted = false;
+    req.session.tRStarted = false;
+    let quizTeam: Character[] = []
+    if (req.session.characters) {
+        quizTeam = await generateTeam(req.session.characters);
+    }
+    await generatedSelectedCharacter(quizTeam, quizTeam.length);
+    // quizTeam.forEach((e) => {
+    //     console.log(e.name)
+    // })
+    const moviedebug = movies.find((e) => {
+        return e.id === selectedQuote.movie
+    })
+    // console.log(moviedebug?.name)
+    // console.log(selectedCharacter.name)
+    let exp: number = 0
+    if (req.session.gameOver) {
+        req.session.sDStarted = false
+        showMenu = true
+        exp = calculateSuddenDeath(req.session.userCurrentScore!)
+        addExp(req.session.user!, exp)
+        if (req.session.user?.suddenDeathHs! < req.session.userCurrentScore!) {
+            req.session.user!.suddenDeathHs! = req.session.userCurrentScore!
+        }
+        req.session.userCurrentQuestion = req.session.userCurrentQuestion! - 1
+        await updateProfile(req.session.user)
+        req.session.gameOver = false;
+    }
+
+    res.render("sudden-death", {
+        title: "Sudden death",
+        characters: quizTeam,
+        movies: movies,
+        selectedCharacter: selectedCharacter,
+        selectedQuote: selectedQuote,
+        userCurrentQuestion: req.session.userCurrentQuestion,
+        userCurrentScore: req.session.userCurrentScore || 0,
+        favoritedQuotes: req.session.favoritedQuotes || [],
+        showMenu: showMenu,
+        receivedExp: exp,
+        mvdebug: moviedebug?.name, //DEBUG VERWIJDER LATER
+        chardebug: selectedCharacter.name //DEUG
+    })
+})
+
 app.get("/10-rounds", secureMiddleware, async (req, res) => {
     let showMenu = false;
     if (!req.session.tRStarted) {
@@ -327,7 +426,7 @@ app.get("/10-rounds", secureMiddleware, async (req, res) => {
         if (req.session.user?.tenRoundsHs! < req.session.userCurrentScore!) {
             req.session.user!.tenRoundsHs! = req.session.userCurrentScore!
         }
-        updateProfile(req.session.user)
+        await updateProfile(req.session.user)
     }
 
     res.render("10-rounds", {

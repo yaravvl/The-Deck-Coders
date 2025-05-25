@@ -19,3 +19,7 @@ export function ExpPercentage(player: PlayerInfo): number {
 export function calculateExp10(number: number) {
     return 10 + (number * 5) //i dunno?? 5xp per juiste vraag + 10 om de quiz te finishen?
 }
+
+export function calculateSuddenDeath(number: number) {
+    return (number * 10)
+}
