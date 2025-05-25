@@ -20,10 +20,17 @@ export async function findByX(user: PlayerInfo | undefined, input: string, field
     return false;
 }
 
-// export async function userScores() {
-//     const users: PlayerInfo[] = userCollection.find({ $sort: { "highscores[0].score": -1 } });
-//     console.log(users);
-// }
+export async function find10Highscores() {
+    return userCollection.find({}).sort({tenRoundsHs: -1}).limit(3).toArray();
+}
+
+export async function findSdHighscores() {
+    return userCollection.find({}).sort({suddenDeathHs: -1}).limit(3).toArray();
+}
+
+export async function findTqHighscores() {
+    return userCollection.find({}).sort({timedQuizHs: -1}).limit(3).toArray();
+}
 
 export async function addQuoteToFavorites(quote: Quote, player: PlayerInfo) {
     if (player) {
@@ -61,7 +68,9 @@ export async function updateProfile(player: PlayerInfo | undefined) {
                     requiredExp: player.requiredExp,
                     favoritedQuotes: player.favoritedQuotes,
                     blacklistedQuotes: player.blacklistedQuotes,
-                    highscores: player.highscores
+                    tenRoundsHs: player.tenRoundsHs,
+                    suddenDeathHs: player.suddenDeathHs,
+                    timedQuizHs: player.timedQuizHs
                 }
             })
         // console.log(`Gevonden: ${updateOne.matchedCount}, Aangepast: ${updateOne.modifiedCount}`); -- debug
@@ -117,11 +126,9 @@ export function createPlayer(username: string, password: string, email: string, 
         requiredExp: 100,
         favoritedQuotes: [],
         blacklistedQuotes: [],
-        highscores: [
-            { name: "tenRounds", score: 0 },
-            { name: "suddenDeath", score: 0 },
-            { name: "timedQuiz", score: 0 }
-        ]
+        tenRoundsHs: 0,
+        suddenDeathHs: 0,
+        timedQuizHs: 0
     }
     return newUser
 }

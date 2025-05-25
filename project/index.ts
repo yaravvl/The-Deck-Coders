@@ -3,8 +3,8 @@ import dotenv from "dotenv";
 import path from "path";
 
 import { Character, PlayerInfo, Movie, Quote, FavoritedQuote, BlackListedQuote } from "./types";
-import { addExp, ExpPercentage } from "./experience";
-import { createPlayer, connect, addUser, checkExistingPlayer, checkLogin, updateProfile, findByX, addQuoteToBlacklist, addQuoteToFavorites } from "./database";
+import { addExp, ExpPercentage, calculateExp10 } from "./experience";
+import { createPlayer, connect, addUser, checkExistingPlayer, findSdHighscores, findTqHighscores, checkLogin, find10Highscores, updateProfile, findByX, addQuoteToBlacklist, addQuoteToFavorites } from "./database";
 import bcrypt from 'bcrypt';
 import session from "./session";
 import { secureMiddleware, loggedIn } from "./secureMiddleware";
@@ -24,7 +24,6 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 app.set("port", process.env.PORT ?? 3000);
 
-let CHARACTERS: Character[] = [];
 // let CHARACTERS_WITHOUT_QUOTE: Character[] = [];
 let QUOTES: Quote[] = [];
 // let quizTeam: Character[] = [];
@@ -45,7 +44,7 @@ async function generatedSelectedCharacter(selectedTeam: Character[], number: num
     // console.log("Debug;" + selectedQuoteIndex, selectedCharacter.quotes.length - 1)
 }
 
-async function generateTeam(): Promise<Character[]> {
+async function generateTeam(characters: Character[]): Promise<Character[]> {
     //Hier de check uitvoeren voor de blacklisted quotes weg te halen
     //Doe de characters maar in de session variabelen.
     const usedNumbers: number[] = [];
@@ -53,11 +52,11 @@ async function generateTeam(): Promise<Character[]> {
     let randomNum = -1;
 
     while (team.length < 3) {
-        randomNum = generateRandomNumber(CHARACTERS.length);
+        randomNum = generateRandomNumber(characters.length);
 
         //Dit is een check om te kijken of de nieuw gemaakte nummer al eens is gebruikt geweest met het maken van dit team.
         if (!usedNumbers.includes(randomNum)) {
-            const character = CHARACTERS[randomNum];
+            const character = characters[randomNum];
             usedNumbers.push(randomNum);
             team.push(character);
         }
@@ -76,7 +75,7 @@ async function getMovies() {
 
 const ERROR_MESSAGE_UPDATE_ACCOUNT = ["Het herhaalde wachtwoord is niet hetzelfde!", "Deze gebruiksnaam is al in gebruik!", "Deze email is al in gebruik!"]
 
-async function getCharactersWithQuotes() {
+async function getCharactersWithQuotes(): Promise<Character[]> {
     try {
         //Dit is momenteel gewoon mijn bearer-token we kunnen zien of we dit houden of later nog dynamisch willen aanpassen per log-in account
         const headers = {
@@ -112,16 +111,17 @@ async function getCharactersWithQuotes() {
         const allowedIds = new Set(localIdsData.map((char: { id: string }) => char.id));
 
         //Alle characters filteren die minstens 1 movie-quote hebben
-        CHARACTERS = charactersData.docs.filter((character: Character) =>
+        const filteredChar = charactersData.docs.filter((character: Character) =>
             characterIdsWithQuotes.has(character._id) && allowedIds.has(character._id)
         );
 
         //Alle quotes die een character heeft bijhouden in hun property quotes
         //Enkel quotes bijhouden die minder dan of net 50 tekens bevatten
-        for (const character of CHARACTERS) {
-            character.quotes = QUOTES.filter((quote: Quote) => quote.character === character._id && quote.dialog.length <= 50);
+        for (const char of filteredChar) {
+            char.quotes = QUOTES.filter((quote: Quote) => quote.character === char._id && quote.dialog.length <= 50);
         }
 
+        return filteredChar
         //Alle characters filteren zodat enkel de characters overblijven die in de json file zitten
 
         // for (const character of CHARACTERS) {
@@ -130,6 +130,7 @@ async function getCharactersWithQuotes() {
 
     } catch (error) {
         console.error(`Error: ${error}`);
+        return [];
     }
 }
 
@@ -174,7 +175,7 @@ app.post("/register", async (req, res) => {
     }
 });
 
-app.post("/update-account", async (req, res) => {
+app.post("/update-account", secureMiddleware, async (req, res) => {
     if (req.session.user) {
         const user: PlayerInfo = req.session.user
         //Check of de wachtwoorden wel hetzelfde zijn
@@ -199,7 +200,6 @@ app.post("/update-account", async (req, res) => {
             })
         }
         req.session.user.imageUrl = req.body.profile_picture;
-        req.session.user.name = req.body.name;
         req.session.user.email = req.body.email;
         req.session.user.username = req.body.username;
         req.session.user.password = await bcrypt.hash(req.body.password, 10);
@@ -209,6 +209,31 @@ app.post("/update-account", async (req, res) => {
             error: null
         })
     }
+})
+
+app.get("/favorites/detail-pagina/:id", secureMiddleware, (req, res) => {
+    const index: string = req.params.id;
+    const foundCharacter: FavoritedQuote | undefined = req.session.favoritedQuotes?.find((e) => {
+        return e.character._id === index
+    })
+    if (foundCharacter) {
+        res.render("character", {
+            foundCharacter,
+            title: foundCharacter.character.name
+        })
+    } 
+})
+
+app.get("/highscores", secureMiddleware, async (req, res) => {
+    const tenRounds = await find10Highscores()
+    const suddenDeath = await findSdHighscores()
+    const timedQuiz = await findTqHighscores()
+    res.render("highscores", {
+        title: "Highscores",
+        tenRounds,
+        suddenDeath,
+        timedQuiz
+    })
 })
 
 app.post("/quiz/10-rounds/next", (req, res) => {
@@ -222,6 +247,14 @@ app.post("/quiz/10-rounds/next", (req, res) => {
         addQuoteToFavorites(selectedQuote, req.session.user!)
     } else if (choice_quote === "blacklist") {
         addQuoteToBlacklist(selectedQuote, req.session.user!, blacklist_reason)
+        const foundCharacter = req.session.characters?.find((e) => {
+            return e._id === character_id
+        })
+        if (foundCharacter) {
+            foundCharacter.quotes = foundCharacter.quotes.filter((e) => {
+                e._id !== selectedQuote._id
+            })
+        }
     } else {
     }
 
@@ -234,12 +267,11 @@ app.post("/quiz/10-rounds/next", (req, res) => {
 
     if (selectedQuote.movie === movie_id && selectedQuote.character === character_id) {
         req.session.userCurrentScore += 1;
-        req.session.userCurrentQuestion += 1;
         console.log("antwoord is juist")
     } else {
-        req.session.userCurrentQuestion += 1;
         console.log("antwoord is fout")
     }
+    req.session.userCurrentQuestion += 1;
     if (req.session.userCurrentQuestion === 10) {
         console.log(req.session.userCurrentScore)
     }
@@ -254,12 +286,19 @@ app.post("/logout", async (req, res) => {
     })
 })
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
+    try {
+        const characters = await getCharactersWithQuotes();
+        req.session.characters = characters
+    } catch (e) {
+        console.log(e)
+    }
+    // console.log(req.session.characters) //debug
     res.render("landingpage")
 });
 
 app.get("/10-rounds", secureMiddleware, async (req, res) => {
-    let activeGame = true;
+    let showMenu = false;
     if (!req.session.tRStarted) {
         req.session.userCurrentQuestion = 1;
         req.session.userCurrentScore = 0;
@@ -267,17 +306,28 @@ app.get("/10-rounds", secureMiddleware, async (req, res) => {
     req.session.sDStarted = false;
     req.session.tQStarted = false;
     req.session.tRStarted = true;
-    const quizTeam: Character[] = await generateTeam();
+    let quizTeam: Character[] = []
+    if (req.session.characters) {
+        quizTeam = await generateTeam(req.session.characters);
+    }
     await generatedSelectedCharacter(quizTeam, quizTeam.length);
-
-    quizTeam.forEach((e) => {
-        console.log(e.name)
+    // quizTeam.forEach((e) => {
+    //     console.log(e.name)
+    // })
+    const moviedebug = movies.find((e) => {
+        return e.id === selectedQuote.movie
     })
-    console.log(selectedQuote)
-    console.log(selectedCharacter.name)
-    if (req.session.userCurrentQuestion! === 10) {
+    // console.log(moviedebug?.name)
+    // console.log(selectedCharacter.name)
+    if (req.session.userCurrentQuestion! === 11) {
+        req.session.userCurrentQuestion = 10
         req.session.tRStarted = false
-        console.log("the game has finished")
+        showMenu = true
+        addExp(req.session.user!, calculateExp10(req.session.userCurrentScore!))
+        if (req.session.user?.tenRoundsHs! < req.session.userCurrentScore!) {
+            req.session.user!.tenRoundsHs! = req.session.userCurrentScore!
+        }
+        updateProfile(req.session.user)
     }
 
     res.render("10-rounds", {
@@ -288,7 +338,11 @@ app.get("/10-rounds", secureMiddleware, async (req, res) => {
         selectedQuote: selectedQuote,
         userCurrentQuestion: req.session.userCurrentQuestion || 1,
         userCurrentScore: req.session.userCurrentScore || 0,
-        favoritedQuotes: req.session.user?.favoritedQuotes
+        favoritedQuotes: req.session.favoritedQuotes || [],
+        showMenu: showMenu,
+        receivedExp: calculateExp10(req.session.userCurrentScore!),
+        mvdebug: moviedebug?.name, //DEBUG VERWIJDER LATER
+        chardebug: selectedCharacter.name //DEUG
     })
 })
 
@@ -297,9 +351,12 @@ app.get("/blacklist", secureMiddleware, async (req, res) => {
     // req.session.blackListedQuotes.forEach((e) => console.log(e.dialog)) //debug
     // console.log(req.session.user?.blacklistedQuotes)
     req.session.user?.blacklistedQuotes.forEach((quotes) => {
-        const foundCharacter = CHARACTERS.find((characters) => {
+        let foundCharacter
+        if (req.session.characters) {
+            foundCharacter = req.session.characters.find((characters) => {
             return characters._id === quotes.character
         })
+        }
         let charInArray = blackListedArray.find((q) => {
             return q.character._id === foundCharacter!._id
         })
@@ -325,7 +382,7 @@ app.get("/blacklist", secureMiddleware, async (req, res) => {
 app.get("/favorites", secureMiddleware, async (req, res) => {
     const quotesByCharacter: FavoritedQuote[] = []
     req.session.user?.favoritedQuotes.forEach((quotes) => {
-        const foundCharacter = CHARACTERS.find((characters) => {
+        const foundCharacter = req.session.characters!.find((characters) => {
             return characters._id === quotes.character
         })
         let charInArray = quotesByCharacter.find((q) => {
@@ -420,9 +477,10 @@ app.post("/favorites/:id", secureMiddleware, (req, res) => {
 })
 
 app.get("/:index", secureMiddleware, async (req, res) => {
-    // req.session.blackListedQuotes = []
-    // req.session.user!.blacklistedQuotes = [] //kleine reset
-    // console.log(req.session.blackListArray, req.session.blackListedQuotes)
+    //deze onderste if statement moet 100% in de quiz router
+    if (!req.session.characters) {
+        req.session.characters = await getCharactersWithQuotes()
+    }
     req.session.sDStarted = false;
     req.session.tQStarted = false;
     req.session.tRStarted = false;
@@ -456,7 +514,6 @@ app.use((req, res, next) => {
 app.listen(app.get("port"), async () => {
     console.log("Server started on http://localhost:" + app.get("port"));
     try {
-        await getCharactersWithQuotes();
         await getMovies();
 
     } catch (e) {

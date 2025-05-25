@@ -15,3 +15,7 @@ export function ExpPercentage(player: PlayerInfo): number {
     const percentage = (player.exp / player.requiredExp) * 100
     return Math.min(100, Math.floor(percentage))
 }
+
+export function calculateExp10(number: number) {
+    return 10 + (number * 5) //i dunno?? 5xp per juiste vraag + 10 om de quiz te finishen?
+}
