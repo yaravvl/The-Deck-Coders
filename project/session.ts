@@ -24,6 +24,7 @@ declare module 'express-session' {
         tQStarted: boolean;
         characters: Character[];
         gameOver: boolean;
+        time: number;
     }
 }
 

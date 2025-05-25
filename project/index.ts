@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import path from "path";
 
 import { Character, PlayerInfo, Movie, Quote, FavoritedQuote, BlackListedQuote } from "./types";
-import { addExp, ExpPercentage, calculateExp10, calculateSuddenDeath } from "./experience";
+import { addExp, ExpPercentage, calculateExp10, calculateSuddenDeath, calculateTimedQuiz } from "./experience";
 import { createPlayer, connect, addUser, checkExistingPlayer, findSdHighscores, findTqHighscores, checkLogin, find10Highscores, updateProfile, findByX, addQuoteToBlacklist, addQuoteToFavorites } from "./database";
 import bcrypt from 'bcrypt';
 import session from "./session";
@@ -237,6 +237,50 @@ app.get("/highscores", secureMiddleware, async (req, res) => {
     })
 })
 
+app.post("/quiz/timed-quiz/next", async (req, res) => {
+    const character_id = req.body.character_id
+    const movie_id = req.body.movie_id
+    const choice_quote = req.body.quote_choice
+    const blacklist_reason = req.body.blacklist_reason
+    const time_left = req.body.timer
+
+    if (choice_quote === "favorited") {
+        await addQuoteToFavorites(selectedQuote, req.session.user!)
+    } else if (choice_quote === "blacklist") {
+        await addQuoteToBlacklist(selectedQuote, req.session.user!, blacklist_reason)
+        const foundCharacter = req.session.characters?.find((e) => {
+            return e._id === character_id
+        })
+        if (foundCharacter) {
+            foundCharacter.quotes = foundCharacter.quotes.filter((e) => {
+                e._id !== selectedQuote._id
+            })
+        }
+    } else {
+    }
+
+    if (req.session.userCurrentQuestion === undefined) {
+        req.session.userCurrentQuestion = 1;
+    }
+    if (req.session.userCurrentScore === undefined) {
+        req.session.userCurrentScore = 0
+    }
+
+    if (selectedQuote.movie === movie_id && selectedQuote.character === character_id) {
+        req.session.userCurrentScore += 1;
+        console.log("antwoord is juist")
+    } else {
+        console.log("antwoord is fout")
+        req.session.gameOver = true;
+    }
+    req.session.userCurrentQuestion += 1;
+    req.session.time = time_left
+    req.session.save( () => {
+        res.redirect("/timed-quiz")
+    })
+
+})
+
 app.post("/quiz/sudden-death/next", async (req, res) => {
     const character_id = req.body.character_id
     const movie_id = req.body.movie_id
@@ -274,10 +318,7 @@ app.post("/quiz/sudden-death/next", async (req, res) => {
         req.session.gameOver = true;
     }
     req.session.userCurrentQuestion += 1;
-    req.session.save((e) => {
-        if (e) {
-            console.error(e)
-        }
+    req.session.save( () => {
         res.redirect("/sudden-death")
     })
 
@@ -322,7 +363,9 @@ app.post("/quiz/10-rounds/next", (req, res) => {
     if (req.session.userCurrentQuestion === 10) {
         console.log(req.session.userCurrentScore)
     }
-    res.redirect("/10-rounds")
+    req.session.save( () => {
+        res.redirect("/10-rounds")
+    })
 
 })
 
@@ -391,6 +434,59 @@ app.get("/sudden-death", secureMiddleware, async (req, res) => {
         favoritedQuotes: req.session.favoritedQuotes || [],
         showMenu: showMenu,
         receivedExp: exp,
+        mvdebug: moviedebug?.name, //DEBUG VERWIJDER LATER
+        chardebug: selectedCharacter.name //DEUG
+    })
+})
+
+app.get("/timed-quiz", secureMiddleware, async (req, res) => {
+    let showMenu = false;
+    if (!req.session.tQStarted) {
+        req.session.userCurrentQuestion = 1;
+        req.session.userCurrentScore = 0;
+        req.session.time = 30
+    }
+    req.session.sDStarted = false;
+    req.session.tQStarted = true;
+    req.session.tRStarted = false;
+    let quizTeam: Character[] = []
+    if (req.session.characters) {
+        quizTeam = await generateTeam(req.session.characters);
+    }
+    await generatedSelectedCharacter(quizTeam, quizTeam.length);
+    // quizTeam.forEach((e) => {
+    //     console.log(e.name)
+    // })
+    const moviedebug = movies.find((e) => {
+        return e.id === selectedQuote.movie
+    })
+    // console.log(moviedebug?.name)
+    // console.log(selectedCharacter.name)
+    let exp: number = 0
+    if (req.session.time! <= 0) {
+        req.session.tQStarted = false
+        showMenu = true
+        exp = calculateTimedQuiz(req.session.userCurrentScore!)
+        addExp(req.session.user!, exp)
+        if (req.session.user?.timedQuizHs! < req.session.userCurrentScore!) {
+            req.session.user!.timedQuizHs! = req.session.userCurrentScore!
+        }
+        req.session.userCurrentQuestion = req.session.userCurrentQuestion! - 1
+        await updateProfile(req.session.user)
+    }
+
+    res.render("timed-quiz", {
+        title: "Timed quiz",
+        characters: quizTeam,
+        movies: movies,
+        selectedCharacter: selectedCharacter,
+        selectedQuote: selectedQuote,
+        userCurrentQuestion: req.session.userCurrentQuestion,
+        userCurrentScore: req.session.userCurrentScore || 0,
+        favoritedQuotes: req.session.favoritedQuotes || [],
+        showMenu: showMenu,
+        receivedExp: exp,
+        time: req.session.time,
         mvdebug: moviedebug?.name, //DEBUG VERWIJDER LATER
         chardebug: selectedCharacter.name //DEUG
     })
@@ -580,6 +676,7 @@ app.get("/:index", secureMiddleware, async (req, res) => {
     if (!req.session.characters) {
         req.session.characters = await getCharactersWithQuotes()
     }
+    req.session.gameOver = false
     req.session.sDStarted = false;
     req.session.tQStarted = false;
     req.session.tRStarted = false;

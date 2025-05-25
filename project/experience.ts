@@ -23,3 +23,7 @@ export function calculateExp10(number: number) {
 export function calculateSuddenDeath(number: number) {
     return (number * 10)
 }
+
+export function calculateTimedQuiz(number: number) {
+    return (number * 15)
+}

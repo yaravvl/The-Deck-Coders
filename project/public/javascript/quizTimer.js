@@ -1,18 +1,18 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const timerElement = document.createElement('div');
-    timerElement.id = 'quiz-timer';
-    timerElement.classList.add('quiz-timer');
+    const timerElement = document.getElementById("quiz-timer")
+    const input = document.getElementById("timer")
     
-    let timeLeft = 30;
-    timerElement.textContent = timeLeft;
-    
+    let timeLeft = parseInt(timerElement.textContent)
+    if (timeLeft > 10) timerElement.classList.remove('time-warning');
+    if (timeLeft > 5) timerElement.classList.remove('time-critical');
+
     const quizContainer = document.querySelector('.quiz');
     quizContainer.appendChild(timerElement);
     
     const countdownTimer = setInterval(function() {
         timeLeft--;
+        input.value = timeLeft
         timerElement.textContent = timeLeft;
-        
         if (timeLeft <= 10) {
             timerElement.classList.add('time-warning');
         }
