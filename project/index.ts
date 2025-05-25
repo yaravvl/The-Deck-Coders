@@ -352,7 +352,7 @@ app.get("/blacklist", secureMiddleware, async (req, res) => {
     req.session.user?.blacklistedQuotes.forEach((quotes) => {
         let foundCharacter
         if (req.session.characters) {
-            const foundCharacter = req.session.characters.find((characters) => {
+            foundCharacter = req.session.characters.find((characters) => {
             return characters._id === quotes.character
         })
         }
@@ -464,9 +464,6 @@ app.post("/favorites/:id", secureMiddleware, (req, res) => {
 })
 
 app.get("/:index", secureMiddleware, async (req, res) => {
-    // req.session.blackListedQuotes = []
-    // req.session.user!.blacklistedQuotes = [] //kleine reset
-    // console.log(req.session.blackListArray, req.session.blackListedQuotes)
     //deze onderste if statement moet 100% in de quiz router
     if (!req.session.characters) {
         req.session.characters = await getCharactersWithQuotes()
