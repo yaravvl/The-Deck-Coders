@@ -64,7 +64,7 @@ export default function quizRouter() {
         })
     });
 
-    router.post("/10-rounds/next", (req, res) => {
+    router.post("/10-rounds/next", async (req, res) => {
         const character_id = req.body.character_id
         const movie_id = req.body.movie_id
         const choice_quote = req.body.quote_choice
@@ -72,9 +72,9 @@ export default function quizRouter() {
         console.log(selectedQuote.dialog)
 
         if (choice_quote === "favorited") {
-            addQuoteToFavorites(selectedQuote, req.session.user!)
+            await addQuoteToFavorites(selectedQuote, req.session.user!)
         } else if (choice_quote === "blacklist") {
-            addQuoteToBlacklist(selectedQuote, req.session.user!, blacklist_reason)
+            await addQuoteToBlacklist(selectedQuote, req.session.user!, blacklist_reason)
             const foundCharacter = req.session.characters?.find((e) => {
                 return e._id === character_id
             })
