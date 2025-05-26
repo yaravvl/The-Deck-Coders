@@ -1,14 +1,14 @@
 import { Collection, MongoClient, ObjectId } from "mongodb";
-import { PlayerInfo, Quote } from "./types";
+import { PlayerInfo, Quote, Movie } from "./types";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
-import { cp } from "fs";
 dotenv.config();
 
 export const URI = process.env.URI!;
 
 const CLIENT = new MongoClient(URI);
 export const userCollection: Collection = CLIENT.db("wpl").collection("users");
+const movieCollection: Collection<Movie> = CLIENT.db("wpl").collection("movies")
 
 export async function findByX(user: PlayerInfo | undefined, input: string, field: "username" | "email") {
     if (user) {
@@ -49,6 +49,23 @@ export async function addQuoteToBlacklist(quote: Quote, player: PlayerInfo, bqRe
             reason: bqReason,
         })
     }
+}
+
+async function moviesToDatabase() {
+    if (await movieCollection.countDocuments() === 0) {
+        const movies = await fetch("http://localhost:3000/data/movies.json")
+        const data: Movie[] = await movies.json()
+
+        movieCollection.insertMany(data);
+    }
+}
+
+export async function getAllMovies(){
+    return movieCollection.find({}).toArray()
+}
+
+export async function findMovieInDatabase(id: string) {
+    return movieCollection.findOne({id: id})
 }
 
 export async function updateProfile(player: PlayerInfo | undefined) {
@@ -138,6 +155,7 @@ export async function connect() {
         await CLIENT.connect();
         console.log("Connected to the database.");
         process.on("SIGINT", exit)
+        moviesToDatabase()
     } catch (e) {
         console.error(e)
         process.exit(0)

@@ -3,8 +3,6 @@ import { Character, Movie, Quote } from "../types";
 import { addExp, calculateExp10, calculateSuddenDeath, calculateTimedQuiz } from "../experience";
 import { addQuoteToBlacklist, addQuoteToFavorites, updateProfile } from "../database";
 import { generateRandomNumber } from "../utilities";
-import { secureHeapUsed } from "crypto";
-import { secureMiddleware } from "../secureMiddleware";
 
 let selectedCharacter: Character;
 let selectedQuote: Quote;

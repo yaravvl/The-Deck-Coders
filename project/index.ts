@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import path from "path";
 
 import { PlayerInfo, Movie, Quote, FavoritedQuote, BlackListedQuote } from "./types";
-import { connect, updateProfile, findByX, addQuoteToBlacklist, addQuoteToFavorites } from "./database";
+import { connect, updateProfile, findByX, addQuoteToBlacklist, addQuoteToFavorites, getAllMovies } from "./database";
 import bcrypt from 'bcrypt';
 import session from "./session";
 import { secureMiddleware, loggedIn } from "./secureMiddleware";
@@ -32,6 +32,15 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 app.set("port", process.env.PORT ?? 3000);
 
+app.use(async (req, res, next) => {
+    try {
+        res.locals.movies = await getAllMovies();
+    } catch (e: any) {
+        console.log(e);
+    }
+    next();
+})
+
 app.use("/", landingPageRouter());
 app.use("/", loginRouter());
 app.use("/", secureMiddleware, welcomepageRouter());
@@ -41,27 +50,14 @@ app.use("/", secureMiddleware, updateAccountRouter());
 app.use("/blacklist", secureMiddleware, blacklistRouter());
 app.use("/favorites", secureMiddleware, favoritesRouter());
 
-app.use(async (req, res, next) => {
-    try {
-        res.locals.movies = await getMovies();
-    } catch (e: any) {
-        console.log(e);
-    }
-    next();
-})
-
-async function getMovies() {
-    const response = await fetch("http://localhost:3000/data/movies.json");
-    if (!response.ok) {
-        throw new Error("Failed to fetch movies");
-    }
-    const movies: Movie[] = await response.json();
-    return movies;
-}
-
-app.use((req, res, next) => {
-    res.redirect("/");
-})
+// async function getMovies() {
+//     const response = await fetch("http://localhost:3000/data/movies.json");
+//     if (!response.ok) {
+//         throw new Error("Failed to fetch movies");
+//     }
+//     const movies: Movie[] = await response.json();
+//     return movies;
+// }
 
 app.listen(app.get("port"), async () => {
     console.log("Server started on http://localhost:" + app.get("port"));
