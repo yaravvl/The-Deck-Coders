@@ -3,13 +3,18 @@ import { Character, Movie, Quote } from "../types";
 import { addExp, calculateExp10, calculateSuddenDeath, calculateTimedQuiz } from "../experience";
 import { addQuoteToBlacklist, addQuoteToFavorites, updateProfile } from "../database";
 import { generateRandomNumber } from "../utilities";
+import { getCharactersWithQuotes } from "./landingsPageRouter";
 
 let selectedCharacter: Character;
 let selectedQuote: Quote;
 
 export default function quizRouter() {
     const router = express.Router();
-    router.get("/", (req, res) => {
+    router.get("/", async (req, res) => {
+        if (!req.session.characters) {
+            const characters = await getCharactersWithQuotes();
+            req.session.characters = characters
+        }
         res.render("quiz", {
             title: "Quiz"
         })
@@ -17,6 +22,7 @@ export default function quizRouter() {
 
     router.get("/10-rounds", async (req, res) => {
         let showMenu = false;
+        console.log(req.session.characters)
         if (!req.session.tRStarted) {
             req.session.userCurrentQuestion = 1;
             req.session.userCurrentScore = 0;

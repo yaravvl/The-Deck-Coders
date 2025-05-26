@@ -26,10 +26,7 @@
         <% for (let quote of sortedQuotes) {%>
           <article>
           <a href="/favorites/detail-pagina/<%=quote.character._id%>"
-            ><img
-              src="./assets/images/characters/frodo/frodo.webp"
-              alt=""
-            />
+            ><img src="../assets/images/pfp/<%=quote.character._id%>.png" alt="" />
             <h1><%=quote.character.name%></h1>
           </a>
 

@@ -4,24 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%=title%></title>
-    <link rel="stylesheet" href="./css/reset.css" />
-    <link rel="stylesheet" href="./css/style.css" />
-    <link rel="stylesheet" href="./css/quiz.css" />
-    <link rel="stylesheet" href="./css/dark-mode.css">
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/quiz.css" />
+    <link rel="stylesheet" href="../css/dark-mode.css">
     <link
       href="https://fonts.googleapis.com/css2?family=Oswald&family=Qwitcher+Grypen:wght@400;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
-    <script src="javascript/profile.js"></script>
-    <script src="./javascript/thumbToggle.js" defer></script>
-    <script src="./javascript/quoteManager.js" defer></script>
-    <script src="./javascript/test.js"></script>
+    <script src="../javascript/profile.js"></script>
+    <script src="../javascript/thumbToggle.js" defer></script>
+    <script src="../javascript/quoteManager.js" defer></script>
+    <script src="../javascript/test.js"></script>
     <link rel="icon" type="image/jpg" href="../public/assets/images/favicon.jpg">
   </head>
   <style>
     body {
-      background-image: url("./assets/images/Toren.webp");
+      background-image: url("../assets/images/Toren.webp");
       background-size: cover;
       background-repeat: no-repeat;
       background-position: fixed;
@@ -48,7 +48,7 @@
       <section class="options">
         <%for (let character of characters) { %>
         <figure name="<%=character._id%>" class="character_choices">
-          <img src="./assets/images/characters/frodo/frodo.webp" alt="" />
+          <img src="../assets/images/pfp/<%=character._id%>.png" alt="" />
           <figcaption><%=character.name%></figcaption>
         </figure>
         <% } %>
@@ -58,7 +58,7 @@
       <section class="options">
         <% for (let movie of movies ) {%>
           <figure name="<%=movie.id%>" class="movie_choices" >
-            <img src="./assets/images/<%=movie.id%>.png" alt="" class="movie-posters"/>
+            <img src="../assets/images/<%=movie.id%>.png" alt="" class="movie-posters"/>
             <figcaption><%=movie.name%></figcaption>
           </figure>
         <% } %>
@@ -81,7 +81,7 @@
           <div class="score">Score: <%= userCurrentScore %></div>
           <p class="meesage">+<%=receivedExp%>exp</p>
           <div class="buttons">
-            <a href="/sudden-death"><button class="try-again">Opnieuw proberen</button></a>
+            <a href="/quiz/sudden-death"><button class="try-again">Opnieuw proberen</button></a>
             <a href="/quiz"><button class="back-to-menu">Terug naar menu</button></a>
           </div>
         </div>

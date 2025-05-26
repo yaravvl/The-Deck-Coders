@@ -2,11 +2,19 @@ import express from "express";
 import bcrypt from "bcrypt";
 import { findByX, updateProfile } from "../database";
 import { PlayerInfo } from "../types";
+import { error } from "console";
 
 const ERROR_MESSAGE_UPDATE_ACCOUNT = ["Het herhaalde wachtwoord is niet hetzelfde!", "Deze gebruiksnaam is al in gebruik!", "Deze email is al in gebruik!"]
 
 export default function updateAccountRouter() {
     const router = express.Router();
+
+    router.get("/account-settings", async (req, res) => {
+        res.render("account-settings", {
+            title: "Account settings",
+            error: null
+        })
+    })
 
     router.post("/update-account", async (req, res) => {
         if (req.session.user) {

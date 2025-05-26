@@ -21,7 +21,7 @@ export default function landingPageRouter() {
 }
 
 
-async function getCharactersWithQuotes(): Promise<Character[]> {
+export async function getCharactersWithQuotes(): Promise<Character[]> {
     try {
         //Dit is momenteel gewoon mijn bearer-token we kunnen zien of we dit houden of later nog dynamisch willen aanpassen per log-in account
         const headers = {

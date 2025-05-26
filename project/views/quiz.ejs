@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%=title%></title>
-    <link rel="stylesheet" href="./css/reset.css" />
-    <link rel="stylesheet" href="./css/style.css" />
-    <link rel="stylesheet" href="./css/quiz.css" />
-    <link rel="stylesheet" href="./css/dark-mode.css" />
+    <link rel="stylesheet" href="../css/reset.css" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/quiz.css" />
+    <link rel="stylesheet" href="../css/dark-mode.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Oswald&family=Qwitcher+Grypen:wght@400;700&display=swap"
       rel="stylesheet"
@@ -58,7 +58,7 @@
         </article>
 
         <article id="article-three" class="<%= user.level < 3 ? 'locked' : '' %>" onclick="showLockPopup(event)">
-          <a href="timed-quiz">
+          <a href="/quiz/timed-quiz">
             <h2>Timed quiz</h2>
             <p>
               Bij deze quiz moet je zo veel mogelijk combinaties tussen karakter

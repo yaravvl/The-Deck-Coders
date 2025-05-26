@@ -13,12 +13,9 @@
     <main>
       <section class="blacklist-page">
         <article class="blacklist-quote-box">
-          <form action="/edit-quote/<%=quote.dialog[0].quoteText%>/update" method="post">
+          <form action="/blacklist/edit-quote/<%=encodeURIComponent(quote.dialog[0].quoteText)%>/update" method="post">
             <a href="./character"
-            ><img
-              src="/assets/images/characters/frodo/frodo.webp"
-              alt=""
-            />
+            ><img src="../assets/images/pfp/<%=quote.character._id%>.png" alt="" />
           </a>
            <h1 name="<%=quote.character.name%>"><%=quote.character.name%></h1>
 
