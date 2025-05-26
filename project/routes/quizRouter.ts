@@ -14,7 +14,7 @@ export default function quizRouter() {
             title: "Quiz"
         })
     })
-    
+
     router.get("/10-rounds", async (req, res) => {
         let showMenu = false;
         if (!req.session.tRStarted) {
@@ -104,7 +104,7 @@ export default function quizRouter() {
             console.log(req.session.userCurrentScore)
         }
         req.session.save(() => {
-            res.redirect("/10-rounds")
+            res.redirect("/quiz/10-rounds")
         })
 
     });
@@ -202,7 +202,7 @@ export default function quizRouter() {
         req.session.userCurrentQuestion += 1;
         req.session.time = time_left
         req.session.save(() => {
-            res.redirect("/timed-quiz")
+            res.redirect("/quiz/timed-quiz")
         })
 
     })
@@ -297,7 +297,7 @@ export default function quizRouter() {
         }
         req.session.userCurrentQuestion += 1;
         req.session.save(() => {
-            res.redirect("/sudden-death")
+            res.redirect("/quiz/sudden-death")
         })
 
     })
