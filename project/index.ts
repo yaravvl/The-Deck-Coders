@@ -15,6 +15,7 @@ import landingPageRouter from "./routes/landingsPageRouter";
 import updateAccountRouter from "./routes/updateAccountRouter";
 import blacklistRouter from "./routes/blacklistRouter";
 import favoritesRouter from "./routes/favoritesRouter";
+import welcomepageRouter from "./routes/welcomepageRouter";
 
 dotenv.config();
 
@@ -33,6 +34,7 @@ app.set("port", process.env.PORT ?? 3000);
 
 app.use("/", landingPageRouter());
 app.use("/", loginRouter());
+app.use("/", secureMiddleware, welcomepageRouter());
 app.use("/", secureMiddleware, highscoresRouter());
 app.use("/quiz", secureMiddleware, quizRouter());
 app.use("/", secureMiddleware, updateAccountRouter());
@@ -57,14 +59,8 @@ async function getMovies() {
     return movies;
 }
 
-app.get("/welcomepage", secureMiddleware, (req, res) => {
-        res.render("welcomepage", {
-            title: "Welcomepage"
-        })
-    })
-
 app.use((req, res, next) => {
-    res.redirect("/welcomepage");
+    res.redirect("/");
 })
 
 app.listen(app.get("port"), async () => {
