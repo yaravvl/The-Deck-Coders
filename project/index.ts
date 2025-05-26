@@ -35,7 +35,7 @@ app.use("/", landingPageRouter());
 app.use("/", loginRouter());
 app.use("/", secureMiddleware, highscoresRouter());
 app.use("/quiz", secureMiddleware, quizRouter());
-app.use("/", updateAccountRouter());
+app.use("/", secureMiddleware, updateAccountRouter());
 app.use("/blacklist", secureMiddleware, blacklistRouter());
 app.use("/favorites", secureMiddleware, favoritesRouter());
 
