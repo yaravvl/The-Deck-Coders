@@ -57,6 +57,11 @@ async function getMovies() {
     return movies;
 }
 
+app.get("/welcomepage", secureMiddleware, (req, res) => {
+        res.render("welcomepage", {
+            title: "Welcomepage"
+        })
+    })
 
 app.use((req, res, next) => {
     res.redirect("/welcomepage");
