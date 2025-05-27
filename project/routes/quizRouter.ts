@@ -34,7 +34,13 @@ export default function quizRouter() {
         if (req.session.characters) {
             quizTeam = await generateTeam(req.session.characters);
         }
-        await generatedSelectedCharacter(quizTeam, quizTeam.length);
+        let blackListedQuote: Quote | undefined
+        do {
+            await generatedSelectedCharacter(quizTeam, quizTeam.length);
+            blackListedQuote = req.session.user?.blacklistedQuotes.find((e) => {
+                return e._id === selectedQuote._id
+            })
+        } while (blackListedQuote !== undefined)
         // quizTeam.forEach((e) => {
         //     console.log(e.name)
         // })
@@ -55,7 +61,6 @@ export default function quizRouter() {
         }
 
         res.render("10-rounds", {
-            player: req.session.user,
             characters: quizTeam,
             movies: res.locals.movies,
             selectedCharacter: selectedCharacter,
@@ -81,14 +86,14 @@ export default function quizRouter() {
             await addQuoteToFavorites(selectedQuote, req.session.user!)
         } else if (choice_quote === "blacklist") {
             await addQuoteToBlacklist(selectedQuote, req.session.user!, blacklist_reason)
-            const foundCharacter = req.session.characters?.find((e) => {
-                return e._id === character_id
-            })
-            if (foundCharacter) {
-                foundCharacter.quotes = foundCharacter.quotes.filter((e) => {
-                    e._id !== selectedQuote._id
-                })
-            }
+            // const foundCharacter = req.session.characters?.find((e) => {
+            //     return e._id === character_id
+            // })
+            // if (foundCharacter) {
+            //     foundCharacter.quotes = foundCharacter.quotes.filter((e) => {
+            //         e._id !== selectedQuote._id
+            //     })
+            // }
         } else {
         }
 
@@ -129,7 +134,13 @@ export default function quizRouter() {
         if (req.session.characters) {
             quizTeam = await generateTeam(req.session.characters);
         }
-        await generatedSelectedCharacter(quizTeam, quizTeam.length);
+        let blackListedQuote: Quote | undefined
+        do {
+            await generatedSelectedCharacter(quizTeam, quizTeam.length);
+            blackListedQuote = req.session.user?.blacklistedQuotes.find((e) => {
+                return e._id === selectedQuote._id
+            })
+        } while (blackListedQuote !== undefined)
         // quizTeam.forEach((e) => {
         //     console.log(e.name)
         // })
@@ -226,7 +237,13 @@ export default function quizRouter() {
         if (req.session.characters) {
             quizTeam = await generateTeam(req.session.characters);
         }
-        await generatedSelectedCharacter(quizTeam, quizTeam.length);
+        let blackListedQuote: Quote | undefined
+        do {
+            await generatedSelectedCharacter(quizTeam, quizTeam.length);
+            blackListedQuote = req.session.user?.blacklistedQuotes.find((e) => {
+                return e._id === selectedQuote._id
+            })
+        } while (blackListedQuote !== undefined)
         // quizTeam.forEach((e) => {
         //     console.log(e.name)
         // })
@@ -236,17 +253,19 @@ export default function quizRouter() {
         // console.log(moviedebug?.name)
         // console.log(selectedCharacter.name)
         let exp: number = 0
-        if (req.session.gameOver) {
+        if (req.session.gameOver && req.session.user && req.session.userCurrentScore && req.session.userCurrentQuestion) {
             req.session.sDStarted = false
             showMenu = true
-            exp = calculateSuddenDeath(req.session.userCurrentScore!)
+            exp = calculateSuddenDeath(req.session.userCurrentScore)
             addExp(req.session.user!, exp)
-            if (req.session.user?.suddenDeathHs! < req.session.userCurrentScore!) {
-                req.session.user!.suddenDeathHs! = req.session.userCurrentScore!
+            if (req.session.user.suddenDeathHs! < req.session.userCurrentScore) {
+                req.session.user.suddenDeathHs! = req.session.userCurrentScore
             }
-            req.session.userCurrentQuestion = req.session.userCurrentQuestion! - 1
+            req.session.userCurrentQuestion = req.session.userCurrentQuestion - 1
             await updateProfile(req.session.user)
             req.session.gameOver = false;
+        } else {
+            throw new Error("Session invalid")
         }
 
         res.render("sudden-death", {
@@ -317,6 +336,7 @@ async function generatedSelectedCharacter(selectedTeam: Character[], number: num
 
     const selectedQuoteIndex = generateRandomNumber(selectedCharacter.quotes.length);
     selectedQuote = selectedCharacter.quotes[selectedQuoteIndex];
+    
     // console.log("Debug;" + selectedQuoteIndex, selectedCharacter.quotes.length - 1)
 }
 
