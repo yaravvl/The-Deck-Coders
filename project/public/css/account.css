@@ -280,13 +280,14 @@ body {
     }
 }
 
-/* 
+
 @media (max-width: 424px) {
 
-    .login-container,
-    .register-container,
-    .account-settings {
-        width: 300px;
+    body {
+            .login-container,
+        .register-container {
+            width: 300px;
+        }
     }
 
-} */
+}
