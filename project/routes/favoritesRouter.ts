@@ -45,7 +45,6 @@ export default function favoritesRouter() {
 
     router.post("/:id", (req, res) => {
         let index: string = req.params.id
-        console.log(index)
         let findCharacter: FavoritedQuote | undefined = req.session.favoritedQuotes?.find((e) => {
             return e.dialog.includes(index)
         })

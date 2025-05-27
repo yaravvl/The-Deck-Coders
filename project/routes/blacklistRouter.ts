@@ -6,8 +6,7 @@ export default function blacklistRouter() {
 
     router.get("/", async (req, res) => {
         const blackListedArray: BlackListedQuote[] = []
-        // req.session.blackListedQuotes.forEach((e) => console.log(e.dialog)) //debug
-        // console.log(req.session.user?.blacklistedQuotes)
+
         req.session.user?.blacklistedQuotes.forEach((quotes) => {
             let foundCharacter
             if (req.session.characters) {
@@ -78,9 +77,7 @@ export default function blacklistRouter() {
         let findQuote: Quote | undefined = req.session.user?.blacklistedQuotes?.find((e) => {
             return e.dialog === index;
         })
-        console.log(req.body)
         if (findQuote) {
-            console.log("foundq uote")
             findQuote.reason = req.body.blackListReason
         }
         req.session.save(() => {

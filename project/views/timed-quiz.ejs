@@ -51,8 +51,10 @@
         <i class="bi bi-hand-thumbs-down"></i>
       </h2>
       <br />
-      <p>DEBUG: <%=chardebug%></p>
-      <p>DEBUG: <%=mvdebug%></p>
+      <%if (user.username === "admin") {%>
+        <p>DEBUG: <%=chardebug%></p>
+        <p>DEBUG: <%=mvdebug%></p>
+      <%}%>
       <h3>Van welk karakter is deze quote?</h3>
 
       <section class="options">

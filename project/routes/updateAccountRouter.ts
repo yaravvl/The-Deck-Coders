@@ -2,9 +2,8 @@ import express from "express";
 import bcrypt from "bcrypt";
 import { findByX, updateProfile } from "../database";
 import { PlayerInfo } from "../types";
-import { error } from "console";
 
-const ERROR_MESSAGE_UPDATE_ACCOUNT = ["Het herhaalde wachtwoord is niet hetzelfde!", "Deze gebruiksnaam is al in gebruik!", "Deze email is al in gebruik!"]
+const ERROR_MESSAGE_UPDATE_ACCOUNT = ["Het herhaalde wachtwoord is niet hetzelfde!", "Deze gebruiksnaam is al in gebruik!", "Deze e-mail is al in gebruik!"]
 
 export default function updateAccountRouter() {
     const router = express.Router();
@@ -43,6 +42,7 @@ export default function updateAccountRouter() {
             req.session.user.imageUrl = req.body.profile_picture;
             req.session.user.email = req.body.email;
             req.session.user.username = req.body.username;
+            
             if (req.body.password && req.body.password.trim() !== "") {
                 req.session.user.password = await bcrypt.hash(req.body.password, 10);
             }
