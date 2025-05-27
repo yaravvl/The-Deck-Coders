@@ -37,13 +37,18 @@ export default function loginRouter() {
         let username: string = req.body.username;
         let password: string = req.body.password;
         let image_url: string = req.body.profile_picture;
+        if (password.length < 8) {
+        return res.render("register", {
+            error: "Het wachtwoord moet langer zijn dan 8 characters!"
+        });
+    }
         const hashedPassword: string = await bcrypt.hash(password, 10)
         if (!(await checkExistingPlayer(email, username))) {
             await addUser(createPlayer(username, hashedPassword, email, image_url))
             res.redirect("/quiz")
         } else {
             return res.render("register", {
-                error: "Username or email already exists!"
+                error: "Username of e-mail bestaat al!"
             })
         }
     });
