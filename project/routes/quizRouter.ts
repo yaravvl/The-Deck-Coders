@@ -38,7 +38,7 @@ export default function quizRouter() {
         do {
             await generatedSelectedCharacter(quizTeam, quizTeam.length);
             blackListedQuote = req.session.user?.blacklistedQuotes.find((e) => {
-                return e._id === selectedQuote._id
+                return e.id === selectedQuote.id
             })
         } while (blackListedQuote !== undefined)
         // quizTeam.forEach((e) => {
@@ -138,7 +138,7 @@ export default function quizRouter() {
         do {
             await generatedSelectedCharacter(quizTeam, quizTeam.length);
             blackListedQuote = req.session.user?.blacklistedQuotes.find((e) => {
-                return e._id === selectedQuote._id
+                return e.id === selectedQuote.id
             })
         } while (blackListedQuote !== undefined)
         // quizTeam.forEach((e) => {
@@ -241,7 +241,7 @@ export default function quizRouter() {
         do {
             await generatedSelectedCharacter(quizTeam, quizTeam.length);
             blackListedQuote = req.session.user?.blacklistedQuotes.find((e) => {
-                return e._id === selectedQuote._id
+                return e.id === selectedQuote.id
             })
         } while (blackListedQuote !== undefined)
         // quizTeam.forEach((e) => {

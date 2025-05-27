@@ -53,7 +53,9 @@ export default function blacklistRouter() {
                 throw new Error("The session.user is undefined")
             }
         }
-        res.redirect("/blacklist")
+        req.session.save(() => {
+            res.redirect("/blacklist")
+        })
     })
 
     router.get("/edit-quote/:id", (req, res) => {
@@ -81,7 +83,9 @@ export default function blacklistRouter() {
             console.log("foundq uote")
             findQuote.reason = req.body.blackListReason
         }
-        res.redirect("/blacklist")
+        req.session.save(() => {
+            res.redirect("/blacklist")
+        })
     })
 
     return router;
