@@ -34,21 +34,18 @@
           <article class="profiel-fotos">
             <h1 class="title">Kies een profielfoto!</h1>
             <section class="profile-options">
-              <img
-                class="picture-option"
-                src="../assets/images/characters/frodo/frodo.webp"
-                alt="Profiel optie 1"
-              />
-              <img
-                class="picture-option"
-                src="../assets/images/characters/gandalf/gandalf.webp"
-                alt="Profiel optie 2"
-              />
-              <img
-                class="picture-option"
-                src="../assets/images/characters/pippin/pippin.png"
-                alt="Profiel optie 3"
-              />
+              <%for (const image of pfp) {%>
+                <%if (user.level >= image.level) {%>
+                  <section class="picture-wrapper">
+                    <img class="picture-option" src="<%=image.image_url%>"/>
+                  </section>
+                <%} else {%>
+                  <section class="picture-wrapper">
+                    <img class="picture-option locked" src="<%=image.image_url%>"/>
+                    <i class="bi bi-lock-fill lock-overlay"><%=image.level%></i>
+                  </section>
+                <%}%>
+              <%}%>
             </section>
           </article>
         </dialog>

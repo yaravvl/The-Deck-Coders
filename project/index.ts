@@ -35,6 +35,7 @@ app.set("port", process.env.PORT ?? 3000);
 app.use(async (req, res, next) => {
     try {
         res.locals.movies = await getAllMovies();
+        res.locals.pfp = profilePictures
     } catch (e: any) {
         console.log(e);
     }
@@ -52,14 +53,17 @@ app.use("/", secureMiddleware, updateAccountRouter());
 app.use("/blacklist", secureMiddleware, blacklistRouter());
 app.use("/favorites", secureMiddleware, favoritesRouter());
 
-// async function getMovies() {
-//     const response = await fetch("http://localhost:3000/data/movies.json");
-//     if (!response.ok) {
-//         throw new Error("Failed to fetch movies");
-//     }
-//     const movies: Movie[] = await response.json();
-//     return movies;
-// }
+const profilePictures = [
+  { level: 1, image_url: '../assets/images/characters/images/archer.png' },
+  { level: 1, image_url: '../assets/images/characters/images/woman.png' },
+  { level: 1, image_url: '../assets/images/characters/images/bread.png' },
+  { level: 2, image_url: '../assets/images/characters/images/feet.png' },
+  { level: 3, image_url: '../assets/images/characters/images/treebeard.png' },
+  { level: 4, image_url: '../assets/images/characters/images/saugoat.png' },
+  { level: 5, image_url: '../assets/images/characters/images/gandalf.png' },
+  { level: 8, image_url: '../assets/images/characters/images/zoro.png' },
+  { level: 10, image_url: '../assets/images/characters/images/smeagol.webp' },
+];
 
 app.listen(app.get("port"), async () => {
     console.log("Server started on http://localhost:" + app.get("port"));
