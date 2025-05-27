@@ -30,7 +30,7 @@ export default function quizRouter() {
         req.session.sDStarted = false;
         req.session.tQStarted = false;
         req.session.tRStarted = true;
-        let quizTeam: Character[] = []
+        let quizTeam: Character[] = [];
         if (req.session.characters) {
             quizTeam = await generateTeam(req.session.characters);
         }

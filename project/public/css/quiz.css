@@ -167,7 +167,36 @@ main {
 }
 
 
+/* Knop om de quiz te stoppen */
+a.up {
+    position: fixed; 
+    text-align: center;
+    height: 40px;
+    width: 40px;
+    bottom: 10px; 
+    right: 20px;
+    z-index: 99; 
+    border: none; 
+    outline: none; 
+    background-color: #455641;
+    /* box-shadow: 3px 3px 1px #d3d3d387; */
+    color: white;
+    cursor: pointer; 
+    padding: 15px; 
+    border-radius: 50%;
+    font-size: 18px;
 
+    &:hover {
+        background-color: #d3d3d3; 
+    }
+
+    i {
+        font-size: 25px;
+        position: relative;
+        top: -15px;
+        left: -7px;
+    }
+}
 
 footer {
     width: 100%;

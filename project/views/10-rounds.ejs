@@ -86,6 +86,7 @@
         />
         <button type="submit" id="next_question">Volgende vraag</button>
       </form>
+      <a class="up" href="/quiz"><i class="bi bi-arrow-left-circle"></i></a>
     </main>
 
     <!-- End Game Popup -->
@@ -95,7 +96,7 @@
         <h2>Quiz voltooid!</h2>
         <p class="message">Je hebt alle 10 vragen beantwoord.</p>
         <div class="score"><%= userCurrentScore %>/10</div>
-        <p class="meesage">+<%=receivedExp%>exp</p>
+        <p class="meesage">+<%=receivedExp%> exp</p>
         <div class="buttons">
           <a href="/quiz/10-rounds"
             ><button class="try-again">Opnieuw proberen</button></a
