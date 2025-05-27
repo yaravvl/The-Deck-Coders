@@ -43,7 +43,9 @@ export default function updateAccountRouter() {
             req.session.user.imageUrl = req.body.profile_picture;
             req.session.user.email = req.body.email;
             req.session.user.username = req.body.username;
-            req.session.user.password = await bcrypt.hash(req.body.password, 10);
+            if (req.body.password && req.body.password.trim() !== "") {
+                req.session.user.password = await bcrypt.hash(req.body.password, 10);
+            }
             await updateProfile(req.session.user)
             res.render("account-settings", {
                 player: req.session.user,

@@ -21,9 +21,27 @@ export function calculateExp10(number: number) {
 }
 
 export function calculateSuddenDeath(number: number) {
-    return (number * 10)
+    let standardExp: number = number * 5
+    let bonusEXp: number = 0;
+
+    if (number >= 5) {
+        bonusEXp = number * 5
+    } else if (number >= 3) {
+        bonusEXp = number * 2
+    }
+
+    return standardExp + bonusEXp
 }
 
 export function calculateTimedQuiz(number: number) {
-    return (number * 15)
+    let standardExp: number = number * 10
+    let bonusEXp: number = 0;
+
+    if (number >= 10) {
+        bonusEXp += (standardExp - 9) * 2 + 20 //Dus alle antwoorden boven de 10 is 2 punten extra per ronde + extra bonus van 20 om 10 te halen??
+    } else if (number >= 5) {
+        bonusEXp += 15
+    }
+
+    return standardExp + bonusEXp
 }
