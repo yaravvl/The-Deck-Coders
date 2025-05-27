@@ -7,17 +7,24 @@
     <link rel="stylesheet" href="../css/reset.css" />
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/quiz.css" />
-    <link rel="stylesheet" href="../css/dark-mode.css">
+    <link rel="stylesheet" href="../css/dark-mode.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Oswald&family=Qwitcher+Grypen:wght@400;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+    />
     <script src="../javascript/profile.js"></script>
     <script src="../javascript/thumbToggle.js" defer></script>
     <script src="../javascript/quoteManager.js" defer></script>
     <script src="../javascript/test.js"></script>
-    <link rel="icon" type="image/jpg" href="../public/assets/images/favicon.jpg">
+    <link
+      rel="icon"
+      type="image/jpg"
+      href="../public/assets/images/favicon.jpg"
+    />
   </head>
   <style>
     body {
@@ -32,19 +39,20 @@
     <main class="quiz">
       <h2>Vraag: <%=userCurrentQuestion%></h2>
       <h2>
-        "<%=selectedQuote.dialog%>"
-        <% if (favoritedQuotes.some(fav => Array.isArray(fav.dialog) && fav.dialog.includes(selectedQuote.dialog))) { %>
+        <span class="quote-question">"<%=selectedQuote.dialog%>"</span>
+        <% if (favoritedQuotes.some(fav => Array.isArray(fav.dialog) &&
+        fav.dialog.includes(selectedQuote.dialog))) { %>
         <i class="bi bi-hand-thumbs-up-fill"></i>
         <% } else {%>
-            <i class="bi bi-hand-thumbs-up"></i>
-          <% } %>
+        <i class="bi bi-hand-thumbs-up"></i>
+        <% } %>
         <i class="bi bi-hand-thumbs-down"></i>
       </h2>
       <br />
       <p>DEBUG: <%=chardebug%></p>
       <p>DEBUG: <%=mvdebug%></p>
       <h3>Van welk karakter is deze quote?</h3>
- 
+
       <section class="options">
         <%for (let character of characters) { %>
         <figure name="<%=character._id%>" class="character_choices">
@@ -53,38 +61,57 @@
         </figure>
         <% } %>
       </section>
- 
+
       <h3>Van welke film is deze quote?</h3>
       <section class="options">
         <% for (let movie of movies ) {%>
-          <figure name="<%=movie.id%>" class="movie_choices" >
-            <img src="../assets/images/<%=movie.id%>.png" alt="" class="movie-posters"/>
-            <figcaption><%=movie.name%></figcaption>
-          </figure>
+        <figure name="<%=movie.id%>" class="movie_choices">
+          <img
+            src="../assets/images/<%=movie.id%>.png"
+            alt=""
+            class="movie-posters"
+          />
+          <figcaption><%=movie.name%></figcaption>
+        </figure>
         <% } %>
       </section>
       <form action="/quiz/sudden-death/next" method="post">
-        <input type="hidden" name="character_id" id="profile_picture" value="">
-        <input type="hidden" name="movie_id" id="movie_id" value="">
-        <input type="hidden" name="quote_choice" id="quote_id" value="">
-        <input type="hidden" name="blacklist_reason" id="blacklist_reason" value="">
+        <input
+          type="hidden"
+          name="character_id"
+          id="profile_picture"
+          value=""
+        />
+        <input type="hidden" name="movie_id" id="movie_id" value="" />
+        <input type="hidden" name="quote_choice" id="quote_id" value="" />
+        <input
+          type="hidden"
+          name="blacklist_reason"
+          id="blacklist_reason"
+          value=""
+        />
         <button type="submit" id="next_question">Volgende vraag</button>
       </form>
     </main>
 
     <!-- End Game Popup -->
     <%if (showMenu) {%>
-      <div id="popupOverlay" class="popup-overlay show">
-        <div id="endGamePopup" class="end-game-popup show">
-          <h2>Quiz voltooid!</h2>
-          <p class="message">Je hebt een fout antwoord gegeven!</p>
-          <div class="score">Score: <%= userCurrentScore %></div>
-          <p class="meesage">+<%=receivedExp%>exp</p>
-          <div class="buttons">
-            <a href="/quiz/sudden-death"><button class="try-again">Opnieuw proberen</button></a>
-            <a href="/quiz"><button class="back-to-menu">Terug naar menu</button></a>
-          </div>
+    <div id="popupOverlay" class="popup-overlay show">
+      <div id="endGamePopup" class="end-game-popup show">
+        <h2>Quiz voltooid!</h2>
+        <p class="message">Je hebt een fout antwoord gegeven!</p>
+        <div class="score">Score: <%= userCurrentScore %></div>
+        <p class="meesage">+<%=receivedExp%>exp</p>
+        <div class="buttons">
+          <a href="/quiz/sudden-death"
+            ><button class="try-again">Opnieuw proberen</button></a
+          >
+          <a href="/quiz"
+            ><button class="back-to-menu">Terug naar menu</button></a
+          >
         </div>
       </div>
-    <%}%>
-    <%- include("partials/footer") %>
+    </div>
+    <%}%> <%- include("partials/footer") %>
+  </body>
+</html>

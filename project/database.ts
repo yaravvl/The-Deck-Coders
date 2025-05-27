@@ -155,7 +155,7 @@ export async function connect() {
         await CLIENT.connect();
         console.log("Connected to the database.");
         process.on("SIGINT", exit)
-        moviesToDatabase()
+        await moviesToDatabase()
     } catch (e) {
         console.error(e)
         process.exit(0)
