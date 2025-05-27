@@ -23,7 +23,7 @@ export default function loginRouter() {
             })
         }
         req.session.user = userExists
-        res.redirect("welcomepage")
+        res.redirect("/welcomepage")
     });
 
     router.get("/register", (req, res) => {
@@ -40,7 +40,7 @@ export default function loginRouter() {
         const hashedPassword: string = await bcrypt.hash(password, 10)
         if (!(await checkExistingPlayer(email, username))) {
             await addUser(createPlayer(username, hashedPassword, email, image_url))
-            res.redirect("quiz")
+            res.redirect("/quiz")
         } else {
             return res.render("register", {
                 error: "Username or email already exists!"

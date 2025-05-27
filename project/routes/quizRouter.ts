@@ -1,5 +1,5 @@
 import express from "express";
-import { Character, Movie, Quote } from "../types";
+import { Character, Movie, PlayerInfo, Quote } from "../types";
 import { addExp, calculateExp10, calculateSuddenDeath, calculateTimedQuiz } from "../experience";
 import { addQuoteToBlacklist, addQuoteToFavorites, updateProfile } from "../database";
 import { generateRandomNumber } from "../utilities";
@@ -11,6 +11,9 @@ let selectedQuote: Quote;
 export default function quizRouter() {
     const router = express.Router();
     router.get("/", async (req, res) => {
+        req.session.sDStarted = false;
+        req.session.tQStarted = false;
+        req.session.tRStarted = false;
         if (!req.session.characters) {
             const characters = await getCharactersWithQuotes();
             req.session.characters = characters
@@ -36,16 +39,16 @@ export default function quizRouter() {
         }
         let blackListedQuote: Quote | undefined
         do {
-            await generatedSelectedCharacter(quizTeam, quizTeam.length);
+            await generatedSelectedCharacter(quizTeam, quizTeam.length, req);
             blackListedQuote = req.session.user?.blacklistedQuotes.find((e) => {
-                return e.id === selectedQuote.id
+                return e.id === req.session.selectedQuote!.id
             })
         } while (blackListedQuote !== undefined)
         // quizTeam.forEach((e) => {
         //     console.log(e.name)
         // })
         const moviedebug = res.locals.movies.find((e: Movie) => {
-            return e.id === selectedQuote.movie
+            return e.id === req.session.selectedQuote!.movie
         })
         // console.log(moviedebug?.name)
         // console.log(selectedCharacter.name)
@@ -63,15 +66,15 @@ export default function quizRouter() {
         res.render("10-rounds", {
             characters: quizTeam,
             movies: res.locals.movies,
-            selectedCharacter: selectedCharacter,
-            selectedQuote: selectedQuote,
+            selectedCharacter: req.session.selectedCharacter!,
+            selectedQuote: req.session.selectedQuote,
             userCurrentQuestion: req.session.userCurrentQuestion || 1,
             userCurrentScore: req.session.userCurrentScore || 0,
             favoritedQuotes: req.session.favoritedQuotes || [],
             showMenu: showMenu,
             receivedExp: calculateExp10(req.session.userCurrentScore!),
             mvdebug: moviedebug?.name, //DEBUG VERWIJDER LATER
-            chardebug: selectedCharacter.name //DEUG
+            chardebug: req.session.selectedCharacter!.name //DEUG
         })
     });
 
@@ -80,12 +83,11 @@ export default function quizRouter() {
         const movie_id = req.body.movie_id
         const choice_quote = req.body.quote_choice
         const blacklist_reason = req.body.blacklist_reason
-        console.log(selectedQuote.dialog)
 
         if (choice_quote === "favorited") {
-            await addQuoteToFavorites(selectedQuote, req.session.user!)
+            await addQuoteToFavorites(req.session.selectedQuote!, req.session.user!)
         } else if (choice_quote === "blacklist") {
-            await addQuoteToBlacklist(selectedQuote, req.session.user!, blacklist_reason)
+            await addQuoteToBlacklist(req.session.selectedQuote!, req.session.user!, blacklist_reason)
             // const foundCharacter = req.session.characters?.find((e) => {
             //     return e._id === character_id
             // })
@@ -104,7 +106,7 @@ export default function quizRouter() {
             req.session.userCurrentScore = 0
         }
 
-        if (selectedQuote.movie === movie_id && selectedQuote.character === character_id) {
+        if (req.session.selectedQuote!.movie === movie_id && req.session.selectedQuote!.character === character_id) {
             req.session.userCurrentScore += 1;
             console.log("antwoord is juist")
         } else {
@@ -136,9 +138,9 @@ export default function quizRouter() {
         }
         let blackListedQuote: Quote | undefined
         do {
-            await generatedSelectedCharacter(quizTeam, quizTeam.length);
+            await generatedSelectedCharacter(quizTeam, quizTeam.length, req);
             blackListedQuote = req.session.user?.blacklistedQuotes.find((e) => {
-                return e.id === selectedQuote.id
+                return e.id === req.session.selectedQuote!.id
             })
         } while (blackListedQuote !== undefined)
         // quizTeam.forEach((e) => {
@@ -146,7 +148,7 @@ export default function quizRouter() {
         // })
 
         const moviedebug = res.locals.movies.find((e: Movie) => {
-            return e.id === selectedQuote.movie
+            return e.id === req.session.selectedQuote!.movie
         })
         // console.log(moviedebug?.name)
         // console.log(selectedCharacter.name)
@@ -167,8 +169,8 @@ export default function quizRouter() {
             title: "Timed quiz",
             characters: quizTeam,
             movies: res.locals.movies,
-            selectedCharacter: selectedCharacter,
-            selectedQuote: selectedQuote,
+            selectedCharacter: req.session.selectedCharacter,
+            selectedQuote: req.session.selectedQuote!,
             userCurrentQuestion: req.session.userCurrentQuestion,
             userCurrentScore: req.session.userCurrentScore || 0,
             favoritedQuotes: req.session.favoritedQuotes || [],
@@ -176,7 +178,7 @@ export default function quizRouter() {
             receivedExp: exp,
             time: req.session.time,
             mvdebug: moviedebug?.name, //DEBUG VERWIJDER LATER
-            chardebug: selectedCharacter.name //DEUG
+            chardebug: req.session.selectedCharacter!.name //DEUG
         })
     })
 
@@ -188,15 +190,15 @@ export default function quizRouter() {
         const time_left = req.body.timer
 
         if (choice_quote === "favorited") {
-            await addQuoteToFavorites(selectedQuote, req.session.user!)
+            await addQuoteToFavorites(req.session.selectedQuote!, req.session.user!)
         } else if (choice_quote === "blacklist") {
-            await addQuoteToBlacklist(selectedQuote, req.session.user!, blacklist_reason)
+            await addQuoteToBlacklist(req.session.selectedQuote!, req.session.user!, blacklist_reason)
             const foundCharacter = req.session.characters?.find((e) => {
                 return e._id === character_id
             })
             if (foundCharacter) {
                 foundCharacter.quotes = foundCharacter.quotes.filter((e) => {
-                    e._id !== selectedQuote._id
+                    e._id !== req.session.selectedQuote!._id
                 })
             }
         } else {
@@ -209,7 +211,7 @@ export default function quizRouter() {
             req.session.userCurrentScore = 0
         }
 
-        if (selectedQuote.movie === movie_id && selectedQuote.character === character_id) {
+        if (req.session.selectedQuote!.movie === movie_id && req.session.selectedQuote!.character === character_id) {
             req.session.userCurrentScore += 1;
             console.log("antwoord is juist")
         } else {
@@ -239,48 +241,46 @@ export default function quizRouter() {
         }
         let blackListedQuote: Quote | undefined
         do {
-            await generatedSelectedCharacter(quizTeam, quizTeam.length);
+            await generatedSelectedCharacter(quizTeam, quizTeam.length, req);
             blackListedQuote = req.session.user?.blacklistedQuotes.find((e) => {
-                return e.id === selectedQuote.id
+                return e.id === req.session.selectedQuote!.id
             })
         } while (blackListedQuote !== undefined)
         // quizTeam.forEach((e) => {
         //     console.log(e.name)
         // })
         const moviedebug = res.locals.movies.find((e: Movie) => {
-            return e.id === selectedQuote.movie
+            return e.id === req.session.selectedQuote!.movie
         })
         // console.log(moviedebug?.name)
         // console.log(selectedCharacter.name)
         let exp: number = 0
-        if (req.session.gameOver && req.session.user && req.session.userCurrentScore && req.session.userCurrentQuestion) {
+        if (req.session.gameOver && req.session.user && typeof req.session.userCurrentScore === "number" && typeof req.session.userCurrentQuestion === "number") {
             req.session.sDStarted = false
             showMenu = true
-            exp = calculateSuddenDeath(req.session.userCurrentScore)
+            exp = calculateSuddenDeath(req.session.userCurrentScore!)
             addExp(req.session.user!, exp)
-            if (req.session.user.suddenDeathHs! < req.session.userCurrentScore) {
-                req.session.user.suddenDeathHs! = req.session.userCurrentScore
+            if (req.session.user!.suddenDeathHs! < req.session.userCurrentScore!) {
+                req.session.user!.suddenDeathHs! = req.session.userCurrentScore!
             }
-            req.session.userCurrentQuestion = req.session.userCurrentQuestion - 1
+            req.session.userCurrentQuestion = req.session.userCurrentQuestion! - 1
             await updateProfile(req.session.user)
             req.session.gameOver = false;
-        } else {
-            throw new Error("Session invalid")
         }
 
         res.render("sudden-death", {
             title: "Sudden death",
             characters: quizTeam,
             movies: res.locals.movies,
-            selectedCharacter: selectedCharacter,
-            selectedQuote: selectedQuote,
+            selectedCharacter: req.session.selectedCharacter,
+            selectedQuote: req.session.selectedQuote!,
             userCurrentQuestion: req.session.userCurrentQuestion,
             userCurrentScore: req.session.userCurrentScore || 0,
             favoritedQuotes: req.session.favoritedQuotes || [],
             showMenu: showMenu,
             receivedExp: exp,
             mvdebug: moviedebug?.name, //DEBUG VERWIJDER LATER
-            chardebug: selectedCharacter.name //DEUG
+            chardebug: req.session.selectedCharacter!.name //DEUG
         })
     })
 
@@ -289,18 +289,18 @@ export default function quizRouter() {
         const movie_id = req.body.movie_id
         const choice_quote = req.body.quote_choice
         const blacklist_reason = req.body.blacklist_reason
-        console.log(selectedQuote.dialog)
+        console.log(req.session.selectedQuote!.dialog)
 
         if (choice_quote === "favorited") {
-            await addQuoteToFavorites(selectedQuote, req.session.user!)
+            await addQuoteToFavorites(req.session.selectedQuote!, req.session.user!)
         } else if (choice_quote === "blacklist") {
-            await addQuoteToBlacklist(selectedQuote, req.session.user!, blacklist_reason)
+            await addQuoteToBlacklist(req.session.selectedQuote!, req.session.user!, blacklist_reason)
             const foundCharacter = req.session.characters?.find((e) => {
                 return e._id === character_id
             })
             if (foundCharacter) {
                 foundCharacter.quotes = foundCharacter.quotes.filter((e) => {
-                    e._id !== selectedQuote._id
+                    e._id !== req.session.selectedQuote!._id
                 })
             }
         } else {
@@ -313,7 +313,7 @@ export default function quizRouter() {
             req.session.userCurrentScore = 0
         }
 
-        if (selectedQuote.movie === movie_id && selectedQuote.character === character_id) {
+        if (req.session.selectedQuote!.movie === movie_id && req.session.selectedQuote!.character === character_id) {
             req.session.userCurrentScore += 1;
             console.log("antwoord is juist")
         } else {
@@ -330,12 +330,12 @@ export default function quizRouter() {
     return router;
 }
 
-async function generatedSelectedCharacter(selectedTeam: Character[], number: number) {
+async function generatedSelectedCharacter(selectedTeam: Character[], number: number, req: express.Request) {
     const randomNum = generateRandomNumber(number);
-    selectedCharacter = selectedTeam[randomNum];
+    req.session.selectedCharacter = selectedTeam[randomNum];
 
-    const selectedQuoteIndex = generateRandomNumber(selectedCharacter.quotes.length);
-    selectedQuote = selectedCharacter.quotes[selectedQuoteIndex];
+    const selectedQuoteIndex = generateRandomNumber(req.session.selectedCharacter.quotes.length);
+    req.session.selectedQuote = req.session.selectedCharacter.quotes[selectedQuoteIndex];
     
     // console.log("Debug;" + selectedQuoteIndex, selectedCharacter.quotes.length - 1)
 }

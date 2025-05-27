@@ -25,6 +25,8 @@ declare module 'express-session' {
         characters: Character[];
         gameOver: boolean;
         time: number;
+        selectedCharacter: Character;
+        selectedQuote: Quote;
     }
 }
 

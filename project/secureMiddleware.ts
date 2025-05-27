@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import { ReturnDocument } from "mongodb";
 
 export function secureMiddleware(req: Request, res: Response, next: NextFunction) {
     const PUBLIC_ROUTES = ["/login", "/register"];

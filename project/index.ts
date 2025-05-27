@@ -42,6 +42,8 @@ app.use(async (req, res, next) => {
 })
 
 app.use("/", landingPageRouter());
+app.use("/login", loggedIn, loginRouter());
+app.use("/register", loggedIn, loginRouter());
 app.use("/", loginRouter());
 app.use("/", secureMiddleware, welcomepageRouter());
 app.use("/", secureMiddleware, highscoresRouter());
