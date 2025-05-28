@@ -40,6 +40,8 @@ export default function favoritesRouter() {
                 foundCharacter,
                 title: foundCharacter.character.name
             })
+        } else {
+            res.redirect("/favorites")
         }
     })
 

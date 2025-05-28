@@ -65,6 +65,10 @@ const profilePictures = [
   { level: 10, image_url: '../assets/images/characters/images/smeagol.webp' },
 ];
 
+app.use((req, res) => {
+    res.redirect("/quiz");
+});
+
 app.listen(app.get("port"), async () => {
     console.log("Server started on http://localhost:" + app.get("port"));
     await connect();

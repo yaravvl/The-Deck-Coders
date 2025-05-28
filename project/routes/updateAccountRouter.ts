@@ -54,6 +54,5 @@ export default function updateAccountRouter() {
         }
     })
 
-
     return router;
 }

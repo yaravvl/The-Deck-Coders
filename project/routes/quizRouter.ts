@@ -289,7 +289,6 @@ export default function quizRouter() {
         const movie_id = req.body.movie_id
         const choice_quote = req.body.quote_choice
         const blacklist_reason = req.body.blacklist_reason
-        console.log(req.session.selectedQuote!.dialog)
 
         if (choice_quote === "favorited") {
             await addQuoteToFavorites(req.session.selectedQuote!, req.session.user!)
@@ -315,9 +314,7 @@ export default function quizRouter() {
 
         if (req.session.selectedQuote!.movie === movie_id && req.session.selectedQuote!.character === character_id) {
             req.session.userCurrentScore += 1;
-            console.log("antwoord is juist")
         } else {
-            console.log("antwoord is fout")
             req.session.gameOver = true;
         }
         req.session.userCurrentQuestion += 1;

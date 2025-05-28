@@ -84,6 +84,6 @@ export default function blacklistRouter() {
             res.redirect("/blacklist")
         })
     })
-
+    
     return router;
 }
